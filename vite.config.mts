@@ -6,8 +6,8 @@ export default defineConfig({
 	root: './',
 	build: {
 		outDir: 'dist',
-		minify: true,
-		sourcemap: false,
+		minify: false,
+		sourcemap: true,
 		rollupOptions: {
 			input: {
 				background: resolve(__dirname, 'src/background.ts'),

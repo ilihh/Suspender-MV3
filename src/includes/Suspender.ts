@@ -17,7 +17,7 @@ export class Suspender
 	public constructor(config: Configuration, device: DeviceStatus, files_allowed: boolean)
 	{
 		this.config = config;
-		this.timeToSuspend = (new Date()).getTime() + (this.config.suspendDelay * 60 * 1000);
+		this.timeToSuspend = (new Date()).getTime() - (this.config.suspendDelay * 60 * 1000);
 		this.suspendedUrl = chrome.runtime.getURL(PAGE.Suspended);
 		this.device = device;
 		this.filesSchemeAllowed = files_allowed;

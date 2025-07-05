@@ -1,0 +1,86 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_manifest_name__",
+  "version": "1.0.0",
+  "description": "__MSG_manifest_description__",
+  "permissions": ["storage", "tabs", "favicon", "alarms", "contextMenus", "offscreen"],
+  "optional_permissions": [
+    "scripting",
+    "history",
+    "downloads"
+  ],
+  "optional_host_permissions": [
+    "https://www.youtube.com/watch*",
+    "http://*/*",
+    "https://*/*",
+    "file://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["suspended.html", "img/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "default_locale": "en",
+  "action": {
+    "default_title": "__MSG_manifest_action__",
+    "default_icon": "img/48dark.png",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "img/16dark.png",
+    "32": "img/32dark.png",
+    "48": "img/48dark.png",
+    "128": "img/128dark.png"
+  },
+  "commands": {
+    "toggle_suspend_tab": {
+      "description": "__MSG_action_toggle_suspend_tab__"
+    },
+    "toggle_pause_tab": {
+      "description": "__MSG_action_toggle_pause_tab__"
+    },
+
+    "whitelist_domain": {
+      "description": "__MSG_action_whitelist_domain__"
+    },
+    "whitelist_url": {
+      "description": "__MSG_action_whitelist_url__"
+    },
+
+    "suspend_group": {
+      "description": "__MSG_action_suspend_group__"
+    },
+    "suspend_group_forced": {
+      "description": "__MSG_action_suspend_group_forced__"
+    },
+    "unsuspend_group": {
+      "description": "__MSG_action_unsuspend_group__"
+    },
+
+    "suspend_window": {
+      "description": "__MSG_action_suspend_window__"
+    },
+    "suspend_window_forced": {
+      "description": "__MSG_action_suspend_window_forced__"
+    },
+    "unsuspend_window": {
+      "description": "__MSG_action_unsuspend_window__"
+    },
+
+    "suspend_all": {
+      "description": "__MSG_action_suspend_all__"
+    },
+    "suspend_all_forced": {
+      "description": "__MSG_action_suspend_all_forced__"
+    },
+    "unsuspend_all": {
+      "description": "__MSG_action_unsuspend_all__"
+    }
+  }
+}

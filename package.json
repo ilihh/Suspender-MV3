@@ -1,0 +1,23 @@
+{
+  "name": "suspender-mv3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ilih (Ilia Novikov)",
+  "license": "unspecified",
+  "type": "module",
+  "devDependencies": {
+    "@types/chrome": "^0.0.329",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^24.0.10",
+    "vite-plugin-static-copy": "^3.1.0"
+  }
+}

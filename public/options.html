@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link id="favicon-url" rel="icon" href="img/32dark.png" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<title data-i18n="page_options_title">Suspender MV3: Settings</title>
+	<script src="options.js" type="module"></script>
+</head>
+<body class="options">
+
+<div class="tabs">
+	<a href="#settings" data-i18n="page_options_tab_settings">Settings</a>
+	<a href="#sessions" data-i18n="page_options_tab_sessions">Sessions</a>
+	<a href="#shortcuts" data-i18n="page_options_tab_shortcuts">Shortcuts</a>
+	<a href="#migrate" data-i18n="page_options_migrate">Migrate</a>
+	<a href="#about" data-i18n="page_options_tab_about">About</a>
+</div>
+
+<div class="tab" id="settings">
+	<h1 data-i18n="page_options_settings">Settings</h1>
+	<div class="options-block" data-config>
+		<h3 data-i18n="page_options_block_automatic">Automatic tab suspension</h3>
+
+		<label for="suspendDelay">
+			<span data-i18n="page_options_suspend_delay">Automatically suspend tabs after</span>
+			<select id="suspendDelay">
+				<option value="0" data-i18n="page_options_suspend_delay_never">Never</option>
+				<option value="5" data-i18n="page_options_suspend_delay_5_min">5 minutes</option>
+				<option value="10" data-i18n="page_options_suspend_delay_10_min">10 minutes</option>
+				<option value="15" data-i18n="page_options_suspend_delay_15_min">15 minutes</option>
+				<option value="30" data-i18n="page_options_suspend_delay_30_min">30 minutes</option>
+				<option value="60" data-i18n="page_options_suspend_delay_1_hour">1 hour</option>
+				<option value="120" data-i18n="page_options_suspend_delay_2_hours">2 hours</option>
+				<option value="240" data-i18n="page_options_suspend_delay_4_hours">4 hours</option>
+				<option value="360" data-i18n="page_options_suspend_delay_6_hours">6 hours</option>
+				<option value="720" data-i18n="page_options_suspend_delay_12_hours">12 hours</option>
+				<option value="1440" data-i18n="page_options_suspend_delay_1_day">1 day</option>
+				<option value="2880" data-i18n="page_options_suspend_delay_2_days">2 days</option>
+				<option value="4320" data-i18n="page_options_suspend_delay_3_days">3 days</option>
+				<option value="10080" data-i18n="page_options_suspend_delay_1_week">1 week</option>
+				<option value="20160" data-i18n="page_options_suspend_delay_2_week">2 weeks</option>
+			</select>
+		</label>
+
+		<label>
+			<input type="checkbox" id="suspendPinned" /> <span data-i18n="page_options_suspend_pinned">Suspend pinned tabs</span>
+		</label>
+
+		<label class="hidden">
+			<input type="checkbox" id="suspendUnsavedData" /> <span data-i18n="page_options_suspend_unsaved_data">Suspend tabs that contain unsaved form inputs</span>
+		</label>
+
+		<label>
+			<input type="checkbox" id="suspendPlayingAudio" /> <span data-i18n="page_options_suspend_playing_audio">Suspend tabs that are playing audio</span>
+		</label>
+
+		<label>
+			<input type="checkbox" id="suspendOffline" /> <span data-i18n="page_options_suspend_offline">Suspend tabs when offline</span>
+		</label>
+
+		<label>
+			<input type="checkbox" id="neverSuspendWhenPowerOn" /> <span data-i18n="page_options_never_suspend_when_power_on">Never suspend tabs when connected to power source</span>
+		</label>
+
+		<label data-i18n="page_options_white_list" for="whiteList">Never suspend tabs with URLs from the following list (one per line)</label>
+		<textarea id="whiteList"></textarea>
+		<div class="comment" data-i18n="page_options_white_list_hint"></div>
+	</div>
+
+	<div class="options-block" data-config>
+		<h3 data-i18n="page_options_block_suspended">Suspended tabs</h3>
+
+		<label data-lite-version-disabled>
+			<input type="checkbox" id="restoreScrollPosition" /> <span data-i18n="page_options_restore_scroll_position">Restore scroll position</span>
+		</label>
+		<div class="comment" data-i18n="page_options_restore_scroll_permissions"></div>
+
+		<label data-lite-version-disabled>
+			<input type="checkbox" id="maintainYoutubeTime" /> <span data-i18n="page_options_maintain_youtube_time">Save YouTube timestamps for the tab with video</span>
+		</label>
+		<div class="comment" data-i18n="page_options_youtube_permissions"></div>
+
+		<label>
+			<input type="checkbox" id="discardTabs" /> <span data-i18n="page_options_discard_tabs">Discard tabs instead of suspending</span>
+		</label>
+	</div>
+
+	<div class="options-block" data-config>
+		<h3 data-i18n="page_options_block_other">Other</h3>
+
+		<label>
+			<input type="checkbox" id="enableContextMenu" /> <span data-i18n="page_options_enable_context_menu">Add to the context menu</span>
+		</label>
+
+		<label>
+			<input type="checkbox" id="cleanupHistory" /> <span data-i18n="page_options_cleanup_history">Remove suspended pages from history</span>
+		</label>
+		<div class="comment" data-i18n="page_options_cleanup_history_permissions"></div>
+
+		<label>
+			<input type="checkbox" id="exportSessions" /> <span data-i18n="page_options_export_sessions">Enable sessions export</span>
+		</label>
+		<div class="comment" data-i18n="page_options_export_sessions_permissions"></div>
+
+		<label class="hidden">
+			<input type="checkbox" id="syncProfile" /> <span data-i18n="page_options_sync_profile">Sync settings with your Chrome profile</span>
+		</label>
+	</div>
+
+</div>
+
+<div class="tab" id="sessions">
+	<h1 data-i18n="page_options_sessions">Sessions</h1>
+
+	<template id="tab-template">
+		<div class="window-tab"><a href="" target="_blank"></a></div>
+	</template>
+
+	<template id="window-template">
+		<div class="window">
+			<div class="window-name">
+				<span data-name data-i18n="page_options_sessions_window"></span>
+				<button type="button" data-open-suspended class="window-action" data-i18n="page_options_sessions_open_suspended">open suspended</button>
+				<button type="button" data-open-loaded class="window-action" data-i18n="page_options_sessions_open_loaded">open loaded</button>
+			</div>
+			<div class="window-tabs"></div>
+		</div>
+	</template>
+
+	<template id="session-template">
+		<div class="session">
+			<div class="session-header">
+				<button class="toggle-session">+/-</button>
+				<a href="#" class="session-name"></a>
+				<button type="button" data-open-suspended class="session-action" data-i18n="page_options_sessions_open_suspended">open suspended</button>
+				<button type="button" data-open-loaded class="session-action" data-i18n="page_options_sessions_open_loaded">open loaded</button>
+				<button type="button" data-export class="session-action" data-i18n="page_options_sessions_export">export</button>
+				<button type="button" data-save class="session-action" data-i18n="page_options_sessions_save">save</button>
+				<button type="button" data-delete class="session-action" data-i18n="page_options_sessions_delete">delete</button>
+			</div>
+
+			<div class="session-windows hidden">
+
+			</div>
+		</div>
+	</template>
+
+	<h3 data-i18n="page_options_sessions_current">Current session:</h3>
+	<div id="session-current"></div>
+
+	<h3 data-i18n="page_options_sessions_recent">Recent sessions:</h3>
+	<div id="sessions-recent"></div>
+
+	<h3 data-i18n="page_options_sessions_saved">Saved sessions:</h3>
+	<div id="sessions-saved"></div>
+
+	<input type="file" id="session-file" class="hidden" />
+	<button type="button" class="button" id="session-import" data-i18n="page_options_sessions_import">Import session</button>
+</div>
+
+<div class="tab" id="shortcuts">
+	<h1 data-i18n="page_options_shortcuts">Keyboard shortcuts</h1>
+
+	<div class="options-block">
+		<div id="commands-list"></div>
+
+		<template id="command-template">
+			<div class="command">
+				<span class="command-description"></span>
+				<span class="command-shortcut"></span>
+			</div>
+		</template>
+
+		<a href="chrome://extensions/shortcuts" target="_blank" class="button" data-i18n="page_options_shortcuts_change">Change shortcuts</a>
+	</div>
+</div>
+
+<div class="tab" id="migrate">
+	<h1 data-i18n="page_options_migrate">About</h1>
+
+	<div class="options-block">
+		<input type="text" id="extension-id" placeholder="Extension ID" />
+		<button type="button" class="button" disabled id="extension-migrate" data-i18n="page_options_migrate">Migrate tabs</button>
+	</div>
+</div>
+
+<div class="tab" id="about">
+	<h1 data-i18n="page_options_about">About</h1>
+
+	<div class="options-block">
+		<h3 id="version">v1.0.0</h3>
+		<div id="url">GitHub: <a href="https://github.com/ilihh/Suspender-MV3" target="_blank">github.com/ilihh/Suspender-MV3</a></div>
+	</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+
+html {
+	box-sizing: border-box;
+}
+
+.hidden {
+	display: none !important;
+}
+
+html.suspended {
+	min-height: 100%;
+	height: 100vh;
+}
+
+body.suspended {
+	margin: 0;
+	padding: 0;
+	background-color: #f9f9fb;
+	font-family: system-ui, sans-serif;
+	color: #333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 1.5rem;
+	line-height: 1.5em;
+}
+
+#suspended {
+	padding: 20px;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#suspended #page-info {
+	font-size: 1.8rem;
+	font-weight: 600;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 0.5rem;
+}
+
+#suspended #page-url {
+	font-size: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+#suspended #page-url a {
+	color: #666;
+	text-decoration: none;
+	word-break: break-all;
+}
+
+#suspended #title {
+	max-width: 900px;
+	text-align: center;
+	text-wrap-style: pretty;
+}
+
+#suspended #logo img {
+	width: 200px;
+	height: auto;
+	margin: 2em 0;
+}
+
+#suspended #unsuspend-text {
+	font-size: 1.3rem;
+	font-weight: 500;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	color: #0077cc;
+	cursor: pointer;
+}
+
+#suspended #shortcuts-info {
+	font-size: 0.9rem;
+}
+
+#suspended #shortcuts-info a {
+	color: #888;
+	text-decoration: underline;
+}
+
+#suspended #favicon {
+	width: 32px;
+	aspect-ratio: 1/1;
+}
+
+/* popup */
+
+body.popup {
+	margin: 0;
+	background-color: #f9f9fb;
+	font-family: system-ui, sans-serif;
+	color: #333;
+	min-width: 325px;
+	padding: 0 0 10px;
+}
+
+.popup #status {
+	padding: 10px;
+	margin-bottom: 10px;
+	font-weight: 500;
+	text-align: center;
+}
+
+.popup .status-valid {
+	background-color: #e0f7e9;
+	color: #2e7d32;
+}
+
+.popup .status-invalid {
+	background-color: #fdecea;
+	color: #c62828;
+}
+
+.popup .action-group {
+	margin-top: 10px;
+}
+
+.popup .action {
+	display: flex;
+	align-items: center;
+	padding: 5px 15px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.popup .action span {
+	flex-grow: 1;
+	text-decoration: none;
+	font-size: 0.95rem;
+}
+
+.popup .action span:hover {
+	text-decoration: underline;
+}
+
+.popup .divider {
+	margin: 10px 0;
+	height: 1px;
+	background-color: #ddd;
+}
+
+.popup .action-group.hidden + .divider {
+	display: none;
+}
+
+/* options */
+
+body.options {
+	background-color: #f9f9fb;
+	font-family: system-ui, sans-serif;
+	color: #333;
+	padding: 20px 20px 70px;
+}
+
+.options .tabs {
+	display: flex;
+	justify-content: center;
+
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #f9f9f9;
+	border-top: 1px solid #ddd;
+	gap: 1.5rem;
+	padding: 0.75rem 1rem;
+	box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+	z-index: 1000;
+	margin: 0;
+}
+
+.options .tabs a {
+	padding: 8px 12px;
+	background-color: #e3e8ee;
+	border-radius: 6px;
+	text-decoration: none;
+	color: #333;
+	font-weight: 500;
+}
+
+.options .tab {
+	display: none;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.options .tab:target {
+	display: block;
+}
+
+.options h1 {
+	font-size: 1.4rem;
+	margin-bottom: 1rem;
+}
+
+.options .options-block {
+	margin-bottom: 1.5rem;
+	padding: 1rem;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.options .options-block h3 {
+	margin-top: 0;
+	font-size: 1.1rem;
+}
+
+.options label {
+	display: flex;
+	align-items: center;
+	margin: 8px 0;
+	font-size: 0.95rem;
+}
+
+.options select,
+.options input[type="text"],
+.options textarea {
+	margin-left: auto;
+	padding: 4px 6px;
+	font-size: 0.9rem;
+	box-sizing: border-box;
+}
+
+.options textarea {
+	width: 100%;
+	height: 100px;
+	margin-top: 6px;
+	font-family: monospace;
+	field-sizing: content;
+}
+
+.options .button {
+	display: inline-block;
+	margin-top: 10px;
+	background-color: #0077cc;
+	color: white;
+	padding: 6px 12px;
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 0.9rem;
+	border: none;
+}
+
+.options .command {
+	display: flex;
+	justify-content: space-between;
+	padding: 6px 0;
+}
+
+.options .session {
+	margin-bottom: 1rem;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	padding: 8px;
+	background-color: #fff;
+}
+
+.options .session button.session-action,
+.options .window button.window-action {
+	display: none;
+	margin-left: 5px;
+}
+
+.options .session:hover button.session-action,
+.options .window:hover button.window-action {
+	display: inline-block;
+}
+
+.options .session.session-current:hover button.session-action[data-open-suspended],
+.options .session.session-current:hover button.session-action[data-open-loaded],
+.options .session.session-current:hover button.session-action[data-delete]
+{
+	display: none !important;
+}
+
+.options .session.session-saved:hover button.session-action[data-save]
+{
+	display: none !important;
+}
+
+.options .window {
+	margin-left: 1rem;
+}
+
+.options .window-name {
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	display: flex;
+	align-items: center;
+}
+
+.options .window-name span {
+	font-weight: bold;
+}
+
+.options .window-tab a {
+	display: block;
+	font-size: 0.85rem;
+	margin-left: 1rem;
+}
+
+.options .session-name span {
+	font-weight: 500;
+}
+
+.options .session-header {
+	display: flex;
+	align-items: center;
+}
+
+.options .comment {
+	margin-left: 21px;
+	margin-top: 0.3em;
+	font-size: 0.85em;
+	color: #666;
+	background: #f0f0f0;
+	padding: 0.5em 0.75em;
+	border-left: 3px solid #ccc;
+	border-radius: 4px;
+	white-space: pre-wrap;
+}
+
+.options button.toggle-session,
+.options button.session-action,
+.options button.window-action {
+	display: inline-block;
+	background-color: #0077cc;
+	color: white;
+	padding: 3px 6px;
+	border: none;
+	border-radius: 4px;
+	font-size: 0.8rem;
+	cursor: pointer;
+	margin-right: 8px;
+	vertical-align: middle;
+	line-height: 1;
+}
+
+.options .button:hover:not(:disabled),
+.options button.toggle-session:hover:not(:disabled),
+.options button.session-action:hover:not(:disabled),
+.options button.window-action:hover:not(:disabled) {
+	background-color: #005fa3;
+}
+
+.options .button:disabled,
+.options button.toggle-session:disabled,
+.options button.session-action:disabled,
+.options button.window-action:disabled,
+.options .button[disabled],
+.options button.toggle-session[disabled],
+.options button.session-action[disabled],
+.options button.window-action[disabled]{
+	background-color: #ccc;
+	color: #666;
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: 0.7;
+}
+
+.options button.session-action,
+.options button.window-action {
+	padding: 3px 8px;
+	margin-left: 6px;
+}
+
+.options #extension-id {
+	min-width: 400px;
+}

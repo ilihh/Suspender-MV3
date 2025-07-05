@@ -1,0 +1,134 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Suspend tabs" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Open link in new suspended tab" },
+	"action_open_settings": { "message": "Settings" },
+
+	"action_toggle_suspend_tab": { "message": "Suspend/Unsuspend this tab" },
+	"action_suspend_tab": { "message": "Suspend this tab" },
+	"action_unsuspend_tab": { "message": "Unsuspend this tab" },
+
+	"action_toggle_pause_tab": { "message": "Pause/Unpause suspension of this tab" },
+	"action_pause_tab": { "message": "Pause suspension of this tab" },
+	"action_unpause_tab": { "message": "Unpause suspension of this tab" },
+
+	"action_whitelist_domain": { "message": "Never suspend this domain" },
+	"action_whitelist_url": { "message": "Never suspend this URL" },
+	"action_whitelist_remove": { "message": "Remove from whitelist" },
+
+	"action_suspend_group": { "message": "Suspend current group" },
+	"action_suspend_group_forced": { "message": "Force suspend current group" },
+	"action_unsuspend_group": { "message": "Unsuspend current group" },
+
+	"action_suspend_window": { "message": "Suspend all other tabs in this window" },
+	"action_suspend_window_forced": { "message": "Force suspend all other tabs in this window" },
+	"action_unsuspend_window": { "message": "Unsuspend all tabs in this window" },
+
+	"action_suspend_all": { "message": "Suspend all tabs in all windows" },
+	"action_suspend_all_forced": { "message": "Force suspend all tabs in all windows" },
+	"action_unsuspend_all": { "message": "Unsuspend all tabs in all windows" },
+
+	"tab_status_normal": { "message": "Tab will suspend automatically." },
+	"tab_status_suspended": { "message": "Tab suspended" },
+	"tab_status_disabled": { "message": "Automatic tab suspension disabled." },
+	"tab_status_special": { "message": "Tab cannot be suspended" },
+	"tab_status_whitelist": { "message": "URL is in whitelist." },
+	"tab_status_playing_audio": { "message": "Tab is playing audio." },
+	"tab_status_unsaved_form": { "message": "Tab has unsaved form data." },
+	"tab_status_pinned": { "message": "Tab has been pinned" },
+	"tab_status_suspend_paused": { "message": "Tabs suspension paused." },
+	"tab_status_offline": { "message": "No network connection" },
+	"tab_status_power_connected": { "message": "Connected to power source" },
+	"tab_status_error": { "message": "Auto-suspend unavailable for this tab" },
+
+	"page_suspended_unsuspend": { "message": "Refresh or click to reload" },
+	"page_suspended_shortcuts": { "message": "Set keyboard shortcuts" },
+
+	"page_options_title": { "message": "Suspender MV3: Settings" },
+	"page_options_tab_settings": { "message": "Settings" },
+	"page_options_tab_sessions": { "message": "Sessions" },
+	"page_options_tab_shortcuts": { "message": "Shortcuts" },
+	"page_options_tab_about": { "message": "About" },
+	"page_options_settings": { "message": "Settings" },
+	"page_options_migrate": { "message": "Migrate" },
+
+	"page_options_sessions": { "message": "Sessions" },
+	"page_options_sessions_current": { "message": "Current session:" },
+	"page_options_sessions_previous": { "message": "Previous sessions:" },
+	"page_options_sessions_saved": { "message": "Saved sessions:" },
+	"page_options_sessions_import": { "message": "Import session" },
+
+	"page_options_sessions_window": {
+		"message": "Window #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "open suspended" },
+	"page_options_sessions_open_loaded": { "message": "open loaded" },
+	"page_options_sessions_export": { "message": "export" },
+	"page_options_sessions_save": { "message": "save" },
+	"page_options_sessions_save_prompt": { "message": "Enter session name:" },
+	"page_options_sessions_delete": { "message": "delete" },
+	"page_options_sessions_delete_confirm": { "message": "Are you sure you want to delete this session?" },
+	"page_options_sessions_import_error": { "message": "Failed to load file. File must be plain text and contains a single url per line." },
+
+	"page_options_shortcuts": { "message": "Keyboard shortcuts" },
+	"page_options_shortcuts_change": { "message": "Change shortcuts" },
+	"page_options_about": { "message": "About" },
+
+	"page_options_block_automatic": { "message": "Automatic tab suspension" },
+	"page_options_suspend_delay": { "message": "Automatically suspend tabs after:" },
+	"page_options_suspend_delay_never": { "message": "Never" },
+	"page_options_suspend_delay_5_min": { "message": "5 minutes" },
+	"page_options_suspend_delay_10_min": { "message": "10 minutes" },
+	"page_options_suspend_delay_15_min": { "message": "15 minutes" },
+	"page_options_suspend_delay_30_min": { "message": "30 minutes" },
+	"page_options_suspend_delay_1_hour": { "message": "1 hour" },
+	"page_options_suspend_delay_2_hours": { "message": "2 hours" },
+	"page_options_suspend_delay_4_hours": { "message": "4 hours" },
+	"page_options_suspend_delay_6_hours": { "message": "6 hours" },
+	"page_options_suspend_delay_12_hours": { "message": "12 hours" },
+	"page_options_suspend_delay_1_day": { "message": "1 day" },
+	"page_options_suspend_delay_2_days": { "message": "2 days" },
+	"page_options_suspend_delay_3_days": { "message": "3 days" },
+	"page_options_suspend_delay_1_week": { "message": "1 week" },
+	"page_options_suspend_delay_2_week": { "message": "2 weeks" },
+
+	"page_options_suspend_pinned": { "message": "Suspend pinned tabs" },
+	"page_options_suspend_unsaved_data": { "message": "Suspend tabs that contain unsaved form inputs" },
+	"page_options_suspend_playing_audio": { "message": "Suspend tabs that are playing audio" },
+	"page_options_suspend_offline": { "message": "Suspend tabs when offline" },
+	"page_options_never_suspend_when_power_on": { "message": "Never suspend tabs when connected to power source" },
+	"page_options_white_list": { "message": "Never suspend tabs with URLs from the following list:" },
+	"page_options_white_list_hint": { "message": "Each item on a new line.\nExample:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Suspended tabs" },
+	"page_options_restore_scroll_position": { "message": "Restore scroll position and enable dimmed tabs icons" },
+	"page_options_restore_scroll_permissions": { "message": "Requires permissions to access all URLs and execute scripts." },
+
+	"page_options_maintain_youtube_time": { "message": "Save YouTube timestamps for the tab with video" },
+	"page_options_youtube_permissions": { "message": "Requires permissions to access https://www.youtube.com/watch* and execute scripts." },
+
+	"page_options_discard_tabs": { "message": "Discard tabs instead of suspending" },
+	"page_options_block_other": { "message": "Other" },
+
+	"page_options_enable_context_menu": { "message": "Add to the context menu" },
+	"page_options_cleanup_history": { "message": "Remove suspended pages from history" },
+	"page_options_cleanup_history_permissions": { "message": "Requires history access" },
+	"page_options_export_sessions": { "message": "Sessions export" },
+	"page_options_export_sessions_permissions": { "message": "Requires downloads permissions" },
+	"page_options_sync_profile": { "message": "Sync settings with your Chrome profile" },
+	
+	"page_options_commands_default_description": { "message": "Unnamed" },
+	"page_options_commands_default_shortcut": { "message": "(not set)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Windows: $WINDOWS$; Tabs: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Test" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	}
+}

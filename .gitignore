@@ -1,0 +1,7 @@
+node_modules
+.idea
+dist
+.hgignore
+*.zip
+.hg
+\!info

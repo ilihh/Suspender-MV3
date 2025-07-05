@@ -15,6 +15,11 @@ export function isEnumValue<T extends Record<string, string | number>>(
 	return Object.values(enumObj).includes(value as T[keyof T]);
 }
 
+export function isDataImage(icon: string): boolean
+{
+	return icon.startsWith('data:image/');
+}
+
 export async function getSuspendedIcon(icon: string): Promise<string>
 {
 	return new Promise((resolve, reject) => {
@@ -46,8 +51,7 @@ export async function getSuspendedIcon(icon: string): Promise<string>
 		}
 
 		img.crossOrigin = 'anonymous';
-		img.src = icon; // https://www.google.com/s2/favicons?sz=32&domain=developer.mozilla.org
-		// Access to image at 'https://www.google.com/s2/favicons?sz=32&domain=developer.mozilla.org' from origin 'chrome-extension://lamlpgknhdkcopbgpheohmcggbdemfck' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+		img.src = icon;
 	});
 }
 

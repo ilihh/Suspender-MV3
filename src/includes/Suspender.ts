@@ -1,10 +1,12 @@
 import { SuspendedURL } from './SuspendedURL';
-import { PAGE, TAB_STATUS, TABS_QUERY_AUTO, TABS_QUERY_BASE } from './constants';
+import { PAGE, SUSPEND_MODE, TAB_STATUS, TABS_QUERY_AUTO, TABS_QUERY_BASE } from './constants';
 import { Configuration } from './Configuration';
 import { DeviceStatus } from './DeviceStatus';
 import { TabInfo } from './TabInfo';
 import { ScrollPositions } from './ScrollPositions';
 import { SessionWindow } from './Sessions';
+import { isValidTab, ValidTab } from './ValidTab';
+
 
 export class Suspender
 {
@@ -14,13 +16,20 @@ export class Suspender
 	private readonly device: DeviceStatus;
 	private readonly filesSchemeAllowed: boolean = false;
 
-	public constructor(config: Configuration, device: DeviceStatus, files_allowed: boolean)
+	public constructor(config: Configuration, device: DeviceStatus, filesSchemeAllowed: boolean)
 	{
 		this.config = config;
 		this.timeToSuspend = (new Date()).getTime() - (this.config.suspendDelay * 60 * 1000);
 		this.suspendedUrl = chrome.runtime.getURL(PAGE.Suspended);
 		this.device = device;
-		this.filesSchemeAllowed = files_allowed;
+		this.filesSchemeAllowed = filesSchemeAllowed;
+	}
+
+	public static async create(config: Configuration): Promise<Suspender>
+	{
+		const files_allowed = await chrome.extension.isAllowedFileSchemeAccess();
+		const device = await DeviceStatus.get();
+		return new Suspender(config, device, files_allowed);
 	}
 
 	private query(): chrome.tabs.QueryInfo
@@ -56,69 +65,59 @@ export class Suspender
 		this.suspendTabs(tabs);
 	}
 
-	public suspendTabs(tabs: chrome.tabs.Tab[], force: boolean = false): void
+	public suspendTabs(tabs: chrome.tabs.Tab[], mode: SUSPEND_MODE = SUSPEND_MODE.Auto): void
 	{
 		for (const tab of tabs)
 		{
-			if (force || this.canSuspend(tab))
+			if (isValidTab(tab) && this.canSuspend(tab, mode))
 			{
 				const _ = this.suspend(tab);
 			}
 		}
 	}
 
-	public async suspendGroup(tab_id: number, force: boolean = false): Promise<void>
+	public async suspendGroup(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tab_id);
+		const tab = await chrome.tabs.get(tabId);
 		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
 			: await this.getTabs({groupId: tab.groupId,});
-		this.suspendTabs(tabs, force);
+		this.suspendTabs(tabs, mode);
 	}
 
-	public async unsuspendGroup(tab_id: number): Promise<void>
+	public async unsuspendGroup(tabId: number): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tab_id);
+		const tab = await chrome.tabs.get(tabId);
 		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
 			: await this.getTabs({groupId: tab.groupId,});
 		this.unsuspendTabs(tabs);
 	}
 
-	public async suspendWindow(tab_id: number, force: boolean = false): Promise<void>
+	public async suspendWindow(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tab_id);
-		const tabs = (await this.getTabs({windowId: tab.windowId,})).filter(x => x.id !== tab_id);
-		this.suspendTabs(tabs, force);
+		const tab = await chrome.tabs.get(tabId);
+		const tabs = (await this.getTabs({windowId: tab.windowId,})).filter(x => x.id !== tabId);
+		this.suspendTabs(tabs, mode);
 	}
 
-	public async unsuspendWindow(tab_id: number): Promise<void>
+	public async unsuspendWindow(tabId: number): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tab_id);
+		const tab = await chrome.tabs.get(tabId);
 		const tabs = await this.getTabs({windowId: tab.windowId,});
 		this.unsuspendTabs(tabs);
 	}
 
-	public async suspendAll(force: boolean = false): Promise<void>
+	public async suspendAll(mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
 		const tabs = await this.getTabs();
-		this.suspendTabs(tabs, force);
+		this.suspendTabs(tabs, mode);
 	}
 
 	public async unsuspendAll(): Promise<void>
 	{
 		const tabs = await this.getTabs();
-		this.unsuspendTabs(tabs);
-	}
-
-	private canSuspendMinimal(tab: chrome.tabs.Tab): boolean
-	{
-		if ((tab.id === undefined) || (tab.url === undefined))
-		{
-			return false;
-		}
-
-		return this.isSuspendableUrl(tab.url);
+		await this.unsuspendTabs(tabs);
 	}
 
 	private isSuspendableUrl(url: string): boolean
@@ -128,35 +127,35 @@ export class Suspender
 			|| (this.filesSchemeAllowed && url.startsWith('file://'));
 	}
 
-	private canSuspend(tab: chrome.tabs.Tab): boolean
+	private canSuspend(tab: ValidTab, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): boolean
 	{
-		return (this.getTabStatus(tab) === TAB_STATUS.Normal)
-			&& (tab.lastAccessed !== undefined)
-			&& (tab.lastAccessed < this.timeToSuspend);
+		switch (mode)
+		{
+			case SUSPEND_MODE.Auto:
+				return (this.getTabStatus(tab) === TAB_STATUS.Normal)
+					&& (tab.lastAccessed !== undefined)
+					&& (tab.lastAccessed < this.timeToSuspend);
+			case SUSPEND_MODE.Normal:
+				return this.getTabStatus(tab) === TAB_STATUS.Normal;
+			case SUSPEND_MODE.Forced:
+				return true;
+			default:
+				return false;
+		}
 	}
 
-	private hasUnsavedData(tab: chrome.tabs.Tab): boolean
+	private hasUnsavedData(tab: ValidTab): boolean
 	{
 		return false;
 	}
 
-	public isSuspended(tab: chrome.tabs.Tab): boolean
+	public isSuspended(tab: ValidTab): boolean
 	{
-		if ((tab.id === undefined) || (tab.url === undefined))
-		{
-			return false;
-		}
-
 		return tab.url.startsWith(this.suspendedUrl);
 	}
 
-	public async suspendToggle(tab: chrome.tabs.Tab): Promise<chrome.tabs.Tab | undefined>
+	public async suspendToggle(tab: ValidTab): Promise<chrome.tabs.Tab | undefined>
 	{
-		if ((tab.id === undefined) || (tab.url === undefined))
-		{
-			return;
-		}
-
 		if (this.isSuspended(tab))
 		{
 			return this.unsuspend(tab)
@@ -167,9 +166,9 @@ export class Suspender
 		}
 	}
 
-	public async suspend(tab: chrome.tabs.Tab): Promise<chrome.tabs.Tab | undefined>
+	public async suspend(tab: ValidTab): Promise<chrome.tabs.Tab | undefined>
 	{
-		if ((tab.id === undefined) || (tab.url === undefined) || !this.canSuspendMinimal(tab))
+		if (!this.isSuspendableUrl(tab.url))
 		{
 			return undefined;
 		}
@@ -185,25 +184,35 @@ export class Suspender
 		}
 	}
 
-	private suspendTab(tab_id: number, url: SuspendedURL): Promise<chrome.tabs.Tab | undefined>
+	private async suspendTab(tabId: number, url: SuspendedURL): Promise<chrome.tabs.Tab | undefined>
 	{
-		return chrome.tabs.update(tab_id, {
+		const tab = await chrome.tabs.update(tabId, {
 			url: url.toString(),
 			autoDiscardable: false,
 		});
+
+		if (isValidTab(tab))
+		{
+			await this.updateTabActionIcon(tab);
+		}
+
+		return tab;
 	}
 
-	public unsuspendTabs(tabs: chrome.tabs.Tab[]): void
+	public async unsuspendTabs(tabs: chrome.tabs.Tab[]): Promise<void>
 	{
 		for (const tab of tabs)
 		{
-			const _ = this.unsuspend(tab);
+			if (isValidTab(tab))
+			{
+				await this.unsuspend(tab);
+			}
 		}
 	}
 
-	public async unsuspend(tab: chrome.tabs.Tab): Promise<chrome.tabs.Tab | undefined>
+	public async unsuspend(tab: ValidTab): Promise<chrome.tabs.Tab | undefined>
 	{
-		if ((tab.id === undefined) || (tab.url === undefined) || !this.isSuspended(tab))
+		if (!this.isSuspended(tab))
 		{
 			return;
 		}
@@ -217,15 +226,22 @@ export class Suspender
 		}
 
 		(await ScrollPositions.load()).set(tab.id, original.scrollPosition);
-		return chrome.tabs.update(tab.id, {
+		const updated_tab = await chrome.tabs.update(tab.id, {
 			url: original.uri,
 		});
+
+		if (isValidTab(updated_tab))
+		{
+			await this.updateTabActionIcon(updated_tab);
+		}
+
+		return updated_tab;
 	}
 
-	private async cleanupHistory(suspended_url: string, original_url: string)
+	private async cleanupHistory(suspendedUrl: string, originalUrl: string)
 	{
-		const _ = chrome.history.deleteUrl({url: suspended_url});
-		const visits = await chrome.history.getVisits({url: original_url});
+		const _ = chrome.history.deleteUrl({url: suspendedUrl});
+		const visits = await chrome.history.getVisits({url: originalUrl});
 
 		const latestVisit = visits.pop();
 		const previousVisit = visits.pop();
@@ -243,14 +259,9 @@ export class Suspender
 		}
 	}
 
-	private async getTabSuspendedUrl(tab: chrome.tabs.Tab): Promise<SuspendedURL>
+	private async getTabSuspendedUrl(tab: ValidTab): Promise<SuspendedURL>
 	{
-		if (tab.url === undefined)
-		{
-			return new SuspendedURL();
-		}
-
-		const data = new SuspendedURL(tab.url || '', tab.title || '', 0, tab.favIconUrl !== undefined ? tab.favIconUrl : '');
+		const data = new SuspendedURL(tab.url, tab.title || '', 0, tab.favIconUrl !== undefined ? tab.favIconUrl : '');
 		if (this.config.restoreScrollPosition || this.config.maintainYoutubeTime)
 		{
 			const request_time = this.config.maintainYoutubeTime && tab.url.startsWith('https://www.youtube.com/watch');
@@ -269,9 +280,9 @@ export class Suspender
 		return data;
 	}
 
-	public getTabStatus(tab: chrome.tabs.Tab): TAB_STATUS
+	public getTabStatus(tab: ValidTab): TAB_STATUS
 	{
-		if ((tab.id === undefined) || (tab.url === undefined))
+		if (!isValidTab(tab))
 		{
 			return TAB_STATUS.Error;
 		}
@@ -281,7 +292,7 @@ export class Suspender
 			return TAB_STATUS.Suspended;
 		}
 
-		if (!this.canSuspendMinimal(tab))
+		if (!this.isSuspendableUrl(tab.url))
 		{
 			return TAB_STATUS.Special;
 		}
@@ -347,7 +358,7 @@ export class Suspender
 		for (const tab of extension_tabs)
 		{
 			const url = SuspendedURL.fromSuspendedUrl(tab.url ?? '');
-			if ((tab.id === undefined) || (url.uri === ''))
+			if (!isValidTab(tab) || (url.uri === ''))
 			{
 				continue;
 			}
@@ -404,5 +415,45 @@ export class Suspender
 		{
 			await this.openWindow(window, suspend);
 		}
+	}
+
+	public async reloadTabs(): Promise<void>
+	{
+		const windows = await chrome.windows.getAll({ populate: true, });
+
+		for (const window of windows)
+		{
+			if (window.tabs === undefined)
+			{
+				continue;
+			}
+
+			for (const tab of window.tabs)
+			{
+				if ((tab.favIconUrl === '') && isValidTab(tab) && this.isSuspended(tab))
+				{
+					const s = SuspendedURL.fromSuspendedUrl(tab.url);
+					s.update = true;
+					await this.suspendTab(tab.id, s);
+				}
+			}
+		}
+	}
+
+	public updateTabActionIcon(tab: ValidTab): Promise<void>
+	{
+		const suffix = this.getTabStatus(tab) === TAB_STATUS.Normal
+			? ''
+			: 'off';
+
+		return chrome.action.setIcon({
+			path: {
+				'16': `img/16${suffix}.png`,
+				'32': `img/32${suffix}.png`,
+				'48': `img/48${suffix}.png`,
+				'128': `img/128${suffix}.png`,
+			},
+			tabId: tab.id,
+		});
 	}
 }

@@ -33,7 +33,22 @@ export class Sessions
 	public static async updateRecent(): Promise<void>
 	{
 		const sessions = await Sessions.load();
-		sessions.recent.push(await Session.loadBackup());
+		const backup = await Session.loadBackup();
+		if (backup.windows === 0)
+		{
+			return;
+		}
+
+		const last_recent: string = sessions.recent.length === 0
+			? ''
+			: sessions.recent[sessions.recent.length - 1].data;
+
+		if (last_recent === backup.data)
+		{
+			return;
+		}
+
+		sessions.recent.push(backup);
 		if (sessions.recent.length > Sessions.recentLimit)
 		{
 			sessions.recent = sessions.recent.slice(sessions.recent.length - Sessions.recentLimit, Sessions.recentLimit);
@@ -113,6 +128,11 @@ export class Session
 
 	public save(): void
 	{
+		if (this.windows === 0)
+		{
+			return;
+		}
+
 		DataStorage.save(Session._key, this);
 	}
 

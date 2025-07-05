@@ -58,6 +58,7 @@ export enum MESSAGE
 
 	// internal
 	BatteryStatus = 'battery_status',
+	ConfigurationChanged = 'configuration_changed',
 
 	// options
 	OpenShortcuts = 'open_shortcuts',
@@ -82,4 +83,11 @@ export enum TAB_STATUS {
 	Offline = 'offline', // is offline
 	PowerConnected = 'power_connected', // power connected = not working from battery
 	Error = 'error',
+}
+
+export enum SUSPEND_MODE
+{
+	Auto = 0,
+	Normal = 1,
+	Forced = 2,
 }

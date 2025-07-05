@@ -27,6 +27,9 @@ export class DeviceStatus
 			target: MESSAGE_TARGET.Offscreen,
 		});
 
-		return new DeviceStatus(navigator.onLine, battery.data ?? true);
+		const b = battery !== undefined
+			? (battery?.data ?? true)
+			: true;
+		return new DeviceStatus(navigator.onLine, b);
 	}
 }

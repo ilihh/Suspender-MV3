@@ -56,7 +56,7 @@
 
 	"page_options_sessions": { "message": "Sessions" },
 	"page_options_sessions_current": { "message": "Current session:" },
-	"page_options_sessions_previous": { "message": "Previous sessions:" },
+	"page_options_sessions_recent": { "message": "Recent sessions:" },
 	"page_options_sessions_saved": { "message": "Saved sessions:" },
 	"page_options_sessions_import": { "message": "Import session" },
 

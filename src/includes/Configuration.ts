@@ -1,8 +1,8 @@
 import { DeviceStatus } from './DeviceStatus';
-import { createContextMenu } from './context_menu';
+import { ContextMenu } from './ContextMenu';
 import { DataStorage } from './DataStorage';
+import { ValidTab } from './ValidTab';
 
-// Settings
 export class Configuration
 {
 	public static liteVersion: boolean = false;
@@ -44,7 +44,7 @@ export class Configuration
 
 	public autoSuspend(): boolean
 	{
-		return this.suspendDelay === 0;
+		return this.suspendDelay > 0;
 	}
 
 	public enableDimmedIcons(): boolean
@@ -54,11 +54,7 @@ export class Configuration
 
 	public async init(): Promise<void>
 	{
-		const _ = await chrome.contextMenus.removeAll();
-		if (this.enableContextMenu)
-		{
-			createContextMenu();
-		}
+		return ContextMenu.create(this.enableContextMenu);
 	}
 
 	public alarmConfig(): chrome.alarms.AlarmCreateInfo
@@ -91,20 +87,20 @@ export class Configuration
 		this.save();
 	}
 
-	public isPausedTab(tab_id: number): boolean
+	public isPausedTab(tabId: number): boolean
 	{
-		return this.pausedTabsIds.indexOf(tab_id, 0) > -1;
+		return this.pausedTabsIds.indexOf(tabId, 0) > -1;
 	}
 
-	public pauseTab(tab_id: number): void
+	public pauseTab(tabId: number): void
 	{
-		this.pausedTabsIds.push(tab_id);
+		this.pausedTabsIds.push(tabId);
 		this.save();
 	}
 
-	public unpauseTab(tab_id: number): void
+	public unpauseTab(tabId: number): void
 	{
-		const index = this.pausedTabsIds.indexOf(tab_id, 0);
+		const index = this.pausedTabsIds.indexOf(tabId, 0);
 		if (index > -1)
 		{
 			this.pausedTabsIds.splice(index, 1);
@@ -112,36 +108,26 @@ export class Configuration
 		}
 	}
 
-	public togglePauseTab(tab_id: number): void
+	public togglePauseTab(tabId: number): void
 	{
-		if (this.isPausedTab(tab_id))
+		if (this.isPausedTab(tabId))
 		{
-			this.unpauseTab(tab_id);
+			this.unpauseTab(tabId);
 		}
 		else
 		{
-			this.pauseTab(tab_id);
+			this.pauseTab(tabId);
 		}
 	}
 
-	public whitelistDomain(tab: chrome.tabs.Tab): void
+	public whitelistDomain(tab: ValidTab): void
 	{
-		if (tab.url === undefined)
-		{
-			return;
-		}
-
 		const url = new URL(tab.url);
 		this.addWhiteList(url.host);
 	}
 
-	public whitelistUrl(tab: chrome.tabs.Tab): void
+	public whitelistUrl(tab: ValidTab): void
 	{
-		if (tab.url === undefined)
-		{
-			return;
-		}
-
 		const url = new URL(tab.url);
 		this.addWhiteList(url.host + url.pathname);
 	}
@@ -156,13 +142,8 @@ export class Configuration
 		this.save();
 	}
 
-	public inWhiteList(tab: chrome.tabs.Tab): boolean
+	public inWhiteList(tab: ValidTab): boolean
 	{
-		if (tab.url === undefined)
-		{
-			return false;
-		}
-
 		const url = new URL(tab.url);
 		const base_url = url.host + url.pathname;
 		for (const path of this.whiteList)
@@ -181,13 +162,8 @@ export class Configuration
 		return false;
 	}
 
-	public whiteListRemove(tab: chrome.tabs.Tab): void
+	public whiteListRemove(tab: ValidTab): void
 	{
-		if (tab.url === undefined)
-		{
-			return;
-		}
-
 		const url = new URL(tab.url);
 		const base_url = url.host + url.pathname;
 		this.whiteList = this.whiteList.filter(x => !base_url.includes(x));

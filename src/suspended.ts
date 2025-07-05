@@ -1,12 +1,12 @@
 import { SuspendedURL } from './includes/SuspendedURL';
 import { MESSAGE } from './includes/constants';
 import { Messenger } from './includes/Messenger';
-import { getSuspendedIcon, isHTMLElement, setInnerText, i18n } from './includes/functions';
-import {Configuration} from "./includes/Configuration";
+import { getSuspendedIcon, isHTMLElement, setInnerText, i18n, isDataImage } from './includes/functions';
+import { Configuration } from './includes/Configuration';
 
 function unsuspend_page()
 {
-	const _ = Messenger.action(MESSAGE.UnsuspendTab);
+	const _ = Messenger.action<void>(MESSAGE.UnsuspendTab);
 }
 
 async function init()
@@ -17,7 +17,15 @@ async function init()
 	const [navigationEntry] = performance.getEntriesByType('navigation');
 	if (('type' in navigationEntry) && (navigationEntry.type === 'reload'))
 	{
-		unsuspend_page();
+		if (info.update)
+		{
+			info.update = false;
+			document.location.hash = info.hash;
+		}
+		else
+		{
+			unsuspend_page();
+		}
 	}
 
 	i18n(document);
@@ -42,7 +50,9 @@ async function init()
 		const icon = info.getIcon(img_icon.src);
 
 		img_icon.src = icon;
-		link_icon.href = config.enableDimmedIcons() ? await getSuspendedIcon(icon) : icon;
+		link_icon.href = config.enableDimmedIcons() || isDataImage(icon)
+			? await getSuspendedIcon(icon)
+			: icon;
 	}
 
 	const shortcuts = document.getElementById('shortcuts');

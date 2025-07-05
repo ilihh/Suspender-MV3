@@ -1,3 +1,5 @@
+import { ValidTab } from './ValidTab';
+
 export class TabInfo
 {
 	public scrollPosition: number;
@@ -9,21 +11,13 @@ export class TabInfo
 		this.time = time;
 	}
 
-	public static async get(tab: chrome.tabs.Tab, request_time: boolean): Promise<TabInfo>
+	public static async get(tab: ValidTab, request_time: boolean): Promise<TabInfo>
 	{
-		if (tab.id === undefined)
-		{
-			return new TabInfo();
-		}
-
 		const func = request_time
 			? () => {
 				const video = document.querySelector('video.video-stream.html5-main-video') as HTMLVideoElement|null;
-				alert(video);
 				const seconds = video !== null ? Math.floor(video.currentTime) : null;
-				alert(seconds);
 				const scroll_position = (document.documentElement || document.body || {}).scrollTop || 0;
-				alert(scroll_position);
 				return {
 					scrollPosition: Math.floor(scroll_position),
 					time: seconds,

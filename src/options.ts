@@ -1,10 +1,15 @@
-import {Session, Sessions, SessionWindow} from './includes/Sessions';
+import { Session, Sessions, SessionWindow } from './includes/Sessions';
 import { Configuration } from './includes/Configuration';
-import {i18n, isHTMLElement, setInnerText} from './includes/functions';
-import { Messenger } from './includes/Messenger';
+import { i18n, isHTMLElement, setInnerText } from './includes/functions';
+import {Messenger, Request} from './includes/Messenger';
 import { MESSAGE } from './includes/constants';
 
 type Keys<T extends object, TValue> = keyof Pick<T, { [K in keyof T]: T[K] extends TValue ? K : never }[keyof T]>;
+
+function isKey<T extends object>(obj: T, key: PropertyKey): key is keyof T
+{
+	return Object.prototype.hasOwnProperty.call(obj, key);
+}
 
 function isBooleanKey<T extends object>(obj: T, key: keyof T): key is Keys<T, boolean>
 {
@@ -49,10 +54,15 @@ class ConfigUI
 		permissions: ['downloads'],
 	};
 
+	private readonly inputs: NodeListOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
+
 	public constructor(root: HTMLElement, config: Configuration)
 	{
 		this.root = root;
 		this.config = config;
+
+		const query = '.options-block[data-config] input[id], .options-block[data-config] select[id], .options-block[data-config] textarea[id]';
+		this.inputs = this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query);
 		this.init();
 	}
 
@@ -63,12 +73,29 @@ class ConfigUI
 			this.root.querySelectorAll('[data-lite-version-disabled]').forEach(el => el.classList.add('hidden'));
 		}
 
-		const query = '.options-block[data-config] input[id], .options-block[data-config] select[id], .options-block[data-config] textarea[id]';
-		const elements = this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query);
+		this.setValues();
+		this.setListeners();
 
-		elements.forEach(el => {
-			const key = el.id as keyof Configuration;
-			if (!(key in this.config))
+		chrome.runtime.onMessage.addListener((request: Request, sender: chrome.runtime.MessageSender, sendResponse: (response: any) => void) => {
+			if (request.action === MESSAGE.ConfigurationChanged)
+			{
+				this.updateConfig();
+			}
+		});
+	}
+
+	private async updateConfig(): Promise<void>
+	{
+		const updated = await Configuration.load();
+		Object.assign(this.config, updated);
+		this.setValues();
+	}
+
+	private setValues(): void
+	{
+		this.inputs.forEach(el => {
+			const key = el.id;
+			if (!isKey(this.config, key))
 			{
 				alert('Unknown field:' + key);
 				return;
@@ -77,16 +104,38 @@ class ConfigUI
 			if (el instanceof HTMLInputElement && el.type === 'checkbox' && isBooleanKey<Configuration>(this.config, key))
 			{
 				el.checked = this.config[key];
-				el.addEventListener('input', ev => this.onCheckboxInput(ev, el, key));
 			}
 			else if (el instanceof HTMLSelectElement && isNumberKey<Configuration>(this.config, key))
 			{
 				el.value = this.config[key].toString();
-				el.addEventListener('input', ev => this.onSelectInput(ev, el, key));
 			}
 			else if (el instanceof HTMLTextAreaElement && isArrayKey<Configuration>(this.config, key))
 			{
 				el.value = (this.config[key] as string[]).join('\n');
+			}
+		});
+	}
+
+	private setListeners(): void
+	{
+		this.inputs.forEach(el => {
+			const key = el.id;
+			if (!isKey(this.config, key))
+			{
+				alert('Unknown field:' + key);
+				return;
+			}
+
+			if (el instanceof HTMLInputElement && el.type === 'checkbox' && isBooleanKey<Configuration>(this.config, key))
+			{
+				el.addEventListener('input', ev => this.onCheckboxInput(ev, el, key));
+			}
+			else if (el instanceof HTMLSelectElement && isNumberKey<Configuration>(this.config, key))
+			{
+				el.addEventListener('input', ev => this.onSelectInput(ev, el, key));
+			}
+			else if (el instanceof HTMLTextAreaElement && isArrayKey<Configuration>(this.config, key))
+			{
 				el.addEventListener('input', ev => this.onTextareaInput(ev, el, key));
 			}
 		});
@@ -169,7 +218,7 @@ class ShortcutsUI
 		const open_shortcuts = this.root.querySelector('a')!;
 		open_shortcuts.addEventListener('click', ev =>{
 			ev.preventDefault();
-			Messenger.action(MESSAGE.OpenShortcuts);
+			Messenger.action<void>(MESSAGE.OpenShortcuts);
 		});
 	}
 }

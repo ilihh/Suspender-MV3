@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_manifest_name__",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "__MSG_manifest_description__",
   "permissions": ["storage", "tabs", "favicon", "alarms", "contextMenus", "offscreen"],
   "optional_permissions": [
@@ -28,15 +28,15 @@
   "default_locale": "en",
   "action": {
     "default_title": "__MSG_manifest_action__",
-    "default_icon": "img/48dark.png",
+    "default_icon": "img/48.png",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
   "icons": {
-    "16": "img/16dark.png",
-    "32": "img/32dark.png",
-    "48": "img/48dark.png",
-    "128": "img/128dark.png"
+    "16": "img/16.png",
+    "32": "img/32.png",
+    "48": "img/48.png",
+    "128": "img/128.png"
   },
   "commands": {
     "toggle_suspend_tab": {

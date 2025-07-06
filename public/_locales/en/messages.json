@@ -71,6 +71,7 @@
 	"page_options_sessions_export": { "message": "export" },
 	"page_options_sessions_save": { "message": "save" },
 	"page_options_sessions_save_prompt": { "message": "Enter session name:" },
+	"page_options_sessions_rename": { "message": "rename" },
 	"page_options_sessions_delete": { "message": "delete" },
 	"page_options_sessions_delete_confirm": { "message": "Are you sure you want to delete this session?" },
 	"page_options_sessions_import_error": { "message": "Failed to load file. File must be plain text and contains a single url per line." },

@@ -15,13 +15,27 @@ export function isEnumValue<T extends Record<string, string | number>>(
 	return Object.values(enumObj).includes(value as T[keyof T]);
 }
 
-export function isDataImage(icon: string): boolean
+export async function canDimIcon(icon: string): Promise<boolean>
 {
-	return icon.startsWith('data:image/');
+	// can dim own icons and data image
+	if (icon.startsWith('img/') || icon.startsWith('data:image/'))
+	{
+		return true;
+	}
+
+	const permissions: chrome.permissions.Permissions = {
+		origins: [icon],
+	};
+	return await chrome.permissions.contains(permissions);
 }
 
-export async function getSuspendedIcon(icon: string): Promise<string>
+export async function getDimmedIcon(icon: string): Promise<string>
 {
+	if (!await canDimIcon(icon))
+	{
+		return icon;
+	}
+
 	return new Promise((resolve, reject) => {
 		const img = document.createElement('img');
 		img.onload = () => {

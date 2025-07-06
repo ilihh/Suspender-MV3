@@ -139,6 +139,7 @@
 				<button type="button" data-open-loaded class="session-action" data-i18n="page_options_sessions_open_loaded">open loaded</button>
 				<button type="button" data-export class="session-action" data-i18n="page_options_sessions_export">export</button>
 				<button type="button" data-save class="session-action" data-i18n="page_options_sessions_save">save</button>
+				<button type="button" data-rename class="session-action" data-i18n="page_options_sessions_rename">rename</button>
 				<button type="button" data-delete class="session-action" data-i18n="page_options_sessions_delete">delete</button>
 			</div>
 
@@ -179,11 +180,17 @@
 </div>
 
 <div class="tab" id="migrate">
-	<h1 data-i18n="page_options_migrate">About</h1>
+	<h1 data-i18n="page_options_migrate">Migrate</h1>
 
 	<div class="options-block">
 		<input type="text" id="extension-id" placeholder="Extension ID" />
 		<button type="button" class="button" disabled id="extension-migrate" data-i18n="page_options_migrate">Migrate tabs</button>
+
+		<div class="comment">
+			Enter 32 symbols of the other extension ID.<br>
+			You can get the ID from the URL of the suspended page.<br>
+			For example, url <code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code> has extension ID <b>liekplgjlphohhlnfaibkdjindpnfimg</b>.
+		</div>
 	</div>
 </div>
 

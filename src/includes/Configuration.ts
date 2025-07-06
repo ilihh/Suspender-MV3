@@ -2,10 +2,11 @@ import { DeviceStatus } from './DeviceStatus';
 import { ContextMenu } from './ContextMenu';
 import { DataStorage } from './DataStorage';
 import { ValidTab } from './ValidTab';
+import { FAVICON_MODE } from './constants';
 
 export class Configuration
 {
-	public static liteVersion: boolean = false;
+	public version: number = 1;
 
 	// alarm timer, in minutes, hidden, not editable by user
 	public timer: number = 3;
@@ -27,6 +28,8 @@ export class Configuration
 	public restoreScrollPosition: boolean = false;
 
 	public maintainYoutubeTime: boolean = false;
+
+	public faviconsMode: FAVICON_MODE = FAVICON_MODE.NoDim;
 
 	public discardTabs: boolean = false;
 
@@ -175,13 +178,17 @@ export class Configuration
 	public static async load(): Promise<Configuration>
 	{
 		const config = await DataStorage.load(Configuration._key, Configuration);
-		if (Configuration.liteVersion)
-		{
-			config.restoreScrollPosition = false;
-			config.maintainYoutubeTime = false;
-		}
-
+		config.upgradeVersion();
 		return config;
+	}
+
+	private upgradeVersion(): void
+	{
+		if (this.version === 1)
+		{
+			this.faviconsMode = this.restoreScrollPosition ? FAVICON_MODE.Actual : FAVICON_MODE.NoDim;
+			this.version = 2;
+		}
 	}
 
 	public save(): void

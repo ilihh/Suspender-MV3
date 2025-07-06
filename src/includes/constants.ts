@@ -91,3 +91,15 @@ export enum SUSPEND_MODE
 	Normal = 1,
 	Forced = 2,
 }
+
+export enum FAVICON_MODE
+{
+	// show actual icon, not dimmed
+	NoDim = 'no_dim',
+
+	// show icon from google, dimmed, requires access to the google.com
+	Google = 'google',
+
+	// show actual icon, dimmed, requires access to the google.com
+	Actual = 'actual',
+}

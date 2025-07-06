@@ -1,7 +1,7 @@
 import { SuspendedURL } from './includes/SuspendedURL';
-import { MESSAGE } from './includes/constants';
+import {FAVICON_MODE, MESSAGE} from './includes/constants';
 import { Messenger } from './includes/Messenger';
-import { getSuspendedIcon, isHTMLElement, setInnerText, i18n, isDataImage } from './includes/functions';
+import { getDimmedIcon, isHTMLElement, setInnerText, i18n } from './includes/functions';
 import { Configuration } from './includes/Configuration';
 
 function unsuspend_page()
@@ -31,11 +31,15 @@ async function init()
 	i18n(document);
 
 	document.title = info.title;
-
 	setInnerText(document.getElementById('title'), info.title);
 
 	const u = new URL(info.uri);
-	setInnerText(document.getElementById('url'), u.host + (u.pathname !== '/' ? u.pathname : ''));
+	const url_el = document.getElementById('url');
+	if (isHTMLElement<HTMLAnchorElement>(url_el))
+	{
+		url_el.innerText = u.host + (u.pathname !== '/' ? u.pathname : '');
+		url_el.href = info.uri;
+	}
 
 	const unsuspend = document.getElementById('suspended');
 	if (unsuspend !== null)
@@ -43,22 +47,25 @@ async function init()
 		unsuspend.addEventListener('click', () => unsuspend_page());
 	}
 
-	const img_icon = document.getElementById('favicon');
-	const link_icon = document.getElementById('favicon-url');
-	if (isHTMLElement<HTMLImageElement>(img_icon) && isHTMLElement<HTMLLinkElement>(link_icon))
-	{
-		const icon = info.getIcon(img_icon.src);
-
-		img_icon.src = icon;
-		link_icon.href = config.enableDimmedIcons() || isDataImage(icon)
-			? await getSuspendedIcon(icon)
-			: icon;
-	}
-
 	const shortcuts = document.getElementById('shortcuts');
 	if (isHTMLElement<HTMLAnchorElement>(shortcuts))
 	{
 		shortcuts.href = chrome.runtime.getURL(shortcuts.href);
+	}
+
+	const _ = setIcons(info, config);
+}
+
+async function setIcons(info: SuspendedURL, config: Configuration)
+{
+	const img_icon = document.getElementById('favicon');
+	const link_icon = document.getElementById('favicon-url');
+	if (isHTMLElement<HTMLImageElement>(img_icon) && isHTMLElement<HTMLLinkElement>(link_icon))
+	{
+		const icon = info.getIcon(config.faviconsMode, img_icon.src);
+
+		img_icon.src = icon;
+		link_icon.href = await getDimmedIcon(icon);
 	}
 }
 

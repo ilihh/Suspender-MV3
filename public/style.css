@@ -23,7 +23,7 @@ body.suspended {
 	padding: 0;
 	background-color: #f9f9fb;
 	font-family: system-ui, sans-serif;
-	color: #333;
+	color: #777;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -197,7 +197,7 @@ body.options {
 
 .options .tab {
 	display: none;
-	max-width: 800px;
+	max-width: 900px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -288,6 +288,7 @@ body.options {
 
 .options .session.session-current:hover button.session-action[data-open-suspended],
 .options .session.session-current:hover button.session-action[data-open-loaded],
+.options .session.session-current:hover button.session-action[data-rename],
 .options .session.session-current:hover button.session-action[data-delete]
 {
 	display: none !important;

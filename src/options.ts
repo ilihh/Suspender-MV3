@@ -31,10 +31,28 @@ function clone(source: HTMLTemplateElement): HTMLElement
 	return (source.content.cloneNode(true) as DocumentFragment).firstElementChild as HTMLElement;
 }
 
+class OptionWrapper
+{
+	input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+	setter: () => void;
+	listener: (ev: Event) => void;
+
+	constructor(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, setter: () => void, listener: (ev: Event) => void)
+	{
+		this.input = input;
+		this.setter = setter;
+		this.listener = listener;
+
+		this.setter();
+		this.input.addEventListener('input', this.listener);
+	}
+}
+
 class ConfigUI
 {
 	private readonly config: Configuration;
 	private readonly root: HTMLElement;
+	private readonly options: OptionWrapper[] = [];
 
 	private readonly youtubePermissions: chrome.permissions.Permissions = {
 		permissions: ['scripting'],
@@ -68,13 +86,7 @@ class ConfigUI
 
 	private init(): void
 	{
-		if (Configuration.liteVersion)
-		{
-			this.root.querySelectorAll('[data-lite-version-disabled]').forEach(el => el.classList.add('hidden'));
-		}
-
-		this.setValues();
-		this.setListeners();
+		this.createOptions();
 
 		chrome.runtime.onMessage.addListener((request: Request, sender: chrome.runtime.MessageSender, sendResponse: (response: any) => void) => {
 			if (request.action === MESSAGE.ConfigurationChanged)
@@ -88,10 +100,14 @@ class ConfigUI
 	{
 		const updated = await Configuration.load();
 		Object.assign(this.config, updated);
-		this.setValues();
+
+		for (const option of this.options)
+		{
+			option.setter();
+		}
 	}
 
-	private setValues(): void
+	private createOptions(): void
 	{
 		this.inputs.forEach(el => {
 			const key = el.id;
@@ -103,40 +119,27 @@ class ConfigUI
 
 			if (el instanceof HTMLInputElement && el.type === 'checkbox' && isBooleanKey<Configuration>(this.config, key))
 			{
-				el.checked = this.config[key];
+				this.options.push(new OptionWrapper(
+					el,
+					() => el.checked = this.config[key],
+					ev => this.onCheckboxInput(ev, el, key),
+				));
 			}
 			else if (el instanceof HTMLSelectElement && isNumberKey<Configuration>(this.config, key))
 			{
-				el.value = this.config[key].toString();
+				this.options.push(new OptionWrapper(
+					el,
+					() => el.value = this.config[key].toString(),
+					ev => this.onSelectInput(ev, el, key),
+				));
 			}
 			else if (el instanceof HTMLTextAreaElement && isArrayKey<Configuration>(this.config, key))
 			{
-				el.value = (this.config[key] as string[]).join('\n');
-			}
-		});
-	}
-
-	private setListeners(): void
-	{
-		this.inputs.forEach(el => {
-			const key = el.id;
-			if (!isKey(this.config, key))
-			{
-				alert('Unknown field:' + key);
-				return;
-			}
-
-			if (el instanceof HTMLInputElement && el.type === 'checkbox' && isBooleanKey<Configuration>(this.config, key))
-			{
-				el.addEventListener('input', ev => this.onCheckboxInput(ev, el, key));
-			}
-			else if (el instanceof HTMLSelectElement && isNumberKey<Configuration>(this.config, key))
-			{
-				el.addEventListener('input', ev => this.onSelectInput(ev, el, key));
-			}
-			else if (el instanceof HTMLTextAreaElement && isArrayKey<Configuration>(this.config, key))
-			{
-				el.addEventListener('input', ev => this.onTextareaInput(ev, el, key));
+				this.options.push(new OptionWrapper(
+					el,
+					() => el.value = (this.config[key] as string[]).join('\n'),
+					ev => this.onTextareaInput(ev, el, key),
+				));
 			}
 		});
 	}
@@ -272,18 +275,23 @@ class SessionsUI
 		this.renderSaved();
 	}
 
+	private renderSessionsBlock(type: 'recent' | 'saved'): void
+	{
+		type === 'recent' ? this.renderRecent() : this.renderSaved();
+	}
+
 	private renderRecent(): void
 	{
 		const container = this.root.querySelector('#sessions-recent')! as HTMLElement;
 		container.innerHTML = '';
-		this.sessions.recent.forEach(session => this.renderSession(session, container, 'recent'));
+		this.sessions.recent.toReversed().forEach(session => this.renderSession(session, container, 'recent'));
 	}
 
 	private renderSaved(): void
 	{
 		const container = this.root.querySelector('#sessions-saved')! as HTMLElement;
 		container.innerHTML = '';
-		this.sessions.saved.forEach(session => this.renderSession(session, container, 'saved'));
+		this.sessions.saved.toReversed().forEach(session => this.renderSession(session, container, 'saved'));
 	}
 
 	private initSessionButton(session: Session, container: HTMLElement, type: 'current' | 'recent' | 'saved'): void
@@ -341,6 +349,19 @@ class SessionsUI
 				});
 			});
 
+			container.querySelector('button[data-rename]')!.addEventListener('click', () =>
+			{
+				const name = (prompt(this.savePrompt, session.name) ?? '').trim();
+				if (!name)
+				{
+					return;
+				}
+
+				session.name = name;
+				this.sessions.save();
+				this.renderSessionsBlock(type);
+			});
+
 			container.querySelector('button[data-delete]')!.addEventListener('click', () =>
 			{
 				if (!confirm(this.deleteConfirm))
@@ -353,15 +374,7 @@ class SessionsUI
 				{
 					this.sessions[type].splice(index, 1);
 					this.sessions.save();
-
-					if (type == 'recent')
-					{
-						this.renderRecent();
-					}
-					else
-					{
-						this.renderSaved();
-					}
+					this.renderSessionsBlock(type);
 				}
 			});
 		}
@@ -503,7 +516,8 @@ class MigrateUI
 	private init()
 	{
 		this.id.addEventListener('input', ev => {
-			this.btn.disabled = this.id.value.trim() === '';
+			const id = this.id.value.trim();
+			this.btn.disabled = (id.length === 32) && (id !== chrome.runtime.id);
 		});
 
 		this.btn.addEventListener('click', ev => {

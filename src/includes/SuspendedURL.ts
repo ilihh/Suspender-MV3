@@ -1,4 +1,4 @@
-import { PAGE } from './constants';
+import { FAVICON_MODE, PAGE } from './constants';
 
 export class SuspendedURL
 {
@@ -17,21 +17,28 @@ export class SuspendedURL
 		this.update = update;
 	}
 
-	public getIcon(default_icon: string): string
+	public getIcon(mode: FAVICON_MODE, default_icon: string): string
 	{
 		if (this.icon === '')
 		{
 			return default_icon;
 		}
 
-		if (this.icon === null)
-		{
-			const domain = (new URL(this.uri)).hostname;
-			return `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
-			// return `https://${domain}/favicon.ico`;
-		}
+		const domain = (new URL(this.uri)).hostname;
+		const google_icon = `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
+		let actual_icon = this.icon === null ? google_icon : this.icon;
 
-		return this.icon;
+		switch (mode)
+		{
+			case FAVICON_MODE.NoDim:
+				return actual_icon;
+			case FAVICON_MODE.Google:
+				return google_icon;
+			case FAVICON_MODE.Actual:
+				return actual_icon;
+			default:
+				return default_icon;
+		}
 	}
 
 	public get hash(): string

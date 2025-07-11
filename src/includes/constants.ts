@@ -70,16 +70,17 @@ export enum MESSAGE
 
 export enum TAB_STATUS {
 	Normal = 'normal', // can be suspended
-	Suspended = 'suspended', // is suspended
+	Suspended = 'suspended',
 	Disabled = 'disabled', // disabled auto suspend
 	Special = 'special', // page cannot be suspended -> extension, chrome, etc
-	WhiteList = 'whitelist', // in whitelist
-	PlayingAudio = 'playing_audio', // playing audio
-	UnsavedForm = 'unsaved_form', // form
-	Active = 'active', // active
-	Pinned = 'pinned', // pinned
-	SuspendPaused = 'suspend_paused', // paused
-	Offline = 'offline', // is offline
+	WhiteList = 'whitelist',
+	PlayingAudio = 'playing_audio',
+	UnsavedForm = 'unsaved_form',
+	LocalFile = 'local_file',
+	Active = 'active',
+	Pinned = 'pinned',
+	SuspendPaused = 'suspend_paused',
+	Offline = 'offline',
 	PowerConnected = 'power_connected', // power connected = not working from battery
 	Error = 'error',
 }

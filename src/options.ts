@@ -52,7 +52,8 @@ function clone(source: HTMLTemplateElement): HTMLElement
 class OptionWrapper
 {
 	public constructor(
-		private readonly input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+		public readonly field: keyof ConfigurationData,
+		public readonly input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
 		public readonly setter: () => void,
 		private readonly listener: (ev: Event) => void,
 	)
@@ -91,13 +92,17 @@ class ConfigUI
 				permissions: ['scripting'],
 				origins: ['https://www.youtube.com/watch*'],
 			}),
+			suspendLocalFiles: () => this.requestPermissions({
+				permissions: ['scripting'],
+				origins: ["file://*/*", ],
+			}),
 			restoreScrollPosition: () => this.requestPermissions({
 				permissions: ['scripting'],
-				origins: ["http://*/*", "https://*/*", "file://*/*"],
+				origins: ["http://*/*", "https://*/*", ], //
 			}),
 			neverSuspendUnsavedData: () => this.requestPermissions({
 				permissions: ['scripting'],
-				origins: ["http://*/*", "https://*/*", "file://*/*"],
+				origins: ["http://*/*", "https://*/*", ], //"file://*/*"
 			}),
 			cleanupHistory: () => this.requestPermissions({
 				permissions: ['history'],
@@ -112,7 +117,7 @@ class ConfigUI
 				origins: ["https://www.google.com/s2/favicons*"],
 			}),
 			[FAVICON_MODE.Actual]: () => this.requestPermissions({
-				origins: ["http://*/*", "https://*/*", "file://*/*"],
+				origins: ["http://*/*", "https://*/*", ], // "file://*/*"
 			}),
 		};
 
@@ -123,9 +128,23 @@ class ConfigUI
 		this.init();
 	}
 
-	private init(): void
+	private async init(): Promise<void>
 	{
+		const files_comment = this.root.querySelector<HTMLDivElement>('div.comment[data-i18n="page_options_suspend_local_files_permissions"]');
+		if (files_comment !== null)
+		{
+			files_comment.dataset['i18nArgs'] = chrome.runtime.id;
+		}
+
 		this.createOptions();
+
+		for (const option of this.options)
+		{
+			if (option.field === 'suspendLocalFiles')
+			{
+				option.input.disabled = !await chrome.extension.isAllowedFileSchemeAccess();
+			}
+		}
 
 		chrome.storage.local.onChanged.addListener(async changes => {
 			if (Configuration.StorageKey in changes)
@@ -161,6 +180,7 @@ class ConfigUI
 				if ((el.type === 'checkbox') && isBooleanKey(this.config.data, key))
 				{
 					this.options.push(new OptionWrapper(
+						key,
 						el,
 						() => el.checked = this.config.data[key],
 						ev => this.onCheckboxInput(ev, el, key),
@@ -169,6 +189,7 @@ class ConfigUI
 				if ((el.type === 'radio') && isEnumKey(this.config.data, key, FAVICON_MODE))
 				{
 					this.options.push(new OptionWrapper(
+						key,
 						el,
 						() => el.checked = this.config.data[key] === el.value,
 						ev => this.onRadioInput(ev, el, key),
@@ -178,6 +199,7 @@ class ConfigUI
 			else if (el instanceof HTMLSelectElement && isNumberKey(this.config.data, key))
 			{
 				this.options.push(new OptionWrapper(
+					key,
 					el,
 					() => el.value = this.config.data[key].toString(),
 					() => this.onSelectInput(el, key),
@@ -186,6 +208,7 @@ class ConfigUI
 			else if (el instanceof HTMLTextAreaElement && isConfigurationDataArrayStringKey(this.config.data, key))
 			{
 				this.options.push(new OptionWrapper(
+					key,
 					el,
 					() => el.value = (this.config.data[key] as string[]).join('\n'),
 					() => this.onTextareaInput(el, key),
@@ -587,6 +610,10 @@ class MigrateUI
 
 	private readonly btn: HTMLButtonElement;
 
+	private readonly options: HTMLDivElement;
+	private readonly progress: HTMLDivElement;
+	private readonly done: HTMLDivElement;
+
 	public constructor(
 		private readonly root: HTMLElement,
 	)
@@ -595,6 +622,10 @@ class MigrateUI
 		this.id = this.root.querySelector('input#extension-id')!;
 		this.btn = this.root.querySelector('button#extension-migrate')!;
 
+		this.options = this.root.querySelector('div#migrate-options')!;
+		this.progress = this.root.querySelector('div#migrate-progress')!;
+		this.done = this.root.querySelector('div#migrate-done')!;
+
 		this.init();
 	}
 
@@ -602,22 +633,41 @@ class MigrateUI
 	{
 		this.id.addEventListener('input', async () => {
 			const id = this.id.value.trim();
-			this.btn.disabled = (id.length === 32) && (id !== chrome.runtime.id);
+			const valid = (id.length === 32) && (id !== chrome.runtime.id);
+			this.btn.disabled = !valid;
 		});
 
-		this.btn.addEventListener('click', async () => {
-			await Messenger.send({
-				action: MESSAGE.Migrate,
-				extensionId: this.id.value.trim(),
-			})
+		this.btn.addEventListener('click', () => this.migrate());
+	}
+
+	async migrate(): Promise<void>
+	{
+		this.options.classList.add('hidden');
+		this.progress.classList.remove('hidden');
+		this.done.classList.add('hidden');
+
+		const extension_id = this.id.value.trim();
+		const extension_url = `chrome-extension://${extension_id}/`;
+		const tabs = (await chrome.tabs.query({})).filter(x => x.url && x.url.startsWith(extension_url));
+
+		this.progress.innerText = chrome.i18n.getMessage(
+			'page_options_migrate_progress',
+			[ tabs.length.toString(), ]
+		)
+
+		await Messenger.send({
+			action: MESSAGE.Migrate,
+			extensionId: extension_id,
 		});
+
+		this.options.classList.remove('hidden');
+		this.progress.classList.add('hidden');
+		this.done.classList.remove('hidden');
 	}
 }
 
 async function init()
 {
-	i18n(document);
-
 	if (document.location.hash === '')
 	{
 		document.location.hash = '#settings';
@@ -630,6 +680,8 @@ async function init()
 	new ShortcutsUI(document.getElementById('shortcuts')!);
 	new SessionsUI(document.getElementById('sessions')!, sessions, config);
 	new MigrateUI(document.getElementById('migrate')!);
+
+	i18n(document);
 }
 
 document.addEventListener('DOMContentLoaded', () => init());

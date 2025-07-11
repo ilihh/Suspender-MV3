@@ -319,6 +319,11 @@ export class Suspender
 			return TAB_STATUS.Suspended;
 		}
 
+		if (this.config.data.suspendLocalFiles && tab.url.startsWith('file://'))
+		{
+			return TAB_STATUS.LocalFile;
+		}
+
 		if (!await this.isSuspendableUrl(tab.url))
 		{
 			return TAB_STATUS.Special;

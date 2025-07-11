@@ -17,7 +17,9 @@ export class ConfigurationData
 
 	public suspendOffline: boolean = false;
 
-	public neverSuspendUnsavedData: boolean = true;
+	public suspendLocalFiles: boolean = false;
+
+	public neverSuspendUnsavedData: boolean = false;
 
 	public neverSuspendWhenPowerOn: boolean = false;
 

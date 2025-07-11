@@ -55,11 +55,16 @@
 	"page_options_settings": { "message": "Settings" },
 	"page_options_migrate": { "message": "Migrate" },
 	"page_options_migrate_comment": {
-		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, url $URL$ has extension ID $ID$.",
+		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, URL:\n<code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code>\nhas extension ID: <b>liekplgjlphohhlnfaibkdjindpnfimg</b>."
+	},
+	"page_options_migrate_progress": {
+		"message": "Migrating $AMOUNT$ tabs. Process can take several minutes.",
 		"placeholders": {
-			"url": { "content": "$1", "example": "chrome-extension://liekplgjlphohhlnfaibkdjindpnfimg/suspended.html" },
-			"id": { "content": "$2", "example": "liekplgjlphohhlnfaibkdjindpnfimg" }
+			"amount": { "content": "$1", "example": "12" }
 		}
+	},
+	"page_options_migrate_done": {
+		"message": "Migration completed. The old extension can be deleted."
 	},
 
 	"page_options_sessions": { "message": "Sessions" },
@@ -82,7 +87,7 @@
 	"page_options_sessions_rename": { "message": "rename" },
 	"page_options_sessions_delete": { "message": "delete" },
 	"page_options_sessions_delete_confirm": { "message": "Are you sure you want to delete this session?" },
-	"page_options_sessions_import_error": { "message": "Failed to load file. File must be plain text and contains a single url per line." },
+	"page_options_sessions_import_error": { "message": "Failed to load file. The file must be plain text and contain a single URL per line." },
 
 	"page_options_shortcuts": { "message": "Keyboard shortcuts" },
 	"page_options_shortcuts_change": { "message": "Change shortcuts" },
@@ -109,10 +114,16 @@
 	"page_options_suspend_active": { "message": "Suspend active tabs" },
 	"page_options_suspend_pinned": { "message": "Suspend pinned tabs" },
 	"page_options_suspend_playing_audio": { "message": "Suspend tabs that are playing audio" },
+
+	"page_options_suspend_local_files": { "message": "Suspend file:// tabs" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "Option \"Allow access to file URLs\" must be enabled on the extension page."
+	},
+
 	"page_options_suspend_offline": { "message": "Suspend tabs when offline" },
 	"page_options_never_suspend_unsaved_data": { "message": "Never suspend tabs that contain unsaved form inputs" },
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requires access to all URLs and permission to execute scripts." },
-	"page_options_never_suspend_when_power_on": { "message": "Never suspend tabs when connected to power source" },
+	"page_options_never_suspend_when_power_on": { "message": "Never suspend tabs when connected to a power source" },
 	"page_options_white_list": { "message": "Never suspend tabs with URLs from the following list:" },
 	"page_options_white_list_hint": { "message": "Each item on a new line.\nExample:\n\tgithub.com\n\tyoutube.com/watch" },
 	"page_options_block_suspended": { "message": "Suspended tabs" },
@@ -135,9 +146,9 @@
 
 	"page_options_block_icons": { "message": "Tab Icons" },
 	"page_options_favicons_mode_no_dim": { "message": "Actual site icon (no dim)" },
-	"page_options_favicons_mode_no_dim_permissions": { "message": "Uses the site favicon as-is. No extra permissions needed. Suspended tab icons are the same as not suspended one." },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Uses the site favicon as-is. No extra permissions needed. Suspended tab icons are the same as non-suspended ones." },
 	"page_options_favicons_mode_google": { "message": "Google icon (dimmed)" },
-	"page_options_favicons_mode_google_permissions": { "message": "Loads icon from Google Favicon API and dims it. Can different from actual icon but requires only access to Google." },
+	"page_options_favicons_mode_google_permissions": { "message": "Loads icon from Google Favicon API and dims it. Can be different from the actual icon but requires only access to Google." },
 	"page_options_favicons_mode_actual": { "message": "Actual site icon (dimmed)" },
 	"page_options_favicons_mode_actual_permissions": { "message": "Uses the exact site icon and dims it. Requires access to all URLs." },
 
@@ -146,7 +157,7 @@
 	"page_options_session_name": {
 		"message": "$SESSION$ (Windows: $WINDOWS$; Tabs: $TABS$)",
 		"placeholders": {
-			"session": { "content": "$1", "example": "Test" },
+			"session": { "content": "$1", "example": "Session Name" },
 			"windows": { "content": "$2", "example": "5" },
 			"tabs": { "content": "$3", "example": "40" }
 		}

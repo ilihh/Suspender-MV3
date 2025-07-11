@@ -38,7 +38,7 @@ export function i18n(document: Document): void
 	document.querySelectorAll('[data-i18n]').forEach(e => {
 		if (isHTMLElement<HTMLElement>(e) && e.dataset['i18n'])
 		{
-			e.innerText = e.dataset['i18nArgs']
+			e.innerHTML = e.dataset['i18nArgs']
 				? chrome.i18n.getMessage(e.dataset['i18n'], e.dataset['i18nArgs'].split(';'))
 				: chrome.i18n.getMessage(e.dataset['i18n']);
 		}

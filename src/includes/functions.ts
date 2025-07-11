@@ -1,4 +1,4 @@
-import { Request } from './Messenger';
+import { SuspenderRequest } from './Messenger';
 
 export const isHTMLElement = <T extends HTMLElement>(
 	el: Element|EventTarget|null|undefined,
@@ -23,20 +23,26 @@ export async function canDimIcon(icon: string): Promise<boolean>
 		return true;
 	}
 
+	return isUrlAllowed(icon);
+}
+
+export async function isUrlAllowed(url: string): Promise<boolean>
+{
 	const permissions: chrome.permissions.Permissions = {
-		origins: [icon],
+		origins: [url],
 	};
 	return await chrome.permissions.contains(permissions);
 }
 
 export async function getDimmedIcon(icon: string): Promise<string>
 {
+	// ensure that icons can be dimmed
 	if (!await canDimIcon(icon))
 	{
 		return icon;
 	}
 
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		const img = document.createElement('img');
 		img.onload = () => {
 			const canvas = document.createElement('canvas');
@@ -50,7 +56,7 @@ export async function getDimmedIcon(icon: string): Promise<string>
 				return;
 			}
 
-			ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
 			// make semi-transparent
 			const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -84,12 +90,14 @@ export function i18n(document: Document): void
 	document.querySelectorAll('[data-i18n]').forEach(e => {
 		if (isHTMLElement<HTMLElement>(e) && e.dataset.i18n)
 		{
-			e.innerText = chrome.i18n.getMessage(e.dataset.i18n);
+			e.innerText = e.dataset.i18nArgs
+				? chrome.i18n.getMessage(e.dataset.i18n, e.dataset.i18nArgs.split(';'))
+				: chrome.i18n.getMessage(e.dataset.i18n);
 		}
 	});
 }
 
-export async function getTab(request: Request, sender: chrome.runtime.MessageSender): Promise<chrome.tabs.Tab|null>
+export async function getTab(request: SuspenderRequest, sender: chrome.runtime.MessageSender): Promise<chrome.tabs.Tab|null>
 {
 	if (request.tabId !== undefined)
 	{

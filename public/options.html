@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link id="favicon-url" rel="icon" href="img/32.png" />
+	<link id="favicon-url" rel="icon" href="img/32_active.png" />
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<title data-i18n="page_options_title">Suspender MV3: Settings</title>
@@ -27,7 +27,7 @@
 		<label for="suspendDelay">
 			<span data-i18n="page_options_suspend_delay">Automatically suspend tabs after</span>
 		</label>
-		<select id="suspendDelay">
+		<select id="suspendDelay" data-field="suspendDelay">
 			<option value="0" data-i18n="page_options_suspend_delay_never">Never</option>
 			<option value="5" data-i18n="page_options_suspend_delay_5_min">5 minutes</option>
 			<option value="10" data-i18n="page_options_suspend_delay_10_min">10 minutes</option>
@@ -46,27 +46,31 @@
 		</select>
 
 		<label>
-			<input type="checkbox" id="suspendPinned" /> <span data-i18n="page_options_suspend_pinned">Suspend pinned tabs</span>
-		</label>
-
-		<label class="hidden">
-			<input type="checkbox" id="suspendUnsavedData" /> <span data-i18n="page_options_suspend_unsaved_data">Suspend tabs that contain unsaved form inputs</span>
+			<input type="checkbox" data-field="suspendActive" /> <span data-i18n="page_options_suspend_active">Suspend active tabs</span>
 		</label>
 
 		<label>
-			<input type="checkbox" id="suspendPlayingAudio" /> <span data-i18n="page_options_suspend_playing_audio">Suspend tabs that are playing audio</span>
+			<input type="checkbox" data-field="suspendPinned" /> <span data-i18n="page_options_suspend_pinned">Suspend pinned tabs</span>
 		</label>
 
 		<label>
-			<input type="checkbox" id="suspendOffline" /> <span data-i18n="page_options_suspend_offline">Suspend tabs when offline</span>
+			<input type="checkbox" data-field="suspendUnsavedData" /> <span data-i18n="page_options_suspend_unsaved_data">Suspend tabs that contain unsaved form inputs</span>
 		</label>
 
 		<label>
-			<input type="checkbox" id="neverSuspendWhenPowerOn" /> <span data-i18n="page_options_never_suspend_when_power_on">Never suspend tabs when connected to power source</span>
+			<input type="checkbox" data-field="suspendPlayingAudio" /> <span data-i18n="page_options_suspend_playing_audio">Suspend tabs that are playing audio</span>
+		</label>
+
+		<label>
+			<input type="checkbox" data-field="suspendOffline" /> <span data-i18n="page_options_suspend_offline">Suspend tabs when offline</span>
+		</label>
+
+		<label>
+			<input type="checkbox" data-field="neverSuspendWhenPowerOn" /> <span data-i18n="page_options_never_suspend_when_power_on">Never suspend tabs when connected to power source</span>
 		</label>
 
 		<label data-i18n="page_options_white_list" for="whiteList">Never suspend tabs with URLs from the following list (one per line)</label>
-		<textarea id="whiteList"></textarea>
+		<textarea id="whiteList" data-field="whiteList"></textarea>
 		<div class="comment" data-i18n="page_options_white_list_hint"></div>
 	</div>
 
@@ -74,17 +78,17 @@
 		<h3 data-i18n="page_options_block_suspended">Suspended tabs</h3>
 
 		<label data-lite-version-disabled>
-			<input type="checkbox" id="restoreScrollPosition" /> <span data-i18n="page_options_restore_scroll_position">Restore scroll position</span>
+			<input type="checkbox" data-field="restoreScrollPosition" /> <span data-i18n="page_options_restore_scroll_position">Restore scroll position</span>
 		</label>
 		<div class="comment" data-i18n="page_options_restore_scroll_permissions"></div>
 
 		<label data-lite-version-disabled>
-			<input type="checkbox" id="maintainYoutubeTime" /> <span data-i18n="page_options_maintain_youtube_time">Save YouTube timestamps for the tab with video</span>
+			<input type="checkbox" data-field="maintainYoutubeTime" /> <span data-i18n="page_options_maintain_youtube_time">Save YouTube timestamps for the tab with video</span>
 		</label>
 		<div class="comment" data-i18n="page_options_youtube_permissions"></div>
 
 		<label>
-			<input type="checkbox" id="discardTabs" /> <span data-i18n="page_options_discard_tabs">Discard tabs instead of suspending</span>
+			<input type="checkbox" data-field="discardTabs" /> <span data-i18n="page_options_discard_tabs">Discard tabs instead of suspending</span>
 		</label>
 	</div>
 
@@ -92,24 +96,39 @@
 		<h3 data-i18n="page_options_block_other">Other</h3>
 
 		<label>
-			<input type="checkbox" id="enableContextMenu" /> <span data-i18n="page_options_enable_context_menu">Add to the context menu</span>
+			<input type="checkbox" data-field="enableContextMenu" /> <span data-i18n="page_options_enable_context_menu">Add to the context menu</span>
 		</label>
 
 		<label>
-			<input type="checkbox" id="cleanupHistory" /> <span data-i18n="page_options_cleanup_history">Remove suspended pages from history</span>
+			<input type="checkbox" data-field="cleanupHistory" /> <span data-i18n="page_options_cleanup_history">Remove suspended pages from history</span>
 		</label>
 		<div class="comment" data-i18n="page_options_cleanup_history_permissions"></div>
 
 		<label>
-			<input type="checkbox" id="exportSessions" /> <span data-i18n="page_options_export_sessions">Enable sessions export</span>
+			<input type="checkbox" data-field="exportSessions" /> <span data-i18n="page_options_export_sessions">Enable sessions export</span>
 		</label>
 		<div class="comment" data-i18n="page_options_export_sessions_permissions"></div>
 
 		<label class="hidden">
-			<input type="checkbox" id="syncProfile" /> <span data-i18n="page_options_sync_profile">Sync settings with your Chrome profile</span>
+			<input type="checkbox" data-field="syncProfile" /> <span data-i18n="page_options_sync_profile">Sync settings with your Chrome profile</span>
 		</label>
-	</div>
 
+		<h3 data-i18n="page_options_block_icons">Tab Icons</h3>
+		<label>
+			<input type="radio" name="faviconsMode" value="no_dim" data-field="faviconsMode" /> <span data-i18n="page_options_favicons_mode_no_dim">Actual site icon (no dim)</span>
+		</label>
+		<div class="comment" data-i18n="page_options_favicons_mode_no_dim_permissions">Uses the site favicon as-is. No extra permissions needed. It will look identical to unsuspended tabs.</div>
+
+		<label>
+			<input type="radio" name="faviconsMode" value="google" data-field="faviconsMode" /> <span data-i18n="page_options_favicons_mode_google">Google favicon (dimmed)</span>
+		</label>
+		<div class="comment" data-i18n="page_options_favicons_mode_google_permissions">Loads icon from Google Favicon API and dims it. Can different from actual icon but requires only access to Google.</div>
+
+		<label>
+			<input type="radio" name="faviconsMode" value="actual" data-field="faviconsMode" /> <span data-i18n="page_options_favicons_mode_actual">Actual site icon (dimmed)</span>
+		</label>
+		<div class="comment" data-i18n="page_options_favicons_mode_actual_permissions">Uses the exact site icon and dims it. Requires access to all sites.</div>
+	</div>
 </div>
 
 <div class="tab" id="sessions">
@@ -184,9 +203,9 @@
 
 	<div class="options-block">
 		<input type="text" id="extension-id" placeholder="Extension ID" />
-		<button type="button" class="button" disabled id="extension-migrate" data-i18n="page_options_migrate">Migrate tabs</button>
+		<button type="button" class="button" disabled id="extension-migrate" data-i18n="page_options_migrate">Migrate</button>
 
-		<div class="comment">
+		<div class="comment" data-i18n="page_options_migrate_comment" data-i18n-args="<code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code>;<b>liekplgjlphohhlnfaibkdjindpnfimg</b>">
 			Enter 32 symbols of the other extension ID.<br>
 			You can get the ID from the URL of the suspended page.<br>
 			For example, url <code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code> has extension ID <b>liekplgjlphohhlnfaibkdjindpnfimg</b>.

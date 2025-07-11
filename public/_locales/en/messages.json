@@ -31,17 +31,18 @@
 	"action_unsuspend_all": { "message": "Unsuspend all tabs in all windows" },
 
 	"tab_status_normal": { "message": "Tab will suspend automatically." },
-	"tab_status_suspended": { "message": "Tab suspended" },
+	"tab_status_suspended": { "message": "Tab suspended." },
 	"tab_status_disabled": { "message": "Automatic tab suspension disabled." },
-	"tab_status_special": { "message": "Tab cannot be suspended" },
+	"tab_status_special": { "message": "Tab cannot be suspended." },
 	"tab_status_whitelist": { "message": "URL is in whitelist." },
 	"tab_status_playing_audio": { "message": "Tab is playing audio." },
 	"tab_status_unsaved_form": { "message": "Tab has unsaved form data." },
-	"tab_status_pinned": { "message": "Tab has been pinned" },
+	"tab_status_active": { "message": "Tab is active." },
+	"tab_status_pinned": { "message": "Tab has been pinned." },
 	"tab_status_suspend_paused": { "message": "Tabs suspension paused." },
-	"tab_status_offline": { "message": "No network connection" },
-	"tab_status_power_connected": { "message": "Connected to power source" },
-	"tab_status_error": { "message": "Auto-suspend unavailable for this tab" },
+	"tab_status_offline": { "message": "No network connection." },
+	"tab_status_power_connected": { "message": "Connected to power source." },
+	"tab_status_error": { "message": "Auto-suspend unavailable for this tab." },
 
 	"page_suspended_unsuspend": { "message": "Refresh or click to reload" },
 	"page_suspended_shortcuts": { "message": "Set keyboard shortcuts" },
@@ -53,6 +54,13 @@
 	"page_options_tab_about": { "message": "About" },
 	"page_options_settings": { "message": "Settings" },
 	"page_options_migrate": { "message": "Migrate" },
+	"page_options_migrate_comment": {
+		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, url $URL$ has extension ID $ID$.",
+		"placeholders": {
+			"url": { "content": "$1", "example": "chrome-extension://liekplgjlphohhlnfaibkdjindpnfimg/suspended.html" },
+			"id": { "content": "$2", "example": "liekplgjlphohhlnfaibkdjindpnfimg" }
+		}
+	},
 
 	"page_options_sessions": { "message": "Sessions" },
 	"page_options_sessions_current": { "message": "Current session:" },
@@ -98,6 +106,7 @@
 	"page_options_suspend_delay_1_week": { "message": "1 week" },
 	"page_options_suspend_delay_2_week": { "message": "2 weeks" },
 
+	"page_options_suspend_active": { "message": "Suspend active tabs" },
 	"page_options_suspend_pinned": { "message": "Suspend pinned tabs" },
 	"page_options_suspend_unsaved_data": { "message": "Suspend tabs that contain unsaved form inputs" },
 	"page_options_suspend_playing_audio": { "message": "Suspend tabs that are playing audio" },
@@ -107,21 +116,29 @@
 	"page_options_white_list_hint": { "message": "Each item on a new line.\nExample:\n\tgithub.com\n\tyoutube.com/watch" },
 	"page_options_block_suspended": { "message": "Suspended tabs" },
 	"page_options_restore_scroll_position": { "message": "Restore scroll position and enable dimmed tabs icons" },
-	"page_options_restore_scroll_permissions": { "message": "Requires permissions to access all URLs and execute scripts." },
+	"page_options_restore_scroll_permissions": { "message": "Requires access to all URLs and execute scripts." },
 
 	"page_options_maintain_youtube_time": { "message": "Save YouTube timestamps for the tab with video" },
-	"page_options_youtube_permissions": { "message": "Requires permissions to access https://www.youtube.com/watch* and execute scripts." },
+	"page_options_youtube_permissions": { "message": "Requires access to https://www.youtube.com/watch* and execute scripts." },
 
 	"page_options_discard_tabs": { "message": "Discard tabs instead of suspending" },
 	"page_options_block_other": { "message": "Other" },
 
 	"page_options_enable_context_menu": { "message": "Add to the context menu" },
 	"page_options_cleanup_history": { "message": "Remove suspended pages from history" },
-	"page_options_cleanup_history_permissions": { "message": "Requires history access" },
+	"page_options_cleanup_history_permissions": { "message": "Requires access to the history." },
 	"page_options_export_sessions": { "message": "Sessions export" },
-	"page_options_export_sessions_permissions": { "message": "Requires downloads permissions" },
+	"page_options_export_sessions_permissions": { "message": "Requires access to the downloads." },
 	"page_options_sync_profile": { "message": "Sync settings with your Chrome profile" },
-	
+
+	"page_options_block_icons": { "message": "Tab Icons" },
+	"page_options_favicons_mode_no_dim": { "message": "Actual site icon (no dim)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Uses the site favicon as-is. No extra permissions needed. It will look identical to unsuspended tabs." },
+	"page_options_favicons_mode_google": { "message": "Google icon (dimmed)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Loads icon from Google Favicon API and dims it. Can different from actual icon but requires only access to Google." },
+	"page_options_favicons_mode_actual": { "message": "Actual site icon (dimmed)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Uses the exact site icon and dims it. Requires access to all URLs." },
+
 	"page_options_commands_default_description": { "message": "Unnamed" },
 	"page_options_commands_default_shortcut": { "message": "(not set)" },
 	"page_options_session_name": {

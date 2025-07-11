@@ -3,68 +3,31 @@ import { ContextMenu } from './ContextMenu';
 import { DataStorage } from './DataStorage';
 import { ValidTab } from './ValidTab';
 import { FAVICON_MODE } from './constants';
+import { ConfigurationData } from './ConfigurationData';
 
 export class Configuration
 {
-	public version: number = 1;
-
-	// alarm timer, in minutes, hidden, not editable by user
-	public timer: number = 3;
-
-	public suspendDelay: number = 60;
-
-	public suspendPinned: boolean = false;
-
-	public suspendUnsavedData: boolean = false;
-
-	public suspendPlayingAudio: boolean = false;
-
-	public suspendOffline: boolean = false;
-
-	public neverSuspendWhenPowerOn: boolean = false;
-
-	public whiteList: string[] = [];
-
-	public restoreScrollPosition: boolean = false;
-
-	public maintainYoutubeTime: boolean = false;
-
-	public faviconsMode: FAVICON_MODE = FAVICON_MODE.NoDim;
-
-	public discardTabs: boolean = false;
-
-	public enableContextMenu: boolean = true;
-
-	public cleanupHistory: boolean = false;
-
-	public exportSessions: boolean = false;
-
-	// decide against implementation
-	public syncProfile: boolean = true;
-
-	// hidden, not editable by user
-	public pausedTabsIds: number[] = [];
+	private constructor(
+		public data: ConfigurationData = new ConfigurationData(),
+	)
+	{
+	}
 
 	public autoSuspend(): boolean
 	{
-		return this.suspendDelay > 0;
+		return this.data.suspendDelay > 0;
 	}
 
-	public enableDimmedIcons(): boolean
+	public init(): Promise<void>
 	{
-		return this.restoreScrollPosition;
-	}
-
-	public async init(): Promise<void>
-	{
-		return ContextMenu.create(this.enableContextMenu);
+		return ContextMenu.create(this.data.enableContextMenu);
 	}
 
 	public alarmConfig(): chrome.alarms.AlarmCreateInfo
 	{
 		return {
-			delayInMinutes: this.timer,
-			periodInMinutes: this.timer,
+			delayInMinutes: this.data.timer,
+			periodInMinutes: this.data.timer,
 		};
 	}
 
@@ -76,80 +39,54 @@ export class Configuration
 
 	public allowedSuspendOnline(device: DeviceStatus): boolean
 	{
-		return device.online || this.suspendOffline;
+		return device.online || this.data.suspendOffline;
 	}
 
 	public allowedSuspendPower(device: DeviceStatus): boolean
 	{
-		return !(this.neverSuspendWhenPowerOn && device.powerOn);
+		return !(this.data.neverSuspendWhenPowerOn && device.powerOn);
 	}
 
-	public clearIgnoredTabs(): void
+	public whitelistDomain(tab: ValidTab): Promise<void>
 	{
-		this.pausedTabsIds = [];
-		this.save();
-	}
-
-	public isPausedTab(tabId: number): boolean
-	{
-		return this.pausedTabsIds.indexOf(tabId, 0) > -1;
-	}
-
-	public pauseTab(tabId: number): void
-	{
-		this.pausedTabsIds.push(tabId);
-		this.save();
-	}
-
-	public unpauseTab(tabId: number): void
-	{
-		const index = this.pausedTabsIds.indexOf(tabId, 0);
-		if (index > -1)
+		const url = new URL(tab.url);
+		if (url.protocol === 'file:')
 		{
-			this.pausedTabsIds.splice(index, 1);
-			this.save();
-		}
-	}
-
-	public togglePauseTab(tabId: number): void
-	{
-		if (this.isPausedTab(tabId))
-		{
-			this.unpauseTab(tabId);
+			return this.whitelistDomain(tab);
 		}
 		else
 		{
-			this.pauseTab(tabId);
+			return this.addWhiteList(url.host);
 		}
 	}
 
-	public whitelistDomain(tab: ValidTab): void
+	public whitelistUrl(tab: ValidTab): Promise<void>
 	{
 		const url = new URL(tab.url);
-		this.addWhiteList(url.host);
+		return this.addWhiteList(url.host + url.pathname);
 	}
 
-	public whitelistUrl(tab: ValidTab): void
+	private async addWhiteList(url: string): Promise<void>
 	{
-		const url = new URL(tab.url);
-		this.addWhiteList(url.host + url.pathname);
-	}
-
-	private addWhiteList(url: string): void
-	{
-		if (this.whiteList.indexOf(url) === -1)
+		url = url.trim();
+		if (url === '')
 		{
-			this.whiteList.push(url);
+			return;
 		}
 
-		this.save();
+		if (this.data.whiteList.indexOf(url) === -1)
+		{
+			this.data.whiteList.push(url);
+		}
+
+		return this.save();
 	}
 
 	public inWhiteList(tab: ValidTab): boolean
 	{
 		const url = new URL(tab.url);
 		const base_url = url.host + url.pathname;
-		for (const path of this.whiteList)
+		for (const path of this.data.whiteList)
 		{
 			if (path === '')
 			{
@@ -165,35 +102,36 @@ export class Configuration
 		return false;
 	}
 
-	public whiteListRemove(tab: ValidTab): void
+	public whiteListRemove(tab: ValidTab): Promise<void>
 	{
 		const url = new URL(tab.url);
 		const base_url = url.host + url.pathname;
-		this.whiteList = this.whiteList.filter(x => !base_url.includes(x));
-		this.save();
+		this.data.whiteList = this.data.whiteList.filter(x => !base_url.includes(x));
+		return this.save();
 	}
 
-	private static _key = 'config';
+	public static readonly StorageKey = 'config';
 
 	public static async load(): Promise<Configuration>
 	{
-		const config = await DataStorage.load(Configuration._key, Configuration);
+		const config = new Configuration();
+		config.data = await DataStorage.load(Configuration.StorageKey, ConfigurationData);
 		config.upgradeVersion();
 		return config;
 	}
 
 	private upgradeVersion(): void
 	{
-		if (this.version === 1)
+		if (this.data.version === 1)
 		{
-			this.faviconsMode = this.restoreScrollPosition ? FAVICON_MODE.Actual : FAVICON_MODE.NoDim;
-			this.version = 2;
+			this.data.faviconsMode = this.data.restoreScrollPosition ? FAVICON_MODE.Actual : FAVICON_MODE.NoDim;
+			this.data.version = 2;
 		}
 	}
 
-	public save(): void
+	public async save(): Promise<void>
 	{
-		DataStorage.save(Configuration._key, this);
-		const _ = this.init();
+		await DataStorage.save(Configuration.StorageKey, this.data);
+		return this.init();
 	}
 }

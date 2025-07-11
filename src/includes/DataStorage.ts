@@ -1,15 +1,18 @@
 export class DataStorage
 {
-	public static async load<T extends object>(key: string, ctor: { new (): T }): Promise<T>
+	public static async load<T extends object>(key: string, ctor: { new (): T }, type: 'local' | 'session' = 'local'): Promise<T>
 	{
-		const loaded = await chrome.storage.local.get([key]);
-		const raw: T = JSON.parse(loaded[key] || '{}');
+		const loaded = await chrome.storage[type].get([key]);
+		const data = loaded[key];
+		const raw: T = typeof data === 'string'
+			? JSON.parse(data || '{}')
+			: data;
 
 		return Object.assign(new ctor(), raw);
 	}
 
-	public static save<T extends object>(key: string, data: T): void
+	public static save<T extends object>(key: string, data: T, type: 'local' | 'session' = 'local'): Promise<void>
 	{
-		const _ = chrome.storage.local.set({ [key]: JSON.stringify(data) });
+		return chrome.storage[type].set({ [key]: data });
 	}
 }

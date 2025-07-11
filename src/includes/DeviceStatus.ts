@@ -4,18 +4,11 @@ import { Messenger } from './Messenger';
 
 export class DeviceStatus
 {
-	public online: boolean;
-	public powerOn: boolean;
-
-	private constructor(online: boolean = true, power: boolean = true)
+	private constructor(
+		public online: boolean = true,
+		public powerOn: boolean = true,
+	)
 	{
-		this.online = online;
-		this.powerOn = power;
-	}
-
-	public get offline(): boolean
-	{
-		return !this.online;
 	}
 
 	public static async get(): Promise<DeviceStatus>

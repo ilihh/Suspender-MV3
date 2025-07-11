@@ -1,12 +1,12 @@
 import { SuspendedURL } from './includes/SuspendedURL';
-import {FAVICON_MODE, MESSAGE} from './includes/constants';
+import { FAVICON_MODE, MESSAGE } from './includes/constants';
 import { Messenger } from './includes/Messenger';
-import { getDimmedIcon, isHTMLElement, setInnerText, i18n } from './includes/functions';
+import { getDimmedIcon, i18n, isHTMLElement, setInnerText } from './includes/functions';
 import { Configuration } from './includes/Configuration';
 
-function unsuspend_page()
+async function unsuspend_page(): Promise<void>
 {
-	const _ = Messenger.action<void>(MESSAGE.UnsuspendTab);
+	await Messenger.action<void>(MESSAGE.UnsuspendTab);
 }
 
 async function init()
@@ -24,7 +24,8 @@ async function init()
 		}
 		else
 		{
-			unsuspend_page();
+			await unsuspend_page();
+			return;
 		}
 	}
 
@@ -44,7 +45,7 @@ async function init()
 	const unsuspend = document.getElementById('suspended');
 	if (unsuspend !== null)
 	{
-		unsuspend.addEventListener('click', () => unsuspend_page());
+		unsuspend.addEventListener('click', unsuspend_page);
 	}
 
 	const shortcuts = document.getElementById('shortcuts');
@@ -53,7 +54,7 @@ async function init()
 		shortcuts.href = chrome.runtime.getURL(shortcuts.href);
 	}
 
-	const _ = setIcons(info, config);
+	await setIcons(info, config);
 }
 
 async function setIcons(info: SuspendedURL, config: Configuration)
@@ -62,10 +63,10 @@ async function setIcons(info: SuspendedURL, config: Configuration)
 	const link_icon = document.getElementById('favicon-url');
 	if (isHTMLElement<HTMLImageElement>(img_icon) && isHTMLElement<HTMLLinkElement>(link_icon))
 	{
-		const icon = info.getIcon(config.faviconsMode, img_icon.src);
+		const { icon, dim } = info.getIcon(config.data.faviconsMode, img_icon.src);
 
 		img_icon.src = icon;
-		link_icon.href = await getDimmedIcon(icon);
+		link_icon.href = dim ? await getDimmedIcon(icon) : icon;
 	}
 }
 

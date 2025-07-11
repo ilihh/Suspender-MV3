@@ -2,26 +2,21 @@ import { FAVICON_MODE, PAGE } from './constants';
 
 export class SuspendedURL
 {
-	public uri: string;
-	public title: string;
-	public scrollPosition: number;
-	public icon: string|null;
-	public update: boolean = false;
-
-	public constructor(uri: string = '', title: string = '', scroll_position: number = 0, icon: string|null = null, update: boolean = false)
+	public constructor(
+		public uri: string = '',
+		public title: string = '',
+		public scrollPosition: number = 0,
+		public icon: string|null = null,
+		public update: boolean = false,
+	)
 	{
-		this.uri = uri;
-		this.title = title;
-		this.scrollPosition = scroll_position;
-		this.icon = icon;
-		this.update = update;
 	}
 
-	public getIcon(mode: FAVICON_MODE, default_icon: string): string
+	public getIcon(mode: FAVICON_MODE, default_icon: string): { icon: string, dim: boolean }
 	{
 		if (this.icon === '')
 		{
-			return default_icon;
+			return {icon: default_icon, dim: true};
 		}
 
 		const domain = (new URL(this.uri)).hostname;
@@ -31,13 +26,13 @@ export class SuspendedURL
 		switch (mode)
 		{
 			case FAVICON_MODE.NoDim:
-				return actual_icon;
+				return { icon: actual_icon, dim: actual_icon.startsWith('data:image/') };
 			case FAVICON_MODE.Google:
-				return google_icon;
+				return { icon: google_icon, dim: true };
 			case FAVICON_MODE.Actual:
-				return actual_icon;
+				return { icon: actual_icon, dim: true };
 			default:
-				return default_icon;
+				return { icon: default_icon, dim: true };
 		}
 	}
 

@@ -1,51 +1,75 @@
-import { ValidTab } from './ValidTab';
-
 export class TabInfo
 {
-	public scrollPosition: number;
-	public time: number|null;
-
-	public constructor(scroll_position: number = 0, time: number|null = null)
+	private constructor(
+		private readonly tabId: number,
+		public isPaused: boolean = false,
+		public lastAccess: number = 0
+	)
 	{
-		this.scrollPosition = scroll_position;
-		this.time = time;
 	}
 
-	public static async get(tab: ValidTab, request_time: boolean): Promise<TabInfo>
+	private static key(tabId: number): string
 	{
-		const func = request_time
-			? () => {
-				const video = document.querySelector('video.video-stream.html5-main-video') as HTMLVideoElement|null;
-				const seconds = video !== null ? Math.floor(video.currentTime) : null;
-				const scroll_position = (document.documentElement || document.body || {}).scrollTop || 0;
-				return {
-					scrollPosition: Math.floor(scroll_position),
-					time: seconds,
-				};
-			}
-			: () => {
-				const scroll_position = (document.documentElement || document.body || {}).scrollTop || 0;
-				return {
-					scrollPosition: Math.floor(scroll_position),
-					time: null,
-				};
-			};
+		return `tab-info-${tabId}`;
+	}
 
-		const results = await chrome.scripting.executeScript({
-			target: { tabId: tab.id, },
-			injectImmediately: true,
-			func: func,
-		});
+	public static async get(tabId: number): Promise<TabInfo>
+	{
+		const key = TabInfo.key(tabId);
+		const loaded = await chrome.storage.session.get([key]);
+		return Object.assign(new TabInfo(tabId), loaded[key] || {});
+	}
 
-		for (const r of results)
-		{
-			const data = r.result || null;
-			if ((data !== undefined) && (data !== null))
-			{
-				return new TabInfo(data.scrollPosition, data.time);
-			}
-		}
+	public static async destroy(tabId: number): Promise<void>
+	{
+		const key = TabInfo.key(tabId);
+		await chrome.storage.session.remove(key);
+	}
 
-		return new TabInfo();
+	public static async activated(tabId: number): Promise<TabInfo>
+	{
+		const info = await TabInfo.get(tabId);
+		info.lastAccess = (new Date()).getTime();
+		await info.save();
+
+		return info;
+	}
+
+	public static async togglePause(tabId: number): Promise<TabInfo>
+	{
+		const info = await TabInfo.get(tabId);
+		info.isPaused = !info.isPaused;
+		await info.save();
+
+		return info;
+	}
+
+	public static async pause(tabId: number): Promise<TabInfo>
+	{
+		const info = await TabInfo.get(tabId);
+		info.isPaused = true;
+		await info.save();
+
+		return info;
+	}
+
+	public static async unpause(tabId: number): Promise<TabInfo>
+	{
+		const info = await TabInfo.get(tabId);
+		info.isPaused = false;
+		await info.save();
+
+		return info;
+	}
+
+	public static async isPaused(tabId: number): Promise<boolean>
+	{
+		return (await TabInfo.get(tabId)).isPaused;
+	}
+
+	public save(): Promise<void>
+	{
+		const key = TabInfo.key(this.tabId);
+		return  chrome.storage.session.set({ [key]: this });
 	}
 }

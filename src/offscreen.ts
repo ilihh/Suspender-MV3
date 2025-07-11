@@ -1,5 +1,5 @@
 import { MESSAGE_TARGET, MESSAGE } from './includes/constants';
-import { Request, Response } from './includes/Messenger';
+import { SuspenderRequest, SuspenderResponse } from './includes/Messenger';
 
 interface Battery
 {
@@ -17,7 +17,7 @@ async function getBatteryStatus(): Promise<boolean>
 	return true;
 }
 
-chrome.runtime.onMessage.addListener(async (message: Request, sender: chrome.runtime.MessageSender, sendResponse: (response?: Response<boolean>) => void) => {
+chrome.runtime.onMessage.addListener(async (message: SuspenderRequest, sender: chrome.runtime.MessageSender, sendResponse: (response?: SuspenderResponse<boolean>) => void) => {
 	if (message.target !== MESSAGE_TARGET.Offscreen)
 	{
 		return;

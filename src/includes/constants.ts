@@ -7,7 +7,6 @@ export const TABS_QUERY_BASE: chrome.tabs.QueryInfo = {
 
 export const TABS_QUERY_AUTO: chrome.tabs.QueryInfo = {
 	status: 'complete',
-	active: false,
 };
 
 export enum PAGE
@@ -58,7 +57,6 @@ export enum MESSAGE
 
 	// internal
 	BatteryStatus = 'battery_status',
-	ConfigurationChanged = 'configuration_changed',
 
 	// options
 	OpenShortcuts = 'open_shortcuts',
@@ -78,6 +76,7 @@ export enum TAB_STATUS {
 	WhiteList = 'whitelist', // in whitelist
 	PlayingAudio = 'playing_audio', // playing audio
 	UnsavedForm = 'unsaved_form', // form
+	Active = 'active', // active
 	Pinned = 'pinned', // pinned
 	SuspendPaused = 'suspend_paused', // paused
 	Offline = 'offline', // is offline
@@ -100,6 +99,6 @@ export enum FAVICON_MODE
 	// show icon from google, dimmed, requires access to the google.com
 	Google = 'google',
 
-	// show actual icon, dimmed, requires access to the google.com
+	// show actual icon, dimmed, requires access to the all urls
 	Actual = 'actual',
 }

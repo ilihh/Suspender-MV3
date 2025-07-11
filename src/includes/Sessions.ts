@@ -19,15 +19,15 @@ export class Sessions
 		return sessions;
 	}
 
-	public save(): void
+	public async save(): Promise<void>
 	{
 		const temp = new Sessions();
 		temp.recent = this.recent;
 		temp.saved = this.saved;
 		temp.current = new Session();
 
-		DataStorage.save(Sessions._key, temp);
-		this.current.save();
+		await DataStorage.save(Sessions._key, temp);
+		return this.current.save();
 	}
 
 	public static async updateRecent(): Promise<void>
@@ -54,7 +54,7 @@ export class Sessions
 			sessions.recent = sessions.recent.slice(sessions.recent.length - Sessions.recentLimit, Sessions.recentLimit);
 		}
 
-		sessions.save();
+		return sessions.save();
 	}
 }
 
@@ -126,14 +126,14 @@ export class Session
 		return await DataStorage.load(Session._key, Session);
 	}
 
-	public save(): void
+	public async save(): Promise<void>
 	{
 		if (this.windows === 0)
 		{
 			return;
 		}
 
-		DataStorage.save(Session._key, this);
+		return DataStorage.save(Session._key, this);
 	}
 
 	public static restore(session: Session): Session
@@ -146,9 +146,9 @@ export class SessionWindow
 {
 	private static tabSeparator: string = '\n';
 
-	public tabs: string[];
-
-	public constructor(tabs: string[])
+	public constructor(
+		public tabs: string[],
+	)
 	{
 		this.tabs = tabs.map(x => x.trim()).filter(x => x.length > 0);
 	}

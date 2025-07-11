@@ -1,10 +1,13 @@
 import { Session, Sessions, SessionWindow } from './includes/Sessions';
 import { Configuration } from './includes/Configuration';
-import { i18n, isHTMLElement, setInnerText } from './includes/functions';
-import {Messenger, Request} from './includes/Messenger';
-import { MESSAGE } from './includes/constants';
+import { ConfigurationData } from './includes/ConfigurationData';
+import { i18n, isEnumValue, isHTMLElement, setInnerText } from './includes/functions';
+import { Messenger } from './includes/Messenger';
+import { FAVICON_MODE, MESSAGE } from './includes/constants';
 
-type Keys<T extends object, TValue> = keyof Pick<T, { [K in keyof T]: T[K] extends TValue ? K : never }[keyof T]>;
+type Keys<T, V> = {
+	[K in keyof T]-?: T[K] extends V ? K : never
+}[keyof T];
 
 function isKey<T extends object>(obj: T, key: PropertyKey): key is keyof T
 {
@@ -26,6 +29,15 @@ function isNumberKey<T extends object>(obj: T, key: keyof T): key is Keys<T, num
 	return key in obj && typeof obj[key as keyof T] === 'number';
 }
 
+function isEnumKey<T extends object, TEnum>(
+	obj: T,
+	key: keyof T,
+	enumObj: Record<string, TEnum>
+): key is Keys<T, TEnum>
+{
+	return key in obj && Object.values(enumObj).includes(obj[key as keyof T] as TEnum);
+}
+
 function clone(source: HTMLTemplateElement): HTMLElement
 {
 	return (source.content.cloneNode(true) as DocumentFragment).firstElementChild as HTMLElement;
@@ -33,11 +45,11 @@ function clone(source: HTMLTemplateElement): HTMLElement
 
 class OptionWrapper
 {
-	input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-	setter: () => void;
-	listener: (ev: Event) => void;
-
-	constructor(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, setter: () => void, listener: (ev: Event) => void)
+	public constructor(
+		private readonly input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+		public readonly setter: () => void,
+		private readonly listener: (ev: Event) => void,
+	)
 	{
 		this.input = input;
 		this.setter = setter;
@@ -50,37 +62,53 @@ class OptionWrapper
 
 class ConfigUI
 {
-	private readonly config: Configuration;
-	private readonly root: HTMLElement;
 	private readonly options: OptionWrapper[] = [];
 
-	private readonly youtubePermissions: chrome.permissions.Permissions = {
-		permissions: ['scripting'],
-		origins: ['https://www.youtube.com/watch*'],
+	private readonly inputs: (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
+
+	private readonly iconsPermissions: {
+		[k in FAVICON_MODE]?: () => Promise<boolean>
 	};
 
-	private readonly scrollPermissions: chrome.permissions.Permissions = {
-		permissions: ['scripting'],
-		origins: ["http://*/*", "https://*/*", "file://*/*"],
+	private readonly permissions: {
+		[K in keyof ConfigurationData]?: () => Promise<boolean>
 	};
 
-	private readonly historyPermissions: chrome.permissions.Permissions = {
-		permissions: ['history'],
-	};
-
-	private readonly downloadsPermissions: chrome.permissions.Permissions = {
-		permissions: ['downloads'],
-	};
-
-	private readonly inputs: NodeListOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
-
-	public constructor(root: HTMLElement, config: Configuration)
+	public constructor(
+		private readonly root: HTMLElement,
+		private readonly config: Configuration,
+	)
 	{
-		this.root = root;
-		this.config = config;
+		this.permissions = {
+			maintainYoutubeTime: () => this.requestPermissions({
+				permissions: ['scripting'],
+				origins: ['https://www.youtube.com/watch*'],
+			}),
+			restoreScrollPosition: () => this.requestPermissions({
+				permissions: ['scripting'],
+				origins: ["http://*/*", "https://*/*", "file://*/*"],
+			}),
+			cleanupHistory: () => this.requestPermissions({
+				permissions: ['history'],
+			}),
+			exportSessions: () => this.requestPermissions({
+				permissions: ['downloads'],
+			}),
+		};
 
-		const query = '.options-block[data-config] input[id], .options-block[data-config] select[id], .options-block[data-config] textarea[id]';
-		this.inputs = this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query);
+		this.iconsPermissions = {
+			[FAVICON_MODE.Google]: () => this.requestPermissions({
+				origins: ["https://www.google.com/s2/favicons*"],
+			}),
+			[FAVICON_MODE.Actual]: () => this.requestPermissions({
+				origins: ["http://*/*", "https://*/*", "file://*/*"],
+			}),
+		};
+
+		const query = '.options-block[data-config] input[data-field],' +
+			'.options-block[data-config] select[data-field],' +
+			'.options-block[data-config] textarea[data-field]';
+		this.inputs = Array.from(this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query));
 		this.init();
 	}
 
@@ -88,10 +116,10 @@ class ConfigUI
 	{
 		this.createOptions();
 
-		chrome.runtime.onMessage.addListener((request: Request, sender: chrome.runtime.MessageSender, sendResponse: (response: any) => void) => {
-			if (request.action === MESSAGE.ConfigurationChanged)
+		chrome.storage.local.onChanged.addListener(async changes => {
+			if (Configuration.StorageKey in changes)
 			{
-				this.updateConfig();
+				await this.updateConfig();
 			}
 		});
 	}
@@ -110,34 +138,45 @@ class ConfigUI
 	private createOptions(): void
 	{
 		this.inputs.forEach(el => {
-			const key = el.id;
-			if (!isKey(this.config, key))
+			const key = el.dataset.field ?? '';
+			if (!isKey(this.config.data, key))
 			{
 				alert('Unknown field:' + key);
 				return;
 			}
 
-			if (el instanceof HTMLInputElement && el.type === 'checkbox' && isBooleanKey<Configuration>(this.config, key))
+			if (el instanceof HTMLInputElement)
 			{
-				this.options.push(new OptionWrapper(
-					el,
-					() => el.checked = this.config[key],
-					ev => this.onCheckboxInput(ev, el, key),
-				));
+				if ((el.type === 'checkbox') && isBooleanKey(this.config.data, key))
+				{
+					this.options.push(new OptionWrapper(
+						el,
+						() => el.checked = this.config.data[key],
+						ev => this.onCheckboxInput(ev, el, key),
+					));
+				}
+				if ((el.type === 'radio') && isEnumKey(this.config.data, key, FAVICON_MODE))
+				{
+					this.options.push(new OptionWrapper(
+						el,
+						() => el.checked = this.config.data[key] === el.value,
+						ev => this.onRadioInput(ev, el, key),
+					));
+				}
 			}
-			else if (el instanceof HTMLSelectElement && isNumberKey<Configuration>(this.config, key))
+			else if (el instanceof HTMLSelectElement && isNumberKey(this.config.data, key))
 			{
 				this.options.push(new OptionWrapper(
 					el,
-					() => el.value = this.config[key].toString(),
+					() => el.value = this.config.data[key].toString(),
 					ev => this.onSelectInput(ev, el, key),
 				));
 			}
-			else if (el instanceof HTMLTextAreaElement && isArrayKey<Configuration>(this.config, key))
+			else if (el instanceof HTMLTextAreaElement && isArrayKey(this.config.data, key))
 			{
 				this.options.push(new OptionWrapper(
 					el,
-					() => el.value = (this.config[key] as string[]).join('\n'),
+					() => el.value = (this.config.data[key] as string[]).join('\n'),
 					ev => this.onTextareaInput(ev, el, key),
 				));
 			}
@@ -149,61 +188,95 @@ class ConfigUI
 		return await chrome.permissions.contains(permissions) || await chrome.permissions.request(permissions);
 	}
 
-	private async onCheckboxInput(ev: Event, el: HTMLInputElement, key: Keys<Configuration, boolean>): Promise<void>
+	private async onRadioInput(ev: Event, el: HTMLInputElement, key: Keys<ConfigurationData, FAVICON_MODE>): Promise<void>
+	{
+		if (!el.checked || !isEnumValue(FAVICON_MODE, el.value))
+		{
+			return;
+		}
+
+		// revert value back
+		el.checked = false;
+		for (const input of this.inputs)
+		{
+			if (input instanceof HTMLInputElement && (input.type === 'radio') && (input.value === this.config.data[key]))
+			{
+				input.checked = true;
+				break;
+			}
+		}
+
+		const permission = this.iconsPermissions[el.value];
+		if (permission !== undefined && !await permission())
+		{
+			ev.preventDefault();
+			return;
+		}
+
+		el.checked = true;
+
+		this.config.data[key] = el.value;
+		await this.saveConfig();
+	}
+
+	private async onCheckboxInput(ev: Event, el: HTMLInputElement, key: Keys<ConfigurationData, boolean>): Promise<void>
 	{
 		if (el.checked)
 		{
 			el.checked = false;
 
-			if (((key === 'maintainYoutubeTime') && !(await this.requestPermissions(this.youtubePermissions)))
-				|| ((key === 'restoreScrollPosition') && !(await this.requestPermissions(this.scrollPermissions)))
-				|| ((key === 'cleanupHistory') && !(await this.requestPermissions(this.historyPermissions)))
-				|| ((key === 'exportSessions') && !(await this.requestPermissions(this.downloadsPermissions)))
-			)
+			const permission = this.permissions[key];
+			if (permission !== undefined && !await permission())
 			{
 				ev.preventDefault();
-				el.checked = false;
 				return;
 			}
 
 			el.checked = true;
 		}
 
-		this.config[key] = el.checked;
-		this.config.save();
+		this.config.data[key] = el.checked;
+		await this.saveConfig();
 	}
 
-	private onSelectInput(ev: Event, el: HTMLSelectElement, key: Keys<Configuration, number>): void
+	private saveConfig(): Promise<void>
 	{
-		this.config[key] = parseInt(el.value, 10);
-		this.config.save();
+		return this.config.save();
 	}
 
-	private onTextareaInput(ev: Event, el: HTMLTextAreaElement, key: Keys<Configuration, Array<string>>): void
+	private async onSelectInput(ev: Event, el: HTMLSelectElement, key: Keys<ConfigurationData, number>): Promise<void>
 	{
-		this.config[key] = el.value.split('\n').map(s => s.trim());
-		this.config.save();
+		this.config.data[key] = parseInt(el.value, 10);
+		await this.saveConfig();
+	}
+
+	private async onTextareaInput(ev: Event, el: HTMLTextAreaElement, key: Keys<ConfigurationData, Array<string>>): Promise<void>
+	{
+		this.config.data[key] = el.value.split('\n').map(s => s.trim());
+		await this.saveConfig();
 	}
 }
 
 class ShortcutsUI
 {
-	private readonly root: HTMLElement;
 	private readonly template: HTMLTemplateElement;
 	private readonly container: HTMLElement;
 
 	private readonly defaultDescription: string;
 	private readonly defaultShortcut: string;
 
-	public constructor(root: HTMLElement)
+	public constructor(
+		private readonly root: HTMLElement,
+	)
 	{
 		this.root = root;
 		this.template = this.root.querySelector('template#command-template')! as HTMLTemplateElement;
 		this.container = this.root.querySelector('#commands-list')!;
-		const _ = this.build();
 
 		this.defaultDescription = chrome.i18n.getMessage('page_options_commands_default_description');
 		this.defaultShortcut = chrome.i18n.getMessage('page_options_commands_default_shortcut');
+
+		const _ = this.build();
 	}
 
 	private async build(): Promise<void>
@@ -228,9 +301,6 @@ class ShortcutsUI
 
 class SessionsUI
 {
-	private readonly sessions: Sessions;
-	private readonly config: Configuration;
-	private readonly root: HTMLElement;
 	private readonly file: HTMLInputElement;
 	private readonly file_import: HTMLButtonElement;
 
@@ -242,7 +312,11 @@ class SessionsUI
 	private readonly deleteConfirm: string;
 	private readonly importError: string = '';
 
-	public constructor(root: HTMLElement, sessions: Sessions, config: Configuration)
+	public constructor(
+		private readonly root: HTMLElement,
+		private readonly sessions: Sessions,
+		private readonly config: Configuration,
+	)
 	{
 		this.root = root;
 		this.sessions = sessions;
@@ -259,10 +333,10 @@ class SessionsUI
 		this.deleteConfirm = chrome.i18n.getMessage('page_options_sessions_delete_confirm');
 		this.importError = chrome.i18n.getMessage('page_options_sessions_import_error');
 
-		const _ = this.build();
+		this.build();
 	}
 
-	private async build()
+	private build(): void
 	{
 		this.file_import.addEventListener('click', () => this.file.click());
 		this.file.addEventListener('input', () => {
@@ -301,7 +375,7 @@ class SessionsUI
 		container.addEventListener('pointerenter', () => {
 			if (isHTMLElement<HTMLButtonElement>(btn_export))
 			{
-				btn_export.disabled = !this.config.exportSessions;
+				btn_export.disabled = !this.config.data.exportSessions;
 			}
 		});
 
@@ -318,7 +392,7 @@ class SessionsUI
 			URL.revokeObjectURL(url);
 		});
 
-		container.querySelector('button[data-save]')!.addEventListener('click', () =>
+		container.querySelector('button[data-save]')!.addEventListener('click', async () =>
 		{
 			const name = (prompt(this.savePrompt) ?? '').trim();
 			if (!name)
@@ -327,29 +401,29 @@ class SessionsUI
 			}
 
 			this.sessions.saved.push(session.copy(name));
-			this.sessions.save();
+			await this.sessions.save();
 			this.renderSaved();
 		});
 
 		if (type !== 'current')
 		{
-			container.querySelector('button[data-open-suspended]')!.addEventListener('click', () => {
-				const _ = Messenger.send({
+			container.querySelector('button[data-open-suspended]')!.addEventListener('click', async () => {
+				await Messenger.send({
 					action: MESSAGE.OpenSession,
 					urls: session.data,
 					suspended: true,
 				});
 			});
 
-			container.querySelector('button[data-open-loaded]')!.addEventListener('click', () => {
-				const _ = Messenger.send({
+			container.querySelector('button[data-open-loaded]')!.addEventListener('click', async () => {
+				await Messenger.send({
 					action: MESSAGE.OpenSession,
 					urls: session.data,
 					suspended: false,
 				});
 			});
 
-			container.querySelector('button[data-rename]')!.addEventListener('click', () =>
+			container.querySelector('button[data-rename]')!.addEventListener('click', async () =>
 			{
 				const name = (prompt(this.savePrompt, session.name) ?? '').trim();
 				if (!name)
@@ -358,11 +432,11 @@ class SessionsUI
 				}
 
 				session.name = name;
-				this.sessions.save();
+				await this.sessions.save();
 				this.renderSessionsBlock(type);
 			});
 
-			container.querySelector('button[data-delete]')!.addEventListener('click', () =>
+			container.querySelector('button[data-delete]')!.addEventListener('click', async () =>
 			{
 				if (!confirm(this.deleteConfirm))
 				{
@@ -373,14 +447,14 @@ class SessionsUI
 				if (index > -1)
 				{
 					this.sessions[type].splice(index, 1);
-					this.sessions.save();
+					await this.sessions.save();
 					this.renderSessionsBlock(type);
 				}
 			});
 		}
 	}
 
-	private importFile()
+	private importFile(): void
 	{
 		if ((this.file.files === null)
 			|| (this.file.files.length === 0)
@@ -394,18 +468,18 @@ class SessionsUI
 
 		const file = this.file.files[0];
 		const reader = new FileReader();
-		reader.onload = (e) =>
+		reader.onload = async (e) =>
 		{
 			const contents = e.target?.result;
 			if (typeof contents === 'string')
 			{
-				this.parseFile(file.name, contents);
+				await this.parseFile(file.name, contents);
 			}
 		};
 		reader.readAsText(file);
 	}
 
-	private parseFile(name: string, content: string): void
+	private async parseFile(name: string, content: string): Promise<void>
 	{
 		const ext = '.txt';
 		if (name.endsWith(ext))
@@ -421,7 +495,7 @@ class SessionsUI
 
 		const session = new Session(Session.createWindows(content), name);
 		this.sessions.saved.push(session);
-		this.sessions.save();
+		await this.sessions.save();
 		this.renderSaved();
 	}
 
@@ -434,16 +508,16 @@ class SessionsUI
 			chrome.i18n.getMessage('page_options_sessions_window', [index.toString()])
 		);
 
-		window_view.querySelector('.window-name button[data-open-suspended]')!.addEventListener('click', () => {
-			const _ = Messenger.send({
+		window_view.querySelector('.window-name button[data-open-suspended]')!.addEventListener('click', async () => {
+			await Messenger.send({
 				action: MESSAGE.OpenWindow,
 				urls: window.toString(),
 				suspended: true,
 			})
 		});
 
-		window_view.querySelector('.window-name button[data-open-loaded]')!.addEventListener('click', () => {
-			const _ = Messenger.send({
+		window_view.querySelector('.window-name button[data-open-loaded]')!.addEventListener('click', async () => {
+			await Messenger.send({
 				action: MESSAGE.OpenWindow,
 				urls: window.toString(),
 				suspended: false,
@@ -464,7 +538,7 @@ class SessionsUI
 		return window_view;
 	}
 
-	private renderSession(session: Session, container: HTMLElement, type: 'current' | 'recent' | 'saved')
+	private renderSession(session: Session, container: HTMLElement, type: 'current' | 'recent' | 'saved'): void
 	{
 		const session_view = clone(this.templateSession);
 		session_view.classList.add(`session-${type}`);
@@ -498,13 +572,13 @@ class SessionsUI
 
 class MigrateUI
 {
-	private readonly root: HTMLElement;
-
 	private readonly id: HTMLInputElement;
 
 	private readonly btn: HTMLButtonElement;
 
-	public constructor(root: HTMLElement)
+	public constructor(
+		private readonly root: HTMLElement,
+	)
 	{
 		this.root = root;
 		this.id = this.root.querySelector('input#extension-id')!;
@@ -515,13 +589,13 @@ class MigrateUI
 
 	private init()
 	{
-		this.id.addEventListener('input', ev => {
+		this.id.addEventListener('input', async () => {
 			const id = this.id.value.trim();
 			this.btn.disabled = (id.length === 32) && (id !== chrome.runtime.id);
 		});
 
-		this.btn.addEventListener('click', ev => {
-			const _ = Messenger.send({
+		this.btn.addEventListener('click', async () => {
+			await Messenger.send({
 				action: MESSAGE.Migrate,
 				extensionId: this.id.value.trim(),
 			})

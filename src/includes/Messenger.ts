@@ -1,34 +1,33 @@
 import { MESSAGE_TARGET, MESSAGE } from './constants';
 
-export interface Response<T>
+export interface SuspenderResponse<T>
 {
 	success: boolean;
 	data?: T;
 	error?: string;
 }
 
-export interface RequestBase extends Record<any, any>
-{
-	target?: MESSAGE_TARGET;
-	tabId?: number;
-}
-
-export interface Request extends RequestBase
+export interface SuspenderRequest
 {
 	action: MESSAGE;
+
+	target?: MESSAGE_TARGET;
+	tabId?: number;
 	url?: string;
 	urls?: string,
 	suspended?: boolean,
+	extensionId?: string,
+	filename?: string;
 }
 
 export class Messenger
 {
-	public static action<T>(action: MESSAGE): Promise<Response<T>>
+	public static action<T>(action: MESSAGE): Promise<SuspenderResponse<T>>
 	{
 		return Messenger.send<T>({ action: action });
 	}
 
-	public static send<T>(request: Request): Promise<Response<T>>
+	public static send<T>(request: SuspenderRequest): Promise<SuspenderResponse<T>>
 	{
 		return chrome.runtime.sendMessage(request);
 	}

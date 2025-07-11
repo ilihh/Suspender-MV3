@@ -17,7 +17,7 @@ export class ContextMenu
 
 	private static async update(enable: boolean): Promise<void>
 	{
-		const _ = await chrome.contextMenus.removeAll();
+		await chrome.contextMenus.removeAll();
 
 		if (enable)
 		{

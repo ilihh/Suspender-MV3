@@ -37,6 +37,7 @@
 	"tab_status_whitelist": { "message": "URL is in whitelist." },
 	"tab_status_playing_audio": { "message": "Tab is playing audio." },
 	"tab_status_unsaved_form": { "message": "Tab has unsaved form data." },
+	"tab_status_local_file": { "message": "Local file cannot be suspended." },
 	"tab_status_active": { "message": "Tab is active." },
 	"tab_status_pinned": { "message": "Tab has been pinned." },
 	"tab_status_suspend_paused": { "message": "Tabs suspension paused." },

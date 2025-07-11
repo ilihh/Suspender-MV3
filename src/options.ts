@@ -1,7 +1,7 @@
 import { Session, Sessions, SessionWindow } from './includes/Sessions';
 import { Configuration } from './includes/Configuration';
 import { ConfigurationData } from './includes/ConfigurationData';
-import { i18n, isEnumValue, isHTMLElement, setInnerText } from './includes/functions';
+import { i18n, isEnumValue, isHTMLElement, isLocalFilesAllowed, setInnerText } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 import { FAVICON_MODE, MESSAGE } from './includes/constants';
 import { ContextMenu } from './includes/ContextMenu';
@@ -84,8 +84,13 @@ class ConfigUI
 	public constructor(
 		private readonly root: HTMLElement,
 		private readonly config: Configuration,
+		private readonly isLocalFilesAllowed: boolean,
 	)
 	{
+		const origins = this.isLocalFilesAllowed
+			? ["http://*/*", "https://*/*", "file://*/*"]
+			: ["http://*/*", "https://*/*", ]
+
 		this.permissions = {
 			enableContextMenu: () => this.requestPermissions(ContextMenu.permissions),
 			maintainYoutubeTime: () => this.requestPermissions({
@@ -98,11 +103,11 @@ class ConfigUI
 			}),
 			restoreScrollPosition: () => this.requestPermissions({
 				permissions: ['scripting'],
-				origins: ["http://*/*", "https://*/*", ], //
+				origins: origins,
 			}),
 			neverSuspendUnsavedData: () => this.requestPermissions({
 				permissions: ['scripting'],
-				origins: ["http://*/*", "https://*/*", ], //"file://*/*"
+				origins: origins,
 			}),
 			cleanupHistory: () => this.requestPermissions({
 				permissions: ['history'],
@@ -117,7 +122,7 @@ class ConfigUI
 				origins: ["https://www.google.com/s2/favicons*"],
 			}),
 			[FAVICON_MODE.Actual]: () => this.requestPermissions({
-				origins: ["http://*/*", "https://*/*", ], // "file://*/*"
+				origins: origins,
 			}),
 		};
 
@@ -125,7 +130,7 @@ class ConfigUI
 			'.options-block[data-config] select[data-field],' +
 			'.options-block[data-config] textarea[data-field]';
 		this.inputs = Array.from(this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query));
-		this.init();
+		void this.init();
 	}
 
 	private async init(): Promise<void>
@@ -137,14 +142,6 @@ class ConfigUI
 		}
 
 		this.createOptions();
-
-		for (const option of this.options)
-		{
-			if (option.field === 'suspendLocalFiles')
-			{
-				option.input.disabled = !await chrome.extension.isAllowedFileSchemeAccess();
-			}
-		}
 
 		chrome.storage.local.onChanged.addListener(async changes => {
 			if (Configuration.StorageKey in changes)
@@ -173,6 +170,11 @@ class ConfigUI
 			{
 				alert('Unknown field:' + key);
 				return;
+			}
+
+			if (key === 'suspendLocalFiles')
+			{
+				el.disabled = !this.isLocalFilesAllowed;
 			}
 
 			if (el instanceof HTMLInputElement)
@@ -675,8 +677,9 @@ async function init()
 
 	const config = await Configuration.load();
 	const sessions = await Sessions.load();
+	const local_files_allowed = await isLocalFilesAllowed();
 
-	new ConfigUI(document.getElementById('settings')!, config);
+	new ConfigUI(document.getElementById('settings')!, config, local_files_allowed);
 	new ShortcutsUI(document.getElementById('shortcuts')!);
 	new SessionsUI(document.getElementById('sessions')!, sessions, config);
 	new MigrateUI(document.getElementById('migrate')!);

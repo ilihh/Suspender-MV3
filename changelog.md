@@ -2,7 +2,7 @@
 
 ## 1.0.7
 
-- bugfix: file://*/* permission cannot be requested
+- bugfix: file:// permission cannot be requested
 - options: added "Suspend local files" option
 - options: "Never suspend unsaved data" is now disabled by default since it requires permission
 

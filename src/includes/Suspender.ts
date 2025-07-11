@@ -7,6 +7,7 @@ import { ScrollPositions } from './ScrollPositions';
 import { SessionWindow } from './Sessions';
 import { isValidTab, ValidTab } from './ValidTab';
 import { TabInfo } from './TabInfo';
+import { isLocalFilesAllowed } from './functions';
 
 export class Suspender
 {
@@ -37,7 +38,7 @@ export class Suspender
 	{
 		if (this._filesSchemeAllowed == null)
 		{
-			this._filesSchemeAllowed = await chrome.extension.isAllowedFileSchemeAccess();
+			this._filesSchemeAllowed = await isLocalFilesAllowed();
 		}
 
 		return this._filesSchemeAllowed;

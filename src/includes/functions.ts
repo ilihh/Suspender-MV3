@@ -23,6 +23,11 @@ export async function isUrlAllowed(url: string): Promise<boolean>
 	return await chrome.permissions.contains(permissions);
 }
 
+export function isLocalFilesAllowed(): Promise<boolean>
+{
+	return chrome.extension.isAllowedFileSchemeAccess();
+}
+
 export function setInnerText(element: HTMLElement|null, text: string): void
 {
 	if (element === null)

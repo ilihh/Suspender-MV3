@@ -4,6 +4,7 @@ import { ConfigurationData } from './includes/ConfigurationData';
 import { i18n, isEnumValue, isHTMLElement, setInnerText } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 import { FAVICON_MODE, MESSAGE } from './includes/constants';
+import { ContextMenu } from './includes/ContextMenu';
 
 type Keys<T, V> = {
 	[K in keyof T]-?: T[K] extends V ? K : never
@@ -19,11 +20,6 @@ function isBooleanKey<T extends object>(obj: T, key: keyof T): key is Keys<T, bo
 	return key in obj && typeof obj[key as keyof T] === 'boolean';
 }
 
-function isArrayKey<T extends object>(obj: T, key: keyof T): key is Keys<T, Array<string>>
-{
-	return key in obj && Array.isArray(obj[key]);
-}
-
 function isNumberKey<T extends object>(obj: T, key: keyof T): key is Keys<T, number>
 {
 	return key in obj && typeof obj[key as keyof T] === 'number';
@@ -36,6 +32,16 @@ function isEnumKey<T extends object, TEnum>(
 ): key is Keys<T, TEnum>
 {
 	return key in obj && Object.values(enumObj).includes(obj[key as keyof T] as TEnum);
+}
+
+// is there a better way to do this?
+const configurationDataArrayStringKeys: { [K in Keys<ConfigurationData, string[]>]: boolean } = {
+	whiteList: true,
+};
+
+function isConfigurationDataArrayStringKey<T extends object>(obj: T, key: keyof T): key is Keys<T, Array<string>>
+{
+	return key in obj && key in configurationDataArrayStringKeys && Array.isArray(obj[key]);
 }
 
 function clone(source: HTMLTemplateElement): HTMLElement
@@ -80,11 +86,16 @@ class ConfigUI
 	)
 	{
 		this.permissions = {
+			enableContextMenu: () => this.requestPermissions(ContextMenu.permissions),
 			maintainYoutubeTime: () => this.requestPermissions({
 				permissions: ['scripting'],
 				origins: ['https://www.youtube.com/watch*'],
 			}),
 			restoreScrollPosition: () => this.requestPermissions({
+				permissions: ['scripting'],
+				origins: ["http://*/*", "https://*/*", "file://*/*"],
+			}),
+			neverSuspendUnsavedData: () => this.requestPermissions({
 				permissions: ['scripting'],
 				origins: ["http://*/*", "https://*/*", "file://*/*"],
 			}),
@@ -169,15 +180,15 @@ class ConfigUI
 				this.options.push(new OptionWrapper(
 					el,
 					() => el.value = this.config.data[key].toString(),
-					ev => this.onSelectInput(ev, el, key),
+					() => this.onSelectInput(el, key),
 				));
 			}
-			else if (el instanceof HTMLTextAreaElement && isArrayKey(this.config.data, key))
+			else if (el instanceof HTMLTextAreaElement && isConfigurationDataArrayStringKey(this.config.data, key))
 			{
 				this.options.push(new OptionWrapper(
 					el,
 					() => el.value = (this.config.data[key] as string[]).join('\n'),
-					ev => this.onTextareaInput(ev, el, key),
+					() => this.onTextareaInput(el, key),
 				));
 			}
 		});
@@ -244,13 +255,13 @@ class ConfigUI
 		return this.config.save();
 	}
 
-	private async onSelectInput(ev: Event, el: HTMLSelectElement, key: Keys<ConfigurationData, number>): Promise<void>
+	private async onSelectInput(el: HTMLSelectElement, key: Keys<ConfigurationData, number>): Promise<void>
 	{
 		this.config.data[key] = parseInt(el.value, 10);
 		await this.saveConfig();
 	}
 
-	private async onTextareaInput(ev: Event, el: HTMLTextAreaElement, key: Keys<ConfigurationData, Array<string>>): Promise<void>
+	private async onTextareaInput(el: HTMLTextAreaElement, key: Keys<ConfigurationData, Array<string>>): Promise<void>
 	{
 		this.config.data[key] = el.value.split('\n').map(s => s.trim());
 		await this.saveConfig();
@@ -276,7 +287,7 @@ class ShortcutsUI
 		this.defaultDescription = chrome.i18n.getMessage('page_options_commands_default_description');
 		this.defaultShortcut = chrome.i18n.getMessage('page_options_commands_default_shortcut');
 
-		const _ = this.build();
+		void this.build();
 	}
 
 	private async build(): Promise<void>
@@ -615,10 +626,10 @@ async function init()
 	const config = await Configuration.load();
 	const sessions = await Sessions.load();
 
-	const config_ui = new ConfigUI(document.getElementById('settings')!, config);
-	const shortcuts_ui = new ShortcutsUI(document.getElementById('shortcuts')!);
-	const sessions_ui = new SessionsUI(document.getElementById('sessions')!, sessions, config);
-	const migrate_ui = new MigrateUI(document.getElementById('migrate')!);
+	new ConfigUI(document.getElementById('settings')!, config);
+	new ShortcutsUI(document.getElementById('shortcuts')!);
+	new SessionsUI(document.getElementById('sessions')!, sessions, config);
+	new MigrateUI(document.getElementById('migrate')!);
 }
 
 document.addEventListener('DOMContentLoaded', () => init());

@@ -8,6 +8,7 @@ import { Session, Sessions } from './includes/Sessions';
 import { isValidTab, ValidTab } from './includes/ValidTab';
 import { TabInfo } from './includes/TabInfo';
 import { MessageProcessor, MessageProcessorResult } from './includes/MessageProcessor';
+import { ContextMenu } from './includes/ContextMenu';
 
 // runtime
 chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) => {
@@ -113,6 +114,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab)=> {
 	await executeMessage(tab, {action: info.menuItemId, url: info.linkUrl, });
 });
 
+// shortcuts/hotkeys
 chrome.commands.onCommand.addListener(async (action, tab)=> {
 	if (!isEnumValue(MESSAGE, action) || !isValidTab(tab))
 	{

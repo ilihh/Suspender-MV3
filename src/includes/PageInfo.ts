@@ -30,7 +30,7 @@ export class PageInfo implements InternalPageInfo
 			tab.id,
 			data.restoreScrollPosition,
 			data.maintainYoutubeTime && tab.url.startsWith('https://www.youtube.com/watch'),
-			data.suspendUnsavedData,
+			data.neverSuspendUnsavedData,
 		);
 		if (results === false)
 		{
@@ -55,6 +55,7 @@ export class PageInfo implements InternalPageInfo
 		{
 			return  await chrome.scripting.executeScript({
 				target: { tabId: tabId, },
+				world: 'MAIN',
 				injectImmediately: true,
 				func: (scroll: boolean, time: boolean, changed_fields: boolean): InternalPageInfo => {
 					const youtube_time = () => {
@@ -119,18 +120,18 @@ export class PageInfo implements InternalPageInfo
 						return false;
 					};
 
-					const get_time = time ? youtube_time : () => null;
+					const seconds = time ? youtube_time() : null;
 
 					const scroll_position = scroll
 						? (document.documentElement || document.body || {}).scrollTop || 0
 						: 0;
 
-					const changed = changed_fields ? any_field_changed : () => false;
+					const changed = changed_fields ? any_field_changed() : false;
 
 					return {
 						scrollPosition: Math.floor(scroll_position),
-						time: get_time(),
-						changedFields: changed(),
+						time: seconds,
+						changedFields: changed,
 					};
 				},
 				args: [scroll, time, changed_fields]

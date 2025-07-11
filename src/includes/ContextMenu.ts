@@ -3,9 +3,22 @@ import { MESSAGE } from './constants';
 export class ContextMenu
 {
 	private static updating: Promise<void>|null = null;
+	public static readonly permissions: chrome.permissions.Permissions = {
+		permissions: ['contextMenus'],
+	};
+
+	public static allowed(): Promise<boolean>
+	{
+		return chrome.permissions.contains(ContextMenu.permissions);
+	}
 
 	public static async create(enable: boolean): Promise<void>
 	{
+		if (!await ContextMenu.allowed())
+		{
+			return;
+		}
+
 		if (ContextMenu.updating === null)
 		{
 			ContextMenu.updating = ContextMenu.update(enable);

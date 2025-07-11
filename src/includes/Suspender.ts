@@ -166,11 +166,6 @@ export class Suspender
 
 	private async hasUnsavedData(tab: ValidTab): Promise<boolean>
 	{
-		if (!this.config.data.suspendUnsavedData)
-		{
-			return false;
-		}
-
 		const info = await PageInfo.get(tab, this.config.data);
 		return info !== false && info.changedFields;
 	}
@@ -274,18 +269,16 @@ export class Suspender
 		await chrome.history.deleteUrl({url: suspendedUrl});
 		const visits = await chrome.history.getVisits({url: originalUrl});
 
-		const latestVisit = visits.pop();
-		const previousVisit = visits.pop();
-		if ((previousVisit !== undefined) && (previousVisit.visitTime !== undefined))
+		void visits.pop(); // latest
+		const previous = visits.pop();
+		if ((previous !== undefined) && (previous.visitTime !== undefined))
 		{
 			chrome.history.deleteRange(
 				{
-					startTime: previousVisit.visitTime - 0.1,
-					endTime: previousVisit.visitTime + 0.1,
+					startTime: previous.visitTime - 0.1,
+					endTime: previous.visitTime + 0.1,
 				},
-				() =>
-				{
-				},
+				() => { },
 			);
 		}
 	}
@@ -374,7 +367,7 @@ export class Suspender
 
 		if (tab.lastAccessed !== undefined)
 		{
-			return !this.config.data.suspendUnsavedData && await this.hasUnsavedData(tab)
+			return this.config.data.neverSuspendUnsavedData && await this.hasUnsavedData(tab)
 				? TAB_STATUS.UnsavedForm
 				: TAB_STATUS.Normal;
 		}

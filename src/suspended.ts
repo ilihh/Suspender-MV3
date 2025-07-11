@@ -1,5 +1,5 @@
 import { SuspendedURL } from './includes/SuspendedURL';
-import { FAVICON_MODE, MESSAGE } from './includes/constants';
+import { MESSAGE } from './includes/constants';
 import { Messenger } from './includes/Messenger';
 import { getDimmedIcon, i18n, isHTMLElement, setInnerText } from './includes/functions';
 import { Configuration } from './includes/Configuration';

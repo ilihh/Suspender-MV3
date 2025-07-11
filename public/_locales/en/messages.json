@@ -108,23 +108,25 @@
 
 	"page_options_suspend_active": { "message": "Suspend active tabs" },
 	"page_options_suspend_pinned": { "message": "Suspend pinned tabs" },
-	"page_options_suspend_unsaved_data": { "message": "Suspend tabs that contain unsaved form inputs" },
 	"page_options_suspend_playing_audio": { "message": "Suspend tabs that are playing audio" },
 	"page_options_suspend_offline": { "message": "Suspend tabs when offline" },
+	"page_options_never_suspend_unsaved_data": { "message": "Never suspend tabs that contain unsaved form inputs" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requires access to all URLs and permission to execute scripts." },
 	"page_options_never_suspend_when_power_on": { "message": "Never suspend tabs when connected to power source" },
 	"page_options_white_list": { "message": "Never suspend tabs with URLs from the following list:" },
 	"page_options_white_list_hint": { "message": "Each item on a new line.\nExample:\n\tgithub.com\n\tyoutube.com/watch" },
 	"page_options_block_suspended": { "message": "Suspended tabs" },
 	"page_options_restore_scroll_position": { "message": "Restore scroll position and enable dimmed tabs icons" },
-	"page_options_restore_scroll_permissions": { "message": "Requires access to all URLs and execute scripts." },
+	"page_options_restore_scroll_permissions": { "message": "Requires access to all URLs and permission to execute scripts." },
 
 	"page_options_maintain_youtube_time": { "message": "Save YouTube timestamps for the tab with video" },
-	"page_options_youtube_permissions": { "message": "Requires access to https://www.youtube.com/watch* and execute scripts." },
+	"page_options_youtube_permissions": { "message": "Requires access to https://www.youtube.com/watch* and permission to execute scripts." },
 
 	"page_options_discard_tabs": { "message": "Discard tabs instead of suspending" },
 	"page_options_block_other": { "message": "Other" },
 
 	"page_options_enable_context_menu": { "message": "Add to the context menu" },
+	"page_options_enable_context_menu_permissions": { "message": "Requires access to the context menu." },
 	"page_options_cleanup_history": { "message": "Remove suspended pages from history" },
 	"page_options_cleanup_history_permissions": { "message": "Requires access to the history." },
 	"page_options_export_sessions": { "message": "Sessions export" },
@@ -133,7 +135,7 @@
 
 	"page_options_block_icons": { "message": "Tab Icons" },
 	"page_options_favicons_mode_no_dim": { "message": "Actual site icon (no dim)" },
-	"page_options_favicons_mode_no_dim_permissions": { "message": "Uses the site favicon as-is. No extra permissions needed. It will look identical to unsuspended tabs." },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Uses the site favicon as-is. No extra permissions needed. Suspended tab icons are the same as not suspended one." },
 	"page_options_favicons_mode_google": { "message": "Google icon (dimmed)" },
 	"page_options_favicons_mode_google_permissions": { "message": "Loads icon from Google Favicon API and dims it. Can different from actual icon but requires only access to Google." },
 	"page_options_favicons_mode_actual": { "message": "Actual site icon (dimmed)" },

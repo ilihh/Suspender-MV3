@@ -13,11 +13,11 @@ export class ConfigurationData
 
 	public suspendPinned: boolean = false;
 
-	public suspendUnsavedData: boolean = false;
-
 	public suspendPlayingAudio: boolean = false;
 
 	public suspendOffline: boolean = false;
+
+	public neverSuspendUnsavedData: boolean = true;
 
 	public neverSuspendWhenPowerOn: boolean = false;
 

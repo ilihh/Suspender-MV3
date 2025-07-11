@@ -54,16 +54,17 @@
 		</label>
 
 		<label>
-			<input type="checkbox" data-field="suspendUnsavedData" /> <span data-i18n="page_options_suspend_unsaved_data">Suspend tabs that contain unsaved form inputs</span>
-		</label>
-
-		<label>
 			<input type="checkbox" data-field="suspendPlayingAudio" /> <span data-i18n="page_options_suspend_playing_audio">Suspend tabs that are playing audio</span>
 		</label>
 
 		<label>
 			<input type="checkbox" data-field="suspendOffline" /> <span data-i18n="page_options_suspend_offline">Suspend tabs when offline</span>
 		</label>
+
+		<label>
+			<input type="checkbox" data-field="neverSuspendUnsavedData" /> <span data-i18n="page_options_never_suspend_unsaved_data">Never suspend tabs that contain unsaved form inputs</span>
+		</label>
+		<div class="comment" data-i18n="page_options_never_suspend_unsaved_data_permissions"></div>
 
 		<label>
 			<input type="checkbox" data-field="neverSuspendWhenPowerOn" /> <span data-i18n="page_options_never_suspend_when_power_on">Never suspend tabs when connected to power source</span>
@@ -90,28 +91,6 @@
 		<label>
 			<input type="checkbox" data-field="discardTabs" /> <span data-i18n="page_options_discard_tabs">Discard tabs instead of suspending</span>
 		</label>
-	</div>
-
-	<div class="options-block" data-config>
-		<h3 data-i18n="page_options_block_other">Other</h3>
-
-		<label>
-			<input type="checkbox" data-field="enableContextMenu" /> <span data-i18n="page_options_enable_context_menu">Add to the context menu</span>
-		</label>
-
-		<label>
-			<input type="checkbox" data-field="cleanupHistory" /> <span data-i18n="page_options_cleanup_history">Remove suspended pages from history</span>
-		</label>
-		<div class="comment" data-i18n="page_options_cleanup_history_permissions"></div>
-
-		<label>
-			<input type="checkbox" data-field="exportSessions" /> <span data-i18n="page_options_export_sessions">Enable sessions export</span>
-		</label>
-		<div class="comment" data-i18n="page_options_export_sessions_permissions"></div>
-
-		<label class="hidden">
-			<input type="checkbox" data-field="syncProfile" /> <span data-i18n="page_options_sync_profile">Sync settings with your Chrome profile</span>
-		</label>
 
 		<h3 data-i18n="page_options_block_icons">Tab Icons</h3>
 		<label>
@@ -128,6 +107,29 @@
 			<input type="radio" name="faviconsMode" value="actual" data-field="faviconsMode" /> <span data-i18n="page_options_favicons_mode_actual">Actual site icon (dimmed)</span>
 		</label>
 		<div class="comment" data-i18n="page_options_favicons_mode_actual_permissions">Uses the exact site icon and dims it. Requires access to all sites.</div>
+	</div>
+
+	<div class="options-block" data-config>
+		<h3 data-i18n="page_options_block_other">Other</h3>
+
+		<label>
+			<input type="checkbox" data-field="enableContextMenu" /> <span data-i18n="page_options_enable_context_menu">Add to the context menu</span>
+		</label>
+		<div class="comment hidden" data-i18n="page_options_enable_context_menu_permissions"></div>
+
+		<label>
+			<input type="checkbox" data-field="cleanupHistory" /> <span data-i18n="page_options_cleanup_history">Remove suspended pages from history</span>
+		</label>
+		<div class="comment" data-i18n="page_options_cleanup_history_permissions"></div>
+
+		<label>
+			<input type="checkbox" data-field="exportSessions" /> <span data-i18n="page_options_export_sessions">Enable sessions export</span>
+		</label>
+		<div class="comment" data-i18n="page_options_export_sessions_permissions"></div>
+
+		<label class="hidden">
+			<input type="checkbox" data-field="syncProfile" /> <span data-i18n="page_options_sync_profile">Sync settings with your Chrome profile</span>
+		</label>
 	</div>
 </div>
 

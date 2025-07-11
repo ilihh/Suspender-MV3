@@ -39,9 +39,10 @@ export class Sessions
 			return;
 		}
 
-		const last_recent: string = sessions.recent.length === 0
-			? ''
-			: sessions.recent[sessions.recent.length - 1].data;
+		const index = sessions.recent.length - 1;
+		const last_recent: string = (sessions.recent.length > 0) && sessions.recent[index]
+			? sessions.recent[index].data
+			: '';
 
 		if (last_recent === backup.data)
 		{

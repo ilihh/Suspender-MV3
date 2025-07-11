@@ -5,7 +5,7 @@ import { Messenger } from './includes/Messenger';
 async function init()
 {
 	const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-	if ((tabs.length == 0) || (tabs[0].id === undefined))
+	if ((tabs.length == 0) || !tabs[0] || (tabs[0].id === undefined))
 	{
 		return;
 	}
@@ -24,10 +24,10 @@ async function init()
 	}
 
 	document.querySelectorAll('[data-action]').forEach(el => {
-		if (isHTMLElement<HTMLElement>(el) && el.dataset.action)
+		if (isHTMLElement<HTMLElement>(el) && el.dataset['action'])
 		{
-			const action = el.dataset.action;
-			el.dataset.i18n = 'action_' + action;
+			const action = el.dataset['action'];
+			el.dataset['i18n'] = 'action_' + action;
 
 			if (isEnumValue(MESSAGE, action))
 			{

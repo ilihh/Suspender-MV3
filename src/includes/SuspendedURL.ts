@@ -1,4 +1,5 @@
 import { FAVICON_MODE, PAGE } from './constants';
+import { FavIcon } from './FavIcon';
 
 export class SuspendedURL
 {
@@ -12,11 +13,11 @@ export class SuspendedURL
 	{
 	}
 
-	public getIcon(mode: FAVICON_MODE, default_icon: string): { icon: string, dim: boolean }
+	public getIcon(mode: FAVICON_MODE, default_icon: string): FavIcon
 	{
 		if (this.icon === '')
 		{
-			return {icon: default_icon, dim: true};
+			return new FavIcon(default_icon, true);
 		}
 
 		const domain = (new URL(this.uri)).hostname;
@@ -26,13 +27,13 @@ export class SuspendedURL
 		switch (mode)
 		{
 			case FAVICON_MODE.NoDim:
-				return { icon: actual_icon, dim: actual_icon.startsWith('data:image/') };
+				return new FavIcon(actual_icon, actual_icon.startsWith('data:image/'));
 			case FAVICON_MODE.Google:
-				return { icon: google_icon, dim: true };
+				return new FavIcon(google_icon);
 			case FAVICON_MODE.Actual:
-				return { icon: actual_icon, dim: true };
+				return new FavIcon(actual_icon);
 			default:
-				return { icon: default_icon, dim: true };
+				return new FavIcon(default_icon);
 		}
 	}
 

@@ -149,7 +149,7 @@ class ConfigUI
 	private createOptions(): void
 	{
 		this.inputs.forEach(el => {
-			const key = el.dataset.field ?? '';
+			const key = el.dataset['field'] ?? '';
 			if (!isKey(this.config.data, key))
 			{
 				alert('Unknown field:' + key);

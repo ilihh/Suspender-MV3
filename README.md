@@ -11,7 +11,7 @@ A free and open-source Tabs Suspender with Manifest V3 support, inspired by The 
 
 ## Chrome Web Store
 
-Due to regional restrictions, this extension is not available on the Chrome Web Store. However, you can install it manually using the instructions below.
+Suspender MV3 is [available at the official Chrome Web Store](https://chromewebstore.google.com/detail/suspender-mv3/cgghgpidclbldljbcdnmejgfgioehjfh).
 
 ## Install as an extension
 
@@ -39,7 +39,9 @@ Due to regional restrictions, this extension is not available on the Chrome Web 
 
 ## Settings with optional permissions
 
-- **Restore scroll position and enable dimmed tabs icons**: requires permissions to access all URLs and execute scripts.
-- **Save YouTube timestamps for the tab with video**: requires permissions to access "https://www.youtube.com/watch*" and execute scripts.
-- **Remove suspended pages from history**: requires history access
-- **Sessions export**: requires downloads permissions
+- **Tab Icons**: requires access to all URLs or to google.com for the dimmed icons.
+- **Never suspend tabs that contain unsaved form inputs**: requires access to all URLs and permission to execute scripts.
+- **Restore scroll position**: requires access to all URLs and permission to execute scripts.
+- **Save YouTube timestamps for the tab with video**: requires access to https://www.youtube.com/watch* and permission to execute scripts.
+- **Remove suspended pages from history**: requires access to the history.
+- **Sessions export**: requires access to the downloads.

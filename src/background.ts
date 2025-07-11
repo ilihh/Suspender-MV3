@@ -8,7 +8,6 @@ import { Session, Sessions } from './includes/Sessions';
 import { isValidTab, ValidTab } from './includes/ValidTab';
 import { TabInfo } from './includes/TabInfo';
 import { MessageProcessor, MessageProcessorResult } from './includes/MessageProcessor';
-import { ContextMenu } from './includes/ContextMenu';
 
 // runtime
 chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) => {
@@ -171,4 +170,4 @@ async function start()
 	await suspender.reloadTabs();
 }
 
-const _ = start();
+void start();

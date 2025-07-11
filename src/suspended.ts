@@ -1,7 +1,7 @@
 import { SuspendedURL } from './includes/SuspendedURL';
 import { MESSAGE } from './includes/constants';
 import { Messenger } from './includes/Messenger';
-import { getDimmedIcon, i18n, isHTMLElement, setInnerText } from './includes/functions';
+import { i18n, isHTMLElement, setInnerText } from './includes/functions';
 import { Configuration } from './includes/Configuration';
 
 async function unsuspend_page(): Promise<void>
@@ -14,8 +14,8 @@ async function init()
 	const info = SuspendedURL.fromSuspendedUrl(document.location.href);
 	const config = await Configuration.load();
 
-	const [navigationEntry] = performance.getEntriesByType('navigation');
-	if (('type' in navigationEntry) && (navigationEntry.type === 'reload'))
+	const [nav] = performance.getEntriesByType('navigation');
+	if (nav && ('type' in nav) && (nav.type === 'reload'))
 	{
 		if (info.update)
 		{
@@ -63,10 +63,10 @@ async function setIcons(info: SuspendedURL, config: Configuration)
 	const link_icon = document.getElementById('favicon-url');
 	if (isHTMLElement<HTMLImageElement>(img_icon) && isHTMLElement<HTMLLinkElement>(link_icon))
 	{
-		const { icon, dim } = info.getIcon(config.data.faviconsMode, img_icon.src);
+		const fav_icon = info.getIcon(config.data.faviconsMode, img_icon.src);
 
-		img_icon.src = icon;
-		link_icon.href = dim ? await getDimmedIcon(icon) : icon;
+		img_icon.src = fav_icon.url;
+		link_icon.href = await fav_icon.dimmed();
 	}
 }
 

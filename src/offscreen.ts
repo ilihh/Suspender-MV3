@@ -17,7 +17,7 @@ async function getBatteryStatus(): Promise<boolean>
 	return true;
 }
 
-chrome.runtime.onMessage.addListener(async (message: SuspenderRequest, sender: chrome.runtime.MessageSender, sendResponse: (response?: SuspenderResponse<boolean>) => void) => {
+chrome.runtime.onMessage.addListener(async (message: SuspenderRequest, _sender: chrome.runtime.MessageSender, sendResponse: (response?: SuspenderResponse<boolean>) => void) => {
 	if (message.target !== MESSAGE_TARGET.Offscreen)
 	{
 		return;

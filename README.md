@@ -39,6 +39,7 @@ Suspender MV3 is [available at the official Chrome Web Store](https://chromewebs
 
 ## Settings with optional permissions
 
+- **Suspend file:// tabs**: Option "Allow access to file URLs" must be enabled on the Chrome extension page. Warning: changing this option will close all suspended pages of this extension. Back up session before doing this. 
 - **Tab Icons**: requires access to all URLs or to google.com for the dimmed icons.
 - **Never suspend tabs that contain unsaved form inputs**: requires access to all URLs and permission to execute scripts.
 - **Restore scroll position**: requires access to all URLs and permission to execute scripts.

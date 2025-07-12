@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.8
+
+- action: default icon changed to the off one
+- options: added warning for the "Suspend file:// tabs" option
+- readme: added the "Suspend file:// tabs" option
+ 
 ## 1.0.7
 
 - bugfix: file:// permission cannot be requested

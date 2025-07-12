@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_manifest_name__",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "__MSG_manifest_description__",
   "permissions": ["storage", "unlimitedStorage", "tabs", "favicon", "alarms", "contextMenus", "offscreen"],
   "optional_permissions": [
@@ -28,7 +28,7 @@
   "default_locale": "en",
   "action": {
     "default_title": "__MSG_manifest_action__",
-    "default_icon": "img/48_active.png",
+    "default_icon": "img/48_off.png",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",

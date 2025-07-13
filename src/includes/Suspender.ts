@@ -8,6 +8,7 @@ import { SessionWindow } from './Sessions';
 import { isValidTab, ValidTab } from './ValidTab';
 import { TabInfo } from './TabInfo';
 import { isLocalFilesAllowed } from './functions';
+import { MigrationTab } from './MigrationTab';
 
 export class Suspender
 {
@@ -383,23 +384,10 @@ export class Suspender
 
 	public async migrate(extension_id: string): Promise<void>
 	{
-		if ((extension_id.length !== 32) || (extension_id === chrome.runtime.id))
+		const migrations = await MigrationTab.create(extension_id);
+		for (const migration of migrations)
 		{
-			return;
-		}
-
-		const tabs = await chrome.tabs.query({});
-		const extension_tabs = tabs.filter(x => x.url?.startsWith(`chrome-extension://${extension_id}/`));
-
-		for (const tab of extension_tabs)
-		{
-			const url = SuspendedURL.fromSuspendedUrl(tab.url ?? '');
-			if (!isValidTab(tab) || (url.uri === ''))
-			{
-				continue;
-			}
-
-			await this.suspendTab(tab.id, url);
+			await this.suspendTab(migration.tabId, migration.url);
 		}
 	}
 

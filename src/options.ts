@@ -1,10 +1,11 @@
 import { Session, Sessions, SessionWindow } from './includes/Sessions';
 import { Configuration } from './includes/Configuration';
 import { ConfigurationData } from './includes/ConfigurationData';
-import { i18n, isEnumValue, isHTMLElement, isLocalFilesAllowed, setInnerText } from './includes/functions';
+import { delay, i18n, isEnumValue, isHTMLElement, isLocalFilesAllowed, setInnerText } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 import { FAVICON_MODE, MESSAGE } from './includes/constants';
 import { ContextMenu } from './includes/ContextMenu';
+import { MigrationTab } from './includes/MigrationTab';
 
 type Keys<T, V> = {
 	[K in keyof T]-?: T[K] extends V ? K : never
@@ -614,7 +615,10 @@ class MigrateUI
 
 	private readonly options: HTMLDivElement;
 	private readonly progress: HTMLDivElement;
+	private readonly progress_text: HTMLDivElement;
 	private readonly done: HTMLDivElement;
+
+	private loading: boolean = false;
 
 	public constructor(
 		private readonly root: HTMLElement,
@@ -626,6 +630,7 @@ class MigrateUI
 
 		this.options = this.root.querySelector('div#migrate-options')!;
 		this.progress = this.root.querySelector('div#migrate-progress')!;
+		this.progress_text = this.progress.querySelector('div.text')!;
 		this.done = this.root.querySelector('div#migrate-done')!;
 
 		this.init();
@@ -642,6 +647,23 @@ class MigrateUI
 		this.btn.addEventListener('click', () => this.migrate());
 	}
 
+	async trackProgress(extension_id: string)
+	{
+		this.loading = true;
+		let migrated = 0;
+		const total = (await MigrationTab.create(extension_id)).length;
+
+		while (this.loading)
+		{
+			this.progress_text.innerText = chrome.i18n.getMessage(
+				'page_options_migrate_progress',
+				[ migrated.toString(), total.toString(), ]
+			);
+			await delay(5_000);
+			migrated = total - (await MigrationTab.create(extension_id)).length;
+		}
+	}
+
 	async migrate(): Promise<void>
 	{
 		this.options.classList.add('hidden');
@@ -649,18 +671,13 @@ class MigrateUI
 		this.done.classList.add('hidden');
 
 		const extension_id = this.id.value.trim();
-		const extension_url = `chrome-extension://${extension_id}/`;
-		const tabs = (await chrome.tabs.query({})).filter(x => x.url && x.url.startsWith(extension_url));
-
-		this.progress.innerText = chrome.i18n.getMessage(
-			'page_options_migrate_progress',
-			[ tabs.length.toString(), ]
-		)
+		void this.trackProgress(extension_id);
 
 		await Messenger.send({
 			action: MESSAGE.Migrate,
 			extensionId: extension_id,
 		});
+		this.loading = false;
 
 		this.options.classList.remove('hidden');
 		this.progress.classList.add('hidden');

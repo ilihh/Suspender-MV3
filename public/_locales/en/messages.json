@@ -59,9 +59,10 @@
 		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, URL:\n<code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code>\nhas extension ID: <b>liekplgjlphohhlnfaibkdjindpnfimg</b>."
 	},
 	"page_options_migrate_progress": {
-		"message": "Migrating $AMOUNT$ tabs. Process can take several minutes.",
+		"message": "Migrated $DONE$ out of $TOTAL$ tabs. The process can take several minutes.",
 		"placeholders": {
-			"amount": { "content": "$1", "example": "12" }
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
 		}
 	},
 	"page_options_migrate_done": {

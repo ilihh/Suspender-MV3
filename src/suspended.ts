@@ -51,7 +51,11 @@ async function init()
 	const shortcuts = document.getElementById('shortcuts');
 	if (isHTMLElement<HTMLAnchorElement>(shortcuts))
 	{
-		shortcuts.href = chrome.runtime.getURL(shortcuts.href);
+		shortcuts.addEventListener('click', ev =>{
+			ev.preventDefault();
+			ev.stopPropagation();
+			Messenger.action<void>(MESSAGE.OpenShortcuts);
+		});
 	}
 
 	await setIcons(info, config);

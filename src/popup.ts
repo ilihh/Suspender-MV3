@@ -2,18 +2,34 @@ import { MESSAGE, TAB_STATUS } from './includes/constants';
 import { i18n, isEnumValue, isHTMLElement } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 
+async function executeAction(action: MESSAGE, tabId: number): Promise<void>
+{
+	const actions = document.querySelectorAll<HTMLDivElement>('div.action-group, div.divider');
+	actions.forEach(x => x.classList.add('hidden'));
+
+	const progress = document.querySelector<HTMLDivElement>('div.action-progress')!;
+	progress.classList.remove('hidden');
+
+	await Messenger.send({
+		action: action,
+		tabId: tabId,
+	});
+	window.close();
+}
+
 async function init()
 {
 	const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-	if ((tabs.length == 0) || !tabs[0] || (tabs[0].id === undefined))
+	const tab = tabs[0];
+	if (!tab || (tab.id === undefined))
 	{
 		return;
 	}
 
-	const tab = tabs[0];
+	const tab_id = tab.id;
 	const status = await Messenger.send<TAB_STATUS>({
 		action: MESSAGE.TabStatus,
-		tabId: tab.id,
+		tabId: tab_id,
 	});
 
 	const status_block = document.getElementById('status');
@@ -31,13 +47,7 @@ async function init()
 
 			if (isEnumValue(MESSAGE, action))
 			{
-				el.addEventListener('click', async () => {
-					await Messenger.send({
-						action: action,
-						tabId: tab.id,
-					});
-					window.close();
-				});
+				el.addEventListener('click', async () => executeAction(action, tab_id));
 			}
 		}
 	});

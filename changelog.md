@@ -2,8 +2,8 @@
 
 ## 1.0.8
 
-- action: default icon changed to the off one
-- actions: added progressbar for the long operation
+- action (popup): default icon changed to the off one
+- action (popup): added progressbar for the long operation
 - options: added warning for the "Suspend file:// tabs" option
 - options: added progressbar for the Migrate process
 - readme: added the "Suspend file:// tabs" option

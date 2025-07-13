@@ -397,15 +397,13 @@ export class Suspender
 			? (new SuspendedURL(url)).toString()
 			: url;
 
-		const options: chrome.tabs.CreateProperties = {
+		const created = await chrome.tabs.create({
 			url: tab_url,
 			openerTabId: opener_id,
 			active: active,
 			index: index,
 			windowId: window_id,
-		};
-
-		const created = await chrome.tabs.create(options);
+		});
 		if (suspend && (created.id !== undefined))
 		{
 			await chrome.tabs.update(created.id, {

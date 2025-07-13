@@ -93,7 +93,6 @@
 
 	"page_options_shortcuts": { "message": "Keyboard shortcuts" },
 	"page_options_shortcuts_change": { "message": "Change shortcuts" },
-	"page_options_about": { "message": "About" },
 
 	"page_options_block_automatic": { "message": "Automatic tab suspension" },
 	"page_options_suspend_delay": { "message": "Automatically suspend tabs after:" },
@@ -163,5 +162,9 @@
 			"windows": { "content": "$2", "example": "5" },
 			"tabs": { "content": "$3", "example": "40" }
 		}
-	}
+	},
+
+	"page_options_about": { "message": "About" },
+	"page_options_about_author": { "message": "Author:" },
+	"page_options_about_info": { "message": "Inspired by The Great Suspender extension." }
 }

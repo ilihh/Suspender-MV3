@@ -153,6 +153,11 @@
 	"page_options_favicons_mode_actual": { "message": "Actual site icon (dimmed)" },
 	"page_options_favicons_mode_actual_permissions": { "message": "Uses the exact site icon and dims it. Requires access to all URLs." },
 
+	"page_options_block_theme": { "message": "Theme" },
+	"page_options_theme_auto": { "message": "Auto" },
+	"page_options_theme_light": { "message": "Light" },
+	"page_options_theme_dark": { "message": "Dark" },
+
 	"page_options_commands_default_description": { "message": "Unnamed" },
 	"page_options_commands_default_shortcut": { "message": "(not set)" },
 	"page_options_session_name": {

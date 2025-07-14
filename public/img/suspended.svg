@@ -1,7 +1,8 @@
 <svg width="200" height="190" viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
 	<rect x="0" y="30" width="200" height="160" fill="#f0f0f0" rx="10" ry="10" stroke="#f0f0f0" stroke-width="2" />
 
-	<rect x="0" y="30" width="200" height="24" rx="10" ry="10" fill="#e0e0e0" stroke="#e0e0e0" stroke-width="2" />
+	<rect x="0" y="30" width="200" height="24" rx="10" ry="10" fill="#e0e0e0" stroke="#e0e0e0" stroke-width="0" />
+	<rect x="0" y="44" width="200" height="10" rx="0" ry="0" fill="#e0e0e0" stroke="#e0e0e0" stroke-width="0" />
 	<circle cx="15" cy="42" r="5" fill="#c0c0c0" />
 	<circle cx="30" cy="42" r="5" fill="#c0c0c0" />
 	<circle cx="45" cy="42" r="5" fill="#c0c0c0" />

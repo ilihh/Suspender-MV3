@@ -15,12 +15,12 @@ export class SuspendedURL
 
 	public getIcon(mode: FAVICON_MODE, default_icon: string): FavIcon
 	{
-		if (this.icon === '')
+		const domain = (new URL(this.uri)).hostname;
+		if ((this.icon === '') || (domain === ''))
 		{
 			return new FavIcon(default_icon, true);
 		}
 
-		const domain = (new URL(this.uri)).hostname;
 		const google_icon = `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
 		let actual_icon = this.icon === null ? google_icon : this.icon;
 

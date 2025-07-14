@@ -17,6 +17,13 @@ export enum PAGE
 	Popup = 'popup.html',
 }
 
+export enum THEMES
+{
+	Auto = 'auto',
+	Light = 'light',
+	Dark = 'dark',
+}
+
 export enum MESSAGE_TARGET
 {
 	Offscreen = 'offscreen',

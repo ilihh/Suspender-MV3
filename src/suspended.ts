@@ -3,6 +3,7 @@ import { MESSAGE } from './includes/constants';
 import { Messenger } from './includes/Messenger';
 import { i18n, isHTMLElement, setInnerText } from './includes/functions';
 import { Configuration } from './includes/Configuration';
+import { Theme } from './includes/Theme';
 
 async function unsuspend_page(): Promise<void>
 {
@@ -29,6 +30,7 @@ async function init()
 		}
 	}
 
+	await Theme.apply(document.body);
 	i18n(document);
 
 	document.title = info.title;

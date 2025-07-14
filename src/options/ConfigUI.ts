@@ -1,8 +1,9 @@
 import { Configuration } from '../includes/Configuration';
 import { ConfigurationData } from '../includes/ConfigurationData';
 import { isEnumValue } from '../includes/functions';
-import { FAVICON_MODE } from '../includes/constants';
+import { FAVICON_MODE, THEMES } from '../includes/constants';
 import { ContextMenu } from '../includes/ContextMenu';
+import { Theme } from '../includes/Theme';
 
 type Keys<T, V> = {
 	[K in keyof T]-?: T[K] extends V ? K : never
@@ -45,7 +46,6 @@ function isConfigurationDataArrayStringKey<T extends object>(obj: T, key: keyof 
 class OptionWrapper
 {
 	public constructor(
-		public readonly field: keyof ConfigurationData,
 		public readonly input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
 		public readonly setter: () => void,
 		private readonly listener: (ev: Event) => void,
@@ -62,9 +62,11 @@ class OptionWrapper
 
 export class ConfigUI
 {
-	private readonly options: OptionWrapper[] = [];
+	private readonly configOptions: OptionWrapper[] = [];
+	private readonly themeOptions: OptionWrapper[] = [];
 
-	private readonly inputs: (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
+	private readonly configInputs: (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
+	private readonly themeInputs: HTMLInputElement[];
 
 	private readonly iconsPermissions: {
 		[k in FAVICON_MODE]?: () => Promise<boolean>
@@ -78,6 +80,7 @@ export class ConfigUI
 		private readonly root: HTMLElement,
 		private readonly config: Configuration,
 		private readonly isLocalFilesAllowed: boolean,
+		private theme: Theme,
 	)
 	{
 		const origins = this.isLocalFilesAllowed
@@ -122,11 +125,13 @@ export class ConfigUI
 		const query = '.options-block[data-config] input[data-field],' +
 			'.options-block[data-config] select[data-field],' +
 			'.options-block[data-config] textarea[data-field]';
-		this.inputs = Array.from(this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query));
-		void this.init();
+		this.configInputs = Array.from(this.root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(query));
+		this.themeInputs = Array.from(this.root.querySelectorAll<HTMLInputElement>('input[type="radio"][name="theme"]'));
+
+		this.init();
 	}
 
-	private async init(): Promise<void>
+	private init(): void
 	{
 		const files_comment = this.root.querySelector<HTMLDivElement>('div.comment[data-i18n="page_options_suspend_local_files_permissions"]');
 		if (files_comment !== null)
@@ -134,30 +139,52 @@ export class ConfigUI
 			files_comment.dataset['i18nArgs'] = chrome.runtime.id;
 		}
 
-		this.createOptions();
-
-		chrome.storage.local.onChanged.addListener(async changes => {
-			if (Configuration.StorageKey in changes)
-			{
-				await this.updateConfig();
-			}
-		});
+		this.createConfigOptions();
+		void this.createThemeOption();
 	}
 
-	private async updateConfig(): Promise<void>
+	public setConfig(config: Configuration): void
 	{
-		const updated = await Configuration.load();
-		Object.assign(this.config, updated);
+		Object.assign(this.config, config);
 
-		for (const option of this.options)
+		for (const option of this.configOptions)
 		{
 			option.setter();
 		}
 	}
 
-	private createOptions(): void
+	public setTheme(theme: Theme): void
 	{
-		this.inputs.forEach(el => {
+		this.theme = theme;
+		for (const option of this.themeOptions)
+		{
+			option.setter();
+		}
+	}
+
+	private createThemeOption(): void
+	{
+		this.themeInputs.forEach(el =>
+		{
+			this.themeOptions.push(new OptionWrapper(
+				el,
+				() => el.checked = el.value === this.theme,
+				ev => this.onThemeInput(ev, el),
+			));
+		});
+	}
+
+	private async onThemeInput(_ev: Event, el: HTMLInputElement): Promise<void>
+	{
+		if (el.checked && isEnumValue(THEMES, el.value))
+		{
+			await Theme.save(el.value);
+		}
+	}
+
+	private createConfigOptions(): void
+	{
+		this.configInputs.forEach(el => {
 			const key = el.dataset['field'] ?? '';
 			if (!isKey(this.config.data, key))
 			{
@@ -174,8 +201,7 @@ export class ConfigUI
 			{
 				if ((el.type === 'checkbox') && isBooleanKey(this.config.data, key))
 				{
-					this.options.push(new OptionWrapper(
-						key,
+					this.configOptions.push(new OptionWrapper(
 						el,
 						() => el.checked = this.config.data[key],
 						ev => this.onCheckboxInput(ev, el, key),
@@ -183,8 +209,7 @@ export class ConfigUI
 				}
 				if ((el.type === 'radio') && isEnumKey(this.config.data, key, FAVICON_MODE))
 				{
-					this.options.push(new OptionWrapper(
-						key,
+					this.configOptions.push(new OptionWrapper(
 						el,
 						() => el.checked = this.config.data[key] === el.value,
 						ev => this.onRadioInput(ev, el, key),
@@ -193,8 +218,7 @@ export class ConfigUI
 			}
 			else if (el instanceof HTMLSelectElement && isNumberKey(this.config.data, key))
 			{
-				this.options.push(new OptionWrapper(
-					key,
+				this.configOptions.push(new OptionWrapper(
 					el,
 					() => el.value = this.config.data[key].toString(),
 					() => this.onSelectInput(el, key),
@@ -202,8 +226,7 @@ export class ConfigUI
 			}
 			else if (el instanceof HTMLTextAreaElement && isConfigurationDataArrayStringKey(this.config.data, key))
 			{
-				this.options.push(new OptionWrapper(
-					key,
+				this.configOptions.push(new OptionWrapper(
 					el,
 					() => el.value = (this.config.data[key] as string[]).join('\n'),
 					() => this.onTextareaInput(el, key),
@@ -226,7 +249,7 @@ export class ConfigUI
 
 		// revert value back
 		el.checked = false;
-		for (const input of this.inputs)
+		for (const input of this.configInputs)
 		{
 			if (input instanceof HTMLInputElement && (input.type === 'radio') && (input.value === this.config.data[key]))
 			{

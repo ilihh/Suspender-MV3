@@ -6,12 +6,12 @@ export class Sessions
 	public recent: Session[] = [];
 	public saved: Session[] = [];
 
-	private static _key: string = 'sessions';
+	private static storageKey: string = 'sessions';
 	private static recentLimit: number = 7;
 
 	public static async load(): Promise<Sessions>
 	{
-		const sessions = await DataStorage.load(Sessions._key, Sessions);
+		const sessions = await DataStorage.load(Sessions.storageKey, Sessions);
 		sessions.current = await Session.current();
 		sessions.recent = sessions.recent.map(x => Session.restore(x));
 		sessions.saved = sessions.saved.map(x => Session.restore(x));
@@ -26,7 +26,7 @@ export class Sessions
 		temp.saved = this.saved;
 		temp.current = new Session();
 
-		await DataStorage.save(Sessions._key, temp);
+		await DataStorage.save(Sessions.storageKey, temp);
 		return this.current.save();
 	}
 

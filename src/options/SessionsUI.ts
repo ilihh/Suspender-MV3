@@ -18,6 +18,10 @@ export class SessionsUI
 	private readonly deleteConfirm: string;
 	private readonly importError: string = '';
 
+	private readonly currentContainer: HTMLElement;
+	private readonly recentContainer: HTMLElement;
+	private readonly savedContainer: HTMLElement;
+
 	public constructor(
 		private readonly root: HTMLElement,
 		private readonly sessions: Sessions,
@@ -39,7 +43,18 @@ export class SessionsUI
 		this.deleteConfirm = chrome.i18n.getMessage('page_options_sessions_delete_confirm');
 		this.importError = chrome.i18n.getMessage('page_options_sessions_import_error');
 
+		this.currentContainer = this.root.querySelector<HTMLElement>('#session-current')!;
+		this.recentContainer = this.root.querySelector<HTMLElement>('#sessions-recent')!;
+		this.savedContainer = this.root.querySelector<HTMLElement>('#sessions-saved')!;
+
 		this.build();
+	}
+
+	public setConfig(config: Configuration): void
+	{
+		Object.assign(this.config, config);
+
+		this.renderSessions();
 	}
 
 	private build(): void
@@ -50,7 +65,12 @@ export class SessionsUI
 			this.file.value = '';
 		});
 
-		this.renderSession(this.sessions.current, this.root.querySelector('#session-current')!, 'current');
+		this.renderSessions();
+	}
+
+	private renderSessions(): void
+	{
+		this.renderCurrent();
 		this.renderRecent();
 		this.renderSaved();
 	}
@@ -60,18 +80,22 @@ export class SessionsUI
 		type === 'recent' ? this.renderRecent() : this.renderSaved();
 	}
 
+	private renderCurrent(): void
+	{
+		this.currentContainer.innerHTML = '';
+		this.renderSession(this.sessions.current, this.currentContainer, 'current');
+	}
+
 	private renderRecent(): void
 	{
-		const container = this.root.querySelector('#sessions-recent')! as HTMLElement;
-		container.innerHTML = '';
-		this.sessions.recent.toReversed().forEach(session => this.renderSession(session, container, 'recent'));
+		this.recentContainer.innerHTML = '';
+		this.sessions.recent.toReversed().forEach(session => this.renderSession(session, this.recentContainer, 'recent'));
 	}
 
 	private renderSaved(): void
 	{
-		const container = this.root.querySelector('#sessions-saved')! as HTMLElement;
-		container.innerHTML = '';
-		this.sessions.saved.toReversed().forEach(session => this.renderSession(session, container, 'saved'));
+		this.savedContainer.innerHTML = '';
+		this.sessions.saved.toReversed().forEach(session => this.renderSession(session, this.savedContainer, 'saved'));
 	}
 
 	private initSessionButton(session: Session, container: HTMLElement, type: 'current' | 'recent' | 'saved'): void

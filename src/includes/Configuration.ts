@@ -110,12 +110,12 @@ export class Configuration
 		return this.save();
 	}
 
-	public static readonly StorageKey = 'config';
+	public static readonly storageKey = 'config';
 
 	public static async load(): Promise<Configuration>
 	{
 		const config = new Configuration();
-		config.data = await DataStorage.load(Configuration.StorageKey, ConfigurationData);
+		config.data = await DataStorage.load(Configuration.storageKey, ConfigurationData);
 		config.upgradeVersion();
 		return config;
 	}
@@ -131,7 +131,7 @@ export class Configuration
 
 	public async save(): Promise<void>
 	{
-		await DataStorage.save(Configuration.StorageKey, this.data);
+		await DataStorage.save(Configuration.storageKey, this.data);
 		return this.init();
 	}
 }

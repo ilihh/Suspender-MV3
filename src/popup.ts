@@ -1,6 +1,7 @@
 import { MESSAGE, TAB_STATUS } from './includes/constants';
 import { i18n, isEnumValue, isHTMLElement } from './includes/functions';
 import { Messenger } from './includes/Messenger';
+import { Theme } from './includes/Theme';
 
 async function executeAction(action: MESSAGE, tabId: number): Promise<void>
 {
@@ -85,6 +86,7 @@ async function init()
 		}
 	})
 
+	await Theme.apply(document.body);
 	i18n(document);
 }
 

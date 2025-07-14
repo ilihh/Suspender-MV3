@@ -38,14 +38,22 @@ export function setInnerText(element: HTMLElement|null, text: string): void
 	element.innerText = text;
 }
 
+export function escapeHtml(str: string): string
+{
+	return str
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#039;');
+}
+
 export function i18n(document: Document): void
 {
 	document.querySelectorAll('[data-i18n]').forEach(e => {
 		if (isHTMLElement<HTMLElement>(e) && e.dataset['i18n'])
 		{
-			e.innerHTML = e.dataset['i18nArgs']
-				? chrome.i18n.getMessage(e.dataset['i18n'], e.dataset['i18nArgs'].split(';'))
-				: chrome.i18n.getMessage(e.dataset['i18n']);
+			e.innerText = chrome.i18n.getMessage(e.dataset['i18n']);
 		}
 	});
 }

@@ -60,7 +60,7 @@
 		<label>
 			<input type="checkbox" data-field="suspendLocalFiles" /> <span data-i18n="page_options_suspend_local_files">Suspend file:// tabs</span>
 		</label>
-		<div class="comment" data-i18n="page_options_suspend_local_files_permissions" data-i18n-args=""></div>
+		<div class="comment" data-i18n="page_options_suspend_local_files_permissions"></div>
 
 		<label>
 			<input type="checkbox" data-field="suspendOffline" /> <span data-i18n="page_options_suspend_offline">Suspend tabs when offline</span>
@@ -212,7 +212,7 @@
 		<input type="text" id="extension-id" placeholder="Extension ID" />
 		<button type="button" class="button" disabled id="extension-migrate" data-i18n="page_options_migrate">Migrate</button>
 
-		<div class="comment" data-i18n="page_options_migrate_comment">
+		<div class="comment" id="page_options_migrate_comment">
 			Enter 32 symbols of the other extension ID.<br>
 			You can get the ID from the URL of the suspended page.<br>
 			For example, url <code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code> has extension ID <b>liekplgjlphohhlnfaibkdjindpnfimg</b>.

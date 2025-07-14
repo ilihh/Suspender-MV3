@@ -56,7 +56,7 @@
 	"page_options_settings": { "message": "Settings" },
 	"page_options_migrate": { "message": "Migrate" },
 	"page_options_migrate_comment": {
-		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, URL:\n<code>chrome-extension://<b>liekplgjlphohhlnfaibkdjindpnfimg</b>/suspended.html</code>\nhas extension ID: <b>liekplgjlphohhlnfaibkdjindpnfimg</b>."
+		"message": "Enter 32 symbols of the other extension ID.\nYou can get the ID from the URL of the suspended page.\nFor example, URL:\n__CODE__\nhas extension ID: __ID__."
 	},
 	"page_options_migrate_progress": {
 		"message": "Migrated $DONE$ out of $TOTAL$ tabs. The process can take several minutes.",
@@ -118,7 +118,7 @@
 
 	"page_options_suspend_local_files": { "message": "Suspend file:// tabs" },
 	"page_options_suspend_local_files_permissions": {
-		"message": "Option \"Allow access to file URLs\" must be enabled on the Chrome extension page.<br>Warning: changing this option will close all suspended pages of this extension. Back up session before doing this."
+		"message": "Option \"Allow access to file URLs\" must be enabled on the Chrome extension page.\nWarning: changing this option will close all suspended pages of this extension. Back up session before doing this."
 	},
 
 	"page_options_suspend_offline": { "message": "Suspend tabs when offline" },

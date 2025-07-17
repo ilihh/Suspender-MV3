@@ -1,13 +1,17 @@
 # Changelog
 
+## 1.0.10
+
+- small performance optimization
+
 ## 1.0.9
 
-+ core: added dark theme
-+ options: added the Theme option
-+ options: added localization support for the About section
-+ options: session button "Export" now properly updated if settings were changed in another tab
-+ no more tags in messages.json
-+ options.ts: moved classes to separate files
+- core: added dark theme
+- options: added the Theme option
+- options: added localization support for the About section
+- options: session button "Export" now properly updated if settings were changed in another tab
+- no more tags in messages.json
+- options.ts: moved classes to separate files
 
 ## 1.0.8
 

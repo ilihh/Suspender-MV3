@@ -69,7 +69,27 @@ export class Suspender
 	private async getTabs(query: chrome.tabs.QueryInfo = {}): Promise<chrome.tabs.Tab[]>
 	{
 		const q = Object.assign({}, TABS_QUERY_BASE, query);
-		return await chrome.tabs.query(q);
+		if (q.url !== undefined)
+		{
+			return await chrome.tabs.query(q);
+		}
+
+		// assumption: there much more suspended tabs (chrome-extension:// urls) than unsuspended tabs (https://, http://, file://),
+		// so making 2-3 queries to get only suspendable tabs is much faster than one query with all tabs
+		// - 1 query with all tabs + filter = ~60ms (~600 ms on first run)
+		// - 3 queries with suspendable tabs = ~8-10ms (~120 ms on first run)
+		q.url = 'https://*/*';
+		const secure = await chrome.tabs.query(q);
+
+		q.url = 'http://*/*';
+		const unsecure = await chrome.tabs.query(q);
+
+		q.url = 'file://*/*';
+		const file = await this.filesSchemeAllowed()
+			? await chrome.tabs.query(q)
+			: [];
+
+		return secure.concat(unsecure, file);
 	}
 
 	public async suspendAuto(): Promise<void>

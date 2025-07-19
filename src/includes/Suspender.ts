@@ -7,13 +7,14 @@ import { ScrollPositions } from './ScrollPositions';
 import { SessionWindow } from './Sessions';
 import { isValidTab, ValidTab } from './ValidTab';
 import { TabInfo } from './TabInfo';
-import { isLocalFilesAllowed } from './functions';
+import { isDataImage, isLocalFilesAllowed, isUrlAllowed } from './functions';
 import { MigrationTab } from './MigrationTab';
 
 export class Suspender
 {
 	private readonly timeToSuspend: number;
 	private readonly suspendedUrl: string;
+	private readonly loadFavIconsAsDataImage: boolean = false;
 	private _device: DeviceStatus|undefined = undefined;
 	private _filesSchemeAllowed: boolean|undefined = undefined;
 
@@ -128,21 +129,21 @@ export class Suspender
 		const tab = await chrome.tabs.get(tabId);
 		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
-			: await this.getTabs({groupId: tab.groupId,});
+			: await this.getTabs({groupId: tab.groupId, url: this.suspendedUrl});
 		return this.unsuspendTabs(tabs);
 	}
 
 	public async suspendWindow(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
 		const tab = await chrome.tabs.get(tabId);
-		const tabs = (await this.getTabs({windowId: tab.windowId,})).filter(x => x.id !== tabId);
+		const tabs = (await this.getTabs({windowId: tab.windowId, })).filter(x => x.id !== tabId);
 		return this.suspendTabs(tabs, mode);
 	}
 
 	public async unsuspendWindow(tabId: number): Promise<void>
 	{
 		const tab = await chrome.tabs.get(tabId);
-		const tabs = await this.getTabs({windowId: tab.windowId,});
+		const tabs = await this.getTabs({windowId: tab.windowId, url: this.suspendedUrl});
 		return this.unsuspendTabs(tabs);
 	}
 
@@ -154,7 +155,7 @@ export class Suspender
 
 	public async unsuspendAll(): Promise<void>
 	{
-		const tabs = await this.getTabs();
+		const tabs = await this.getTabs({url: this.suspendedUrl});
 		await this.unsuspendTabs(tabs);
 	}
 
@@ -305,9 +306,39 @@ export class Suspender
 		}
 	}
 
+	private async getFavIcon(url: string | undefined): Promise<string>
+	{
+		if (url === undefined)
+		{
+			return '';
+		}
+
+		if (this.loadFavIconsAsDataImage && await isUrlAllowed(url))
+		{
+			const response = await fetch(url);
+			const blob = await response.blob();
+
+			const data_image = await new Promise((resolve: (result: string) => void) =>
+			{
+				const reader = new FileReader();
+				reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+				reader.onerror = () => resolve('');
+				reader.readAsDataURL(blob);
+			});
+
+			return isDataImage(data_image) ? data_image : url;
+		}
+		else
+		{
+			return url;
+		}
+	}
+
 	private async getTabSuspendedUrl(tab: ValidTab): Promise<SuspendedURL|false>
 	{
-		const data = new SuspendedURL(tab.url, tab.title || '', 0, tab.favIconUrl !== undefined ? tab.favIconUrl : '');
+		const icon = await this.getFavIcon(tab.favIconUrl);
+		const data = new SuspendedURL(tab.url, tab.title || '', 0, icon);
+
 		if (this.config.data.restoreScrollPosition || this.config.data.maintainYoutubeTime)
 		{
 			const info = await PageInfo.get(tab, this.config.data);

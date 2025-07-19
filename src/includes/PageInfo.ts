@@ -12,9 +12,9 @@ interface InternalPageInfo
 export class PageInfo implements InternalPageInfo
 {
 	public constructor(
-		public scrollPosition: number = 0,
-		public time: number|null = null,
-		public changedFields: boolean = false,
+		public readonly scrollPosition: number = 0,
+		public readonly time: number|null = null,
+		public readonly changedFields: boolean = false,
 	)
 	{
 	}
@@ -32,18 +32,16 @@ export class PageInfo implements InternalPageInfo
 			data.maintainYoutubeTime && tab.url.startsWith('https://www.youtube.com/watch'),
 			data.neverSuspendUnsavedData,
 		);
+
 		if (results === false)
 		{
 			return false;
 		}
 
-		for (const r of results)
+		const result = results[0]?.result;
+		if (result !== undefined)
 		{
-			const data = r.result || null;
-			if ((data !== undefined) && (data !== null))
-			{
-				return new PageInfo(data.scrollPosition, data.time, data.changedFields);
-			}
+			return new PageInfo(result.scrollPosition, result.time, result.changedFields);
 		}
 
 		return new PageInfo();
@@ -63,56 +61,47 @@ export class PageInfo implements InternalPageInfo
 						return  video !== null ? Math.floor(video.currentTime) : null;
 					};
 
-					const any_field_changed = () =>
+					const is_field_changed = (el: HTMLElement) =>
 					{
-						const elements = Array.from(document.querySelectorAll('input, textarea, select'));
-						for (const el of elements)
+						if (el instanceof HTMLInputElement)
 						{
-							if (!(el instanceof HTMLElement))
+							if (el.type === 'checkbox' || el.type === 'radio')
 							{
-								continue;
-							}
-
-							if (el instanceof HTMLInputElement)
-							{
-								if (el.type === 'checkbox' || el.type === 'radio')
+								if (el.checked !== el.defaultChecked)
 								{
-									if (el.checked !== el.defaultChecked)
-									{
-										return true;
-									}
-								}
-								else if (el.type === 'file')
-								{
-									if (el.files && el.files.length > 0)
-									{
-										return true;
-									}
-								}
-								else
-								{
-									if (el.value !== el.defaultValue)
-									{
-										return true;
-									}
+									return true;
 								}
 							}
-							else if (el instanceof HTMLTextAreaElement)
+							else if (el.type === 'file')
+							{
+								if (el.files && el.files.length > 0)
+								{
+									return true;
+								}
+							}
+							else
 							{
 								if (el.value !== el.defaultValue)
 								{
 									return true;
 								}
 							}
-							else if (el instanceof HTMLSelectElement)
+						}
+						else if (el instanceof HTMLTextAreaElement)
+						{
+							if (el.value !== el.defaultValue)
 							{
-								const options = Array.from(el.options);
-								for (const opt of options)
+								return true;
+							}
+						}
+						else if (el instanceof HTMLSelectElement)
+						{
+							const options = Array.from(el.options);
+							for (const opt of options)
+							{
+								if (opt.selected !== opt.defaultSelected)
 								{
-									if (opt.selected !== opt.defaultSelected)
-									{
-										return true;
-									}
+									return true;
 								}
 							}
 						}
@@ -120,21 +109,45 @@ export class PageInfo implements InternalPageInfo
 						return false;
 					};
 
-					const seconds = time ? youtube_time() : null;
+					const any_field_changed = (form: HTMLFormElement) =>
+					{
+						const elements = Array.from(form.querySelectorAll<HTMLElement>('input, textarea, select'));
+						for (const el of elements)
+						{
+							if (is_field_changed(el))
+							{
+								return true;
+							}
+						}
+
+						return false;
+					};
+
+					const any_form_changed = () =>
+					{
+						const forms = Array.from(document.querySelectorAll<HTMLFormElement>('form[method="post"]'));
+						for (const form of forms)
+						{
+							if (any_field_changed(form))
+							{
+								return true;
+							}
+						}
+
+						return false;
+					};
 
 					const scroll_position = scroll
 						? (document.documentElement || document.body || {}).scrollTop || 0
 						: 0;
 
-					const changed = changed_fields ? any_field_changed() : false;
-
 					return {
 						scrollPosition: Math.floor(scroll_position),
-						time: seconds,
-						changedFields: changed,
+						time: time ? youtube_time() : null,
+						changedFields: changed_fields ? any_form_changed() : false,
 					};
 				},
-				args: [scroll, time, changed_fields]
+				args: [scroll, time, changed_fields, ],
 			});
 		}
 		// prevent error on internal chrome pages like ERR_CONNECTION_CLOSED

@@ -1,4 +1,4 @@
-import { isUrlAllowed } from './functions';
+import { isDataImage, isUrlAllowed } from './functions';
 
 export class FavIcon
 {
@@ -59,7 +59,7 @@ export class FavIcon
 		}
 
 		// can dim own icons and data image
-		if (this.url.startsWith('img/') || this.url.startsWith('data:image/'))
+		if (this.url.startsWith('img/') || isDataImage(this.url))
 		{
 			return true;
 		}

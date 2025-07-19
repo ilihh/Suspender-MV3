@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.11
+
+- suspended: fixed icon for the file:// urls
+- bugfix: unsuspend group/window/all was not working
+
 ## 1.0.10
 
 - small performance optimization

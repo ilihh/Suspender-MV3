@@ -1,5 +1,6 @@
 import { FAVICON_MODE, PAGE } from './constants';
 import { FavIcon } from './FavIcon';
+import { isDataImage } from './functions';
 
 export class SuspendedURL
 {
@@ -15,19 +16,24 @@ export class SuspendedURL
 
 	public getIcon(mode: FAVICON_MODE, default_icon: string): FavIcon
 	{
-		const domain = (new URL(this.uri)).hostname;
-		if ((this.icon === '') || (domain === ''))
+		if (this.icon === '')
 		{
 			return new FavIcon(default_icon, true);
 		}
 
-		const google_icon = `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
-		let actual_icon = this.icon === null ? google_icon : this.icon;
+		if (isDataImage(this.icon))
+		{
+			return new FavIcon(this.icon);
+		}
+
+		const domain = (new URL(this.uri)).hostname;
+		const google_icon = domain ? `https://www.google.com/s2/favicons?sz=32&domain=${domain}` : default_icon;
+		const actual_icon = this.icon === null ? google_icon : this.icon;
 
 		switch (mode)
 		{
 			case FAVICON_MODE.NoDim:
-				return new FavIcon(actual_icon, actual_icon.startsWith('data:image/'));
+				return new FavIcon(actual_icon, false);
 			case FAVICON_MODE.Google:
 				return new FavIcon(google_icon);
 			case FAVICON_MODE.Actual:

@@ -112,3 +112,8 @@ export function delay(ms: number): Promise<void>
 {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function isDataImage(url: string|null): url is string
+{
+	return url !== null && url.startsWith('data:image/');
+}

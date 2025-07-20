@@ -398,11 +398,6 @@ export class Suspender
 			return TAB_STATUS.PowerConnected;
 		}
 
-		if (!this.config.data.suspendActive && tab.active)
-		{
-			return TAB_STATUS.Active;
-		}
-
 		if (!this.config.data.suspendPinned && tab.pinned)
 		{
 			return TAB_STATUS.Pinned;
@@ -421,6 +416,11 @@ export class Suspender
 		if (this.config.inWhiteList(tab))
 		{
 			return TAB_STATUS.WhiteList;
+		}
+
+		if (!this.config.data.suspendActive && tab.active)
+		{
+			return TAB_STATUS.Active;
 		}
 
 		if (tab.lastAccessed !== undefined)

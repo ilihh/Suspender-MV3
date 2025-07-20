@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.12
+
+- action (popup): relaxed conditions when commands "Suspend", "Pause Suspension", "Never suspend this domain", "Never suspend this URL" are available
+
 ## 1.0.11
 
 - suspended: fixed icon for the file:// urls

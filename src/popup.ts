@@ -33,6 +33,11 @@ async function init()
 		tabId: tab_id,
 	});
 
+	if (status.data == undefined)
+	{
+		status.data = TAB_STATUS.Error;
+	}
+
 	const status_block = document.getElementById('status');
 	if (isHTMLElement(status_block))
 	{
@@ -53,15 +58,33 @@ async function init()
 		}
 	});
 
+	const allow_suspend = [
+		TAB_STATUS.Disabled,
+		TAB_STATUS.Offline,
+		TAB_STATUS.PowerConnected,
+		TAB_STATUS.Pinned,
+		TAB_STATUS.PlayingAudio,
+		TAB_STATUS.SuspendPaused,
+		TAB_STATUS.WhiteList,
+		TAB_STATUS.Active,
+		TAB_STATUS.UnsavedForm,
+		TAB_STATUS.Normal,
+	];
+
+	const disable_pause = [TAB_STATUS.Disabled, TAB_STATUS.SuspendPaused, TAB_STATUS.WhiteList];
+	const allow_pause = allow_suspend.filter(x => !disable_pause.includes(x));
+
+	const allow_whitelist: TAB_STATUS[] = allow_suspend.filter(x => x != TAB_STATUS.WhiteList);
+
 	// hide buttons
 	const conditions = {
-		[MESSAGE.SuspendTab]: status.data === TAB_STATUS.Normal,
+		[MESSAGE.SuspendTab]: allow_suspend.includes(status.data),
 		[MESSAGE.UnsuspendTab]: status.data === TAB_STATUS.Suspended,
-		[MESSAGE.PauseTab]: status.data === TAB_STATUS.Normal,
+		[MESSAGE.PauseTab]: allow_pause.includes(status.data),
 		[MESSAGE.UnpauseTab]: status.data === TAB_STATUS.SuspendPaused,
 
-		[MESSAGE.WhitelistDomain]: status.data === TAB_STATUS.Normal,
-		[MESSAGE.WhitelistUrl]: status.data === TAB_STATUS.Normal,
+		[MESSAGE.WhitelistDomain]: allow_whitelist.includes(status.data),
+		[MESSAGE.WhitelistUrl]: allow_whitelist.includes(status.data),
 		[MESSAGE.WhitelistRemove]: status.data === TAB_STATUS.WhiteList,
 
 		[MESSAGE.SuspendGroup]: tab.groupId !== -1,

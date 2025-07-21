@@ -3,6 +3,7 @@
 ## 1.0.12
 
 - action (popup): relaxed conditions when commands "Suspend", "Pause Suspension", "Never suspend this domain", "Never suspend this URL" are available
+- bugfix: multiple unsuspended tabs are no more suspended back right away
 
 ## 1.0.11
 

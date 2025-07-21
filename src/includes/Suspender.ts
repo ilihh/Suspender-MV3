@@ -281,7 +281,8 @@ export class Suspender
 
 		if (isValidTab(updated_tab))
 		{
-			await this.updateTabActionIcon(updated_tab);
+			void TabInfo.activated(updated_tab.id);
+			void this.updateTabActionIcon(updated_tab);
 		}
 
 		return updated_tab;

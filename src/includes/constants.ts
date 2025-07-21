@@ -5,9 +5,9 @@ export const TABS_QUERY_BASE: chrome.tabs.QueryInfo = {
 	windowType: 'normal',
 };
 
-export const TABS_QUERY_AUTO: chrome.tabs.QueryInfo = {
+export const TABS_QUERY_AUTO: chrome.tabs.QueryInfo = Object.assign(TABS_QUERY_BASE, {
 	status: 'complete',
-};
+});
 
 export enum PAGE
 {

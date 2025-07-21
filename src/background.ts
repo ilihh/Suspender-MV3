@@ -8,6 +8,7 @@ import { Session, Sessions } from './includes/Sessions';
 import { isValidTab, ValidTab } from './includes/ValidTab';
 import { TabInfo } from './includes/TabInfo';
 import { MessageProcessor, MessageProcessorResult } from './includes/MessageProcessor';
+import { Tabs } from './includes/Tabs';
 
 // runtime
 chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) => {
@@ -35,7 +36,7 @@ chrome.runtime.onMessage.addListener((request: SuspenderRequest, sender: chrome.
 
 // tabs
 chrome.tabs.onActivated.addListener(async (tabInfo: chrome.tabs.TabActiveInfo) => {
-	const tab = await chrome.tabs.get(tabInfo.tabId);
+	const tab = await Tabs.get(tabInfo.tabId);
 	if (isValidTab(tab))
 	{
 		const config = await Configuration.load();
@@ -135,7 +136,7 @@ async function processMessage(request: SuspenderRequest, sender: chrome.runtime.
 	}
 
 	const tab = await getTab(request, sender);
-	if (!isValidTab(tab))
+	if (tab === null)
 	{
 		return {
 			success: false,

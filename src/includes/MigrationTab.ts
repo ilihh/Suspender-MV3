@@ -1,5 +1,6 @@
 import { SuspendedURL } from './SuspendedURL';
 import { isValidTab } from './ValidTab';
+import { Tabs } from './Tabs';
 
 export class MigrationTab
 {
@@ -10,15 +11,10 @@ export class MigrationTab
 	{
 	}
 
-	public static async create(extension_id: string): Promise<MigrationTab[]>
+	public static async create(extensionId: string): Promise<MigrationTab[]>
 	{
-		if ((extension_id.length !== 32) || (extension_id === chrome.runtime.id))
-		{
-			return [];
-		}
-
 		const result: MigrationTab[] = [];
-		const tabs = await chrome.tabs.query({url: `chrome-extension://${extension_id}/*`});
+		const tabs = await Tabs.ofExtension(extensionId);
 		for (const tab of tabs)
 		{
 			const url = SuspendedURL.fromSuspendedUrl(tab.url ?? '');

@@ -1,4 +1,6 @@
 import { SuspenderRequest } from './Messenger';
+import { Tabs } from './Tabs';
+import {isValidTab, ValidTab} from "./ValidTab";
 
 export const isHTMLElement = <T extends HTMLElement>(
 	el: Element|EventTarget|null|undefined,
@@ -58,20 +60,12 @@ export function i18n(document: Document): void
 	});
 }
 
-export async function getTab(request: SuspenderRequest, sender: chrome.runtime.MessageSender): Promise<chrome.tabs.Tab|null>
+export async function getTab(request: SuspenderRequest, sender: chrome.runtime.MessageSender): Promise<ValidTab|null>
 {
-	if (request.tabId !== undefined)
-	{
-		return await chrome.tabs.get(request.tabId);
-	}
-
-	const tab = sender.tab;
-	if ((tab === undefined) || (tab.id === undefined))
-	{
-		return null;
-	}
-
-	return tab;
+	const tab = request.tabId !== undefined
+		? await Tabs.get(request.tabId)
+		: sender.tab;
+	return isValidTab(tab) ? tab : null;
 }
 
 export function string2filename(str: string): string

@@ -1,5 +1,5 @@
 import { SuspendedURL } from './SuspendedURL';
-import { PAGE, SUSPEND_MODE, TAB_STATUS, TABS_QUERY_AUTO, TABS_QUERY_BASE } from './constants';
+import { PAGE, SUSPEND_MODE, TAB_STATUS } from './constants';
 import { Configuration } from './Configuration';
 import { DeviceStatus } from './DeviceStatus';
 import { PageInfo } from './PageInfo';
@@ -9,6 +9,7 @@ import { isValidTab, ValidTab } from './ValidTab';
 import { TabInfo } from './TabInfo';
 import { isDataImage, isLocalFilesAllowed, isUrlAllowed } from './functions';
 import { MigrationTab } from './MigrationTab';
+import { Tabs } from './Tabs';
 
 export class Suspender
 {
@@ -18,12 +19,15 @@ export class Suspender
 	private _device: DeviceStatus|undefined = undefined;
 	private _filesSchemeAllowed: boolean|undefined = undefined;
 
+	private readonly tabs: Tabs;
+
 	public constructor(
 		private readonly config: Configuration,
 	)
 	{
 		this.timeToSuspend = (new Date()).getTime() - (this.config.data.suspendDelay * 60 * 1000);
 		this.suspendedUrl = chrome.runtime.getURL(PAGE.Suspended);
+		this.tabs = new Tabs(this.config);
 	}
 
 	private async device(): Promise<DeviceStatus>
@@ -46,53 +50,6 @@ export class Suspender
 		return this._filesSchemeAllowed;
 	}
 
-	private query(): chrome.tabs.QueryInfo
-	{
-		const q = TABS_QUERY_AUTO;
-		if (!this.config.data.suspendActive)
-		{
-			q.active = false;
-		}
-
-		if (!this.config.data.suspendPlayingAudio)
-		{
-			q.audible = false;
-		}
-
-		if (!this.config.data.suspendPinned)
-		{
-			q.pinned = false;
-		}
-
-		return q;
-	}
-
-	private async getTabs(query: chrome.tabs.QueryInfo = {}): Promise<chrome.tabs.Tab[]>
-	{
-		const q = Object.assign({}, TABS_QUERY_BASE, query);
-		if (q.url !== undefined)
-		{
-			return await chrome.tabs.query(q);
-		}
-
-		// assumption: there much more suspended tabs (chrome-extension:// urls) than unsuspended tabs (https://, http://, file://),
-		// so making 2-3 queries to get only suspendable tabs is much faster than one query with all tabs
-		// - 1 query with all tabs + filter = ~60ms (~600 ms on first run)
-		// - 3 queries with suspendable tabs = ~8-10ms (~120 ms on first run)
-		q.url = 'https://*/*';
-		const secure = await chrome.tabs.query(q);
-
-		q.url = 'http://*/*';
-		const unsecure = await chrome.tabs.query(q);
-
-		q.url = 'file://*/*';
-		const file = await this.filesSchemeAllowed()
-			? await chrome.tabs.query(q)
-			: [];
-
-		return secure.concat(unsecure, file);
-	}
-
 	public async suspendAuto(): Promise<void>
 	{
 		if (!this.config.allowedSuspend(await this.device()))
@@ -100,7 +57,7 @@ export class Suspender
 			return;
 		}
 
-		const tabs = await this.getTabs(this.query());
+		const tabs = await this.tabs.unsuspended(SUSPEND_MODE.Auto, await this.filesSchemeAllowed());
 		return this.suspendTabs(tabs);
 	}
 
@@ -117,45 +74,46 @@ export class Suspender
 
 	public async suspendGroup(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tabId);
+		const tab = await Tabs.get(tabId);
 		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
-			: await this.getTabs({groupId: tab.groupId,});
+			: await this.tabs.unsuspended(mode, await this.filesSchemeAllowed(), { groupId: tab.groupId, });
 		return this.suspendTabs(tabs, mode);
 	}
 
 	public async unsuspendGroup(tabId: number): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tabId);
+		const tab = await Tabs.get(tabId);
 		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
-			: await this.getTabs({groupId: tab.groupId, url: this.suspendedUrl});
+			: await this.tabs.suspended({ groupId: tab.groupId, });
 		return this.unsuspendTabs(tabs);
 	}
 
 	public async suspendWindow(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tabId);
-		const tabs = (await this.getTabs({windowId: tab.windowId, })).filter(x => x.id !== tabId);
+		const tab = await Tabs.get(tabId);
+		const all_tabs = await this.tabs.unsuspended(mode, await this.filesSchemeAllowed(), { windowId: tab.windowId, });
+		const tabs = all_tabs.filter(x => x.id !== tabId);
 		return this.suspendTabs(tabs, mode);
 	}
 
 	public async unsuspendWindow(tabId: number): Promise<void>
 	{
-		const tab = await chrome.tabs.get(tabId);
-		const tabs = await this.getTabs({windowId: tab.windowId, url: this.suspendedUrl});
+		const tab = await Tabs.get(tabId);
+		const tabs = await this.tabs.suspended({windowId: tab.windowId});
 		return this.unsuspendTabs(tabs);
 	}
 
 	public async suspendAll(mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
-		const tabs = await this.getTabs();
+		const tabs = await this.tabs.unsuspended(mode, await this.filesSchemeAllowed());
 		return this.suspendTabs(tabs, mode);
 	}
 
 	public async unsuspendAll(): Promise<void>
 	{
-		const tabs = await this.getTabs({url: this.suspendedUrl});
+		const tabs = await this.tabs.suspended();
 		await this.unsuspendTabs(tabs);
 	}
 
@@ -219,7 +177,7 @@ export class Suspender
 
 		if (this.config.data.discardTabs)
 		{
-			return chrome.tabs.discard(tab.id);
+			return Tabs.discard(tab.id);
 		}
 		else
 		{
@@ -235,7 +193,7 @@ export class Suspender
 
 	private async suspendTab(tabId: number, url: SuspendedURL): Promise<chrome.tabs.Tab | undefined>
 	{
-		const tab = await chrome.tabs.update(tabId, {
+		const tab = await Tabs.update(tabId, {
 			url: url.toString(),
 			autoDiscardable: false,
 		});
@@ -275,7 +233,7 @@ export class Suspender
 		}
 
 		await (await ScrollPositions.load()).set(tab.id, original.scrollPosition);
-		const updated_tab = await chrome.tabs.update(tab.id, {
+		const updated_tab = await Tabs.update(tab.id, {
 			url: original.uri,
 		});
 
@@ -449,7 +407,7 @@ export class Suspender
 			? (new SuspendedURL(url)).toString()
 			: url;
 
-		const created = await chrome.tabs.create({
+		const created = await Tabs.create({
 			url: tab_url,
 			openerTabId: opener_id,
 			active: active,
@@ -458,7 +416,7 @@ export class Suspender
 		});
 		if (suspend && (created.id !== undefined))
 		{
-			await chrome.tabs.update(created.id, {
+			await Tabs.update(created.id, {
 				autoDiscardable: false,
 			});
 		}

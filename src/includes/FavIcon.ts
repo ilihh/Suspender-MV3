@@ -11,7 +11,6 @@ export class FavIcon
 
 	public async dimmed(): Promise<string>
 	{
-		// ensure that icons can be dimmed
 		if (!await this.ensureDim())
 		{
 			return this.url;
@@ -53,17 +52,11 @@ export class FavIcon
 
 	private async ensureDim(): Promise<boolean>
 	{
-		if (!this.canDim)
-		{
-			return false;
-		}
-
-		// can dim own icons and data image
 		if (this.url.startsWith('img/') || isDataImage(this.url))
 		{
 			return true;
 		}
 
-		return isUrlAllowed(this.url);
+		return this.canDim && isUrlAllowed(this.url);
 	}
 }

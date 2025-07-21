@@ -2,6 +2,7 @@ import { MESSAGE, TAB_STATUS } from './includes/constants';
 import { i18n, isEnumValue, isHTMLElement } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 import { Theme } from './includes/Theme';
+import { Tabs } from './includes/Tabs';
 
 async function executeAction(action: MESSAGE, tabId: number): Promise<void>
 {
@@ -20,8 +21,7 @@ async function executeAction(action: MESSAGE, tabId: number): Promise<void>
 
 async function init()
 {
-	const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-	const tab = tabs[0];
+	const tab = await Tabs.active();
 	if (!tab || (tab.id === undefined))
 	{
 		return;
@@ -76,7 +76,7 @@ async function init()
 
 	const allow_whitelist: TAB_STATUS[] = allow_suspend.filter(x => x != TAB_STATUS.WhiteList);
 
-	// hide buttons
+	// show/hide buttons on condition
 	const conditions = {
 		[MESSAGE.SuspendTab]: allow_suspend.includes(status.data),
 		[MESSAGE.UnsuspendTab]: status.data === TAB_STATUS.Suspended,

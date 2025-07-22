@@ -33,7 +33,7 @@ async function init()
 		tabId: tab_id,
 	});
 
-	if (status.data == undefined)
+	if (status.data === undefined)
 	{
 		status.data = TAB_STATUS.Error;
 	}
@@ -45,7 +45,8 @@ async function init()
 		status_block.classList.add(status.data === TAB_STATUS.Normal ? 'status-valid' : 'status-invalid');
 	}
 
-	document.querySelectorAll('[data-action]').forEach(el => {
+	document.querySelectorAll('[data-action]').forEach(el =>
+	{
 		if (isHTMLElement<HTMLElement>(el) && el.dataset['action'])
 		{
 			const action = el.dataset['action'];
@@ -101,7 +102,8 @@ async function init()
 		}
 	}
 
-	document.querySelectorAll('.action-group').forEach(el => {
+	document.querySelectorAll('.action-group').forEach(el =>
+	{
 		const visible = el.querySelectorAll('.action:not(.hidden)').length > 0;
 		if (!visible)
 		{

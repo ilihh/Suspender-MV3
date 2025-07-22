@@ -11,7 +11,8 @@ import { MessageProcessor, MessageProcessorResult } from './includes/MessageProc
 import { Tabs } from './includes/Tabs';
 
 // runtime
-chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) => {
+chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) =>
+{
 	const config = await Configuration.load();
 	await config.init();
 
@@ -22,20 +23,27 @@ chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledD
 	}
 });
 
-chrome.runtime.onStartup.addListener(async () => {
+chrome.runtime.onStartup.addListener(async () =>
+{
 	const config = await Configuration.load();
 	await config.init();
 
 	await Sessions.updateRecent();
 });
 
-chrome.runtime.onMessage.addListener((request: SuspenderRequest, sender: chrome.runtime.MessageSender, sendResponse: (response: any) => void) => {
+chrome.runtime.onMessage.addListener((
+	request: SuspenderRequest,
+	sender: chrome.runtime.MessageSender,
+	sendResponse: (response: any) => void
+) =>
+{
 	processMessage(request, sender).then(sendResponse);
 	return true;
 });
 
 // tabs
-chrome.tabs.onActivated.addListener(async (tabInfo: chrome.tabs.TabActiveInfo) => {
+chrome.tabs.onActivated.addListener(async (tabInfo: chrome.tabs.TabActiveInfo) =>
+{
 	const tab = await Tabs.get(tabInfo.tabId);
 	if (isValidTab(tab))
 	{
@@ -45,7 +53,8 @@ chrome.tabs.onActivated.addListener(async (tabInfo: chrome.tabs.TabActiveInfo) =
 	}
 });
 
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab)=> {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) =>
+{
 	if (!isValidTab(tab))
 	{
 		return;
@@ -69,7 +78,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab)=> {
 			if (scroll !== null)
 			{
 				await chrome.scripting.executeScript({
-					target: {tabId: tabId,},
+					target: { tabId: tabId, },
 					world: 'MAIN',
 					func: (scroll: number) =>
 					{
@@ -86,12 +95,14 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab)=> {
 	}
 });
 
-chrome.tabs.onRemoved.addListener(async (tabId) => {
+chrome.tabs.onRemoved.addListener(async (tabId) =>
+{
 	await TabInfo.destroy(tabId);
 });
 
 // alarms
-chrome.alarms.onAlarm.addListener(async (alarm) => {
+chrome.alarms.onAlarm.addListener(async (alarm) =>
+{
 	if (alarm.name === ALARM_TABS)
 	{
 		const config = await Configuration.load();
@@ -105,9 +116,11 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 });
 
 // context menu
-chrome.contextMenus.onClicked.addListener(async (info, tab)=> {
+chrome.contextMenus.onClicked.addListener(async (info, tab) =>
+{
 	if (!isEnumValue(MESSAGE, info.menuItemId) || !isValidTab(tab))
 	{
+		console.error(`Unsupported menu item: ${info.menuItemId}`);
 		return;
 	}
 
@@ -115,9 +128,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab)=> {
 });
 
 // shortcuts/hotkeys
-chrome.commands.onCommand.addListener(async (action, tab)=> {
+chrome.commands.onCommand.addListener(async (action, tab) =>
+{
 	if (!isEnumValue(MESSAGE, action) || !isValidTab(tab))
 	{
+		console.error(`Unsupported command: ${action}`);
 		return;
 	}
 
@@ -147,7 +162,8 @@ async function processMessage(request: SuspenderRequest, sender: chrome.runtime.
 	return await executeMessage(tab, request);
 }
 
-async function executeMessage(tab: ValidTab, request: SuspenderRequest): Promise<SuspenderResponse<boolean>|SuspenderResponse<TAB_STATUS>|SuspenderResponse<void>>
+async function executeMessage(tab: ValidTab, request: SuspenderRequest):
+	Promise<SuspenderResponse<boolean>|SuspenderResponse<TAB_STATUS>|SuspenderResponse<void>>
 {
 	const config = await Configuration.load();
 	const suspender = new Suspender(config);

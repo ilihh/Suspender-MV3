@@ -26,7 +26,8 @@ async function init(): Promise<void>
 	new MigrateUI(document.getElementById('migrate')!);
 	new AboutUI(document.getElementById('about')!);
 
-	chrome.storage.local.onChanged.addListener(async changes => {
+	chrome.storage.local.onChanged.addListener(async changes =>
+	{
 		if (Configuration.storageKey in changes)
 		{
 			const config = await Configuration.load();

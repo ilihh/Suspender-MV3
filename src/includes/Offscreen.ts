@@ -1,6 +1,6 @@
 export class Offscreen
 {
-	private static creating: Promise<void>|null = null;
+	private static creating: Record<string, Promise<void>> = {};
 
 	public static async requireOffscreenDocument(path: string): Promise<void>
 	{
@@ -16,16 +16,16 @@ export class Offscreen
 			return;
 		}
 
-		if (Offscreen.creating == null)
+		if (Offscreen.creating[path] === undefined)
 		{
-			Offscreen.creating = chrome.offscreen.createDocument({
+			Offscreen.creating[path] = chrome.offscreen.createDocument({
 				url: path,
 				reasons: ['BATTERY_STATUS'],
-				justification: 'reason for needing the document',
+				justification: 'Request battery status',
 			});
 		}
 
-		await Offscreen.creating;
-		Offscreen.creating = null;
+		await Offscreen.creating[path];
+		delete Offscreen.creating[path];
 	}
 }

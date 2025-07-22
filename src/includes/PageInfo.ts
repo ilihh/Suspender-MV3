@@ -51,14 +51,16 @@ export class PageInfo implements InternalPageInfo
 	{
 		try
 		{
-			return  await chrome.scripting.executeScript({
+			return await chrome.scripting.executeScript({
 				target: { tabId: tabId, },
 				world: 'MAIN',
 				injectImmediately: true,
-				func: (scroll: boolean, time: boolean, changed_fields: boolean): InternalPageInfo => {
-					const youtube_time = () => {
-						const video = document.querySelector('video.video-stream.html5-main-video') as HTMLVideoElement | null;
-						return  video !== null ? Math.floor(video.currentTime) : null;
+				func: (scroll: boolean, time: boolean, changed_fields: boolean): InternalPageInfo =>
+				{
+					const youtube_time = () =>
+					{
+						const video = document.querySelector<HTMLVideoElement>('video.video-stream.html5-main-video');
+						return video !== null ? Math.floor(video.currentTime) : null;
 					};
 
 					const is_field_changed = (el: HTMLElement) =>
@@ -138,7 +140,7 @@ export class PageInfo implements InternalPageInfo
 					};
 
 					const scroll_position = scroll
-						? (document.documentElement || document.body || {}).scrollTop || 0
+						? document.documentElement.scrollTop || 0
 						: 0;
 
 					return {

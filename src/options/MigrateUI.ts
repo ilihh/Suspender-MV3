@@ -34,7 +34,8 @@ export class MigrateUI
 
 	private init()
 	{
-		this.id.addEventListener('input', async () => {
+		this.id.addEventListener('input', async () =>
+		{
 			const id = this.id.value.trim();
 			const valid = (id.length === 32) && (id !== chrome.runtime.id);
 			this.btn.disabled = !valid;

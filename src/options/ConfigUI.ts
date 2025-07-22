@@ -184,7 +184,8 @@ export class ConfigUI
 
 	private createConfigOptions(): void
 	{
-		this.configInputs.forEach(el => {
+		this.configInputs.forEach(el =>
+		{
 			const key = el.dataset['field'] ?? '';
 			if (!isKey(this.config.data, key))
 			{

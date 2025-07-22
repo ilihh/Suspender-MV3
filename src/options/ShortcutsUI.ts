@@ -16,7 +16,7 @@ export class ShortcutsUI
 	)
 	{
 		this.root = root;
-		this.template = this.root.querySelector('template#command-template')! as HTMLTemplateElement;
+		this.template = this.root.querySelector<HTMLTemplateElement>('template#command-template')!;
 		this.container = this.root.querySelector('#commands-list')!;
 
 		this.defaultDescription = chrome.i18n.getMessage('page_options_commands_default_description');

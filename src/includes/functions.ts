@@ -52,7 +52,8 @@ export function escapeHtml(str: string): string
 
 export function i18n(document: Document): void
 {
-	document.querySelectorAll('[data-i18n]').forEach(e => {
+	document.querySelectorAll('[data-i18n]').forEach(e =>
+	{
 		if (isHTMLElement<HTMLElement>(e) && e.dataset['i18n'])
 		{
 			e.innerText = chrome.i18n.getMessage(e.dataset['i18n']);

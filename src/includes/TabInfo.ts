@@ -70,6 +70,6 @@ export class TabInfo
 	public save(): Promise<void>
 	{
 		const key = TabInfo.key(this.tabId);
-		return  chrome.storage.session.set({ [key]: this });
+		return chrome.storage.session.set({ [key]: this });
 	}
 }

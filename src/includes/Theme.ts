@@ -21,7 +21,8 @@ export class Theme
 	{
 		let current = 'theme-auto';
 
-		const update = async (): Promise<void> => {
+		const update = async (): Promise<void> =>
+		{
 			const theme = await Theme.load();
 
 			body.classList.remove(current);
@@ -31,7 +32,8 @@ export class Theme
 
 		await update();
 
-		chrome.storage.local.onChanged.addListener(async changes => {
+		chrome.storage.local.onChanged.addListener(async changes =>
+		{
 			if (Theme.storageKey in changes)
 			{
 				await update();

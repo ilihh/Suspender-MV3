@@ -60,7 +60,8 @@ export class SessionsUI
 	private build(): void
 	{
 		this.file_import.addEventListener('click', () => this.file.click());
-		this.file.addEventListener('input', () => {
+		this.file.addEventListener('input', () =>
+		{
 			this.importFile();
 			this.file.value = '';
 		});
@@ -102,14 +103,16 @@ export class SessionsUI
 	{
 		const btn_export = container.querySelector('button[data-export]')!;
 
-		container.addEventListener('pointerenter', () => {
+		container.addEventListener('pointerenter', () =>
+		{
 			if (isHTMLElement<HTMLButtonElement>(btn_export))
 			{
 				btn_export.disabled = !this.config.data.exportSessions;
 			}
 		});
 
-		btn_export.addEventListener('click', async () => {
+		btn_export.addEventListener('click', async () =>
+		{
 			const blob = new Blob([session.data], {type : 'text/plain'});
 			const url = URL.createObjectURL(blob);
 
@@ -137,7 +140,8 @@ export class SessionsUI
 
 		if (type !== 'current')
 		{
-			container.querySelector('button[data-open-suspended]')!.addEventListener('click', async () => {
+			container.querySelector('button[data-open-suspended]')!.addEventListener('click', async () =>
+			{
 				await Messenger.send({
 					action: MESSAGE.OpenSession,
 					urls: session.data,
@@ -145,7 +149,8 @@ export class SessionsUI
 				});
 			});
 
-			container.querySelector('button[data-open-loaded]')!.addEventListener('click', async () => {
+			container.querySelector('button[data-open-loaded]')!.addEventListener('click', async () =>
+			{
 				await Messenger.send({
 					action: MESSAGE.OpenSession,
 					urls: session.data,
@@ -238,7 +243,8 @@ export class SessionsUI
 			chrome.i18n.getMessage('page_options_sessions_window', [index.toString()])
 		);
 
-		window_view.querySelector('.window-name button[data-open-suspended]')!.addEventListener('click', async () => {
+		window_view.querySelector('.window-name button[data-open-suspended]')!.addEventListener('click', async () =>
+		{
 			await Messenger.send({
 				action: MESSAGE.OpenWindow,
 				urls: window.toString(),
@@ -246,7 +252,8 @@ export class SessionsUI
 			})
 		});
 
-		window_view.querySelector('.window-name button[data-open-loaded]')!.addEventListener('click', async () => {
+		window_view.querySelector('.window-name button[data-open-loaded]')!.addEventListener('click', async () =>
+		{
 			await Messenger.send({
 				action: MESSAGE.OpenWindow,
 				urls: window.toString(),
@@ -280,7 +287,7 @@ export class SessionsUI
 			chrome.i18n.getMessage('page_options_session_name', [session.name, session.windows.toString(), session.tabs.toString()])
 		);
 
-		const windows = session_view.querySelector('.session-windows') as HTMLElement;
+		const windows = session_view.querySelector<HTMLElement>('.session-windows')!;
 
 		let index = 1;
 		for (const window of session.loadWindows())
@@ -289,8 +296,10 @@ export class SessionsUI
 			index++;
 		}
 
-		session_view.querySelectorAll('button.toggle-session, a.session-name').forEach(el => {
-			el.addEventListener('click', ev => {
+		session_view.querySelectorAll('button.toggle-session, a.session-name').forEach(el =>
+		{
+			el.addEventListener('click', ev =>
+			{
 				ev.preventDefault();
 				windows.classList.toggle('hidden');
 			});

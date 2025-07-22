@@ -16,8 +16,8 @@ export class Suspender
 	private readonly timeToSuspend: number;
 	private readonly suspendedUrl: string;
 	private readonly loadFavIconsAsDataImage: boolean = false;
-	private _device: DeviceStatus|undefined = undefined;
-	private _filesSchemeAllowed: boolean|undefined = undefined;
+	private _device: DeviceStatus | undefined = undefined;
+	private _filesSchemeAllowed: boolean | undefined = undefined;
 
 	private readonly tabs: Tabs;
 
@@ -32,7 +32,7 @@ export class Suspender
 
 	private async device(): Promise<DeviceStatus>
 	{
-		if (this._device == null)
+		if (this._device === undefined)
 		{
 			this._device = await DeviceStatus.get();
 		}
@@ -42,7 +42,7 @@ export class Suspender
 
 	private async filesSchemeAllowed(): Promise<boolean>
 	{
-		if (this._filesSchemeAllowed == null)
+		if (this._filesSchemeAllowed === undefined)
 		{
 			this._filesSchemeAllowed = await isLocalFilesAllowed();
 		}
@@ -75,7 +75,7 @@ export class Suspender
 	public async suspendGroup(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
 		const tab = await Tabs.get(tabId);
-		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
+		const tabs = tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
 			: await this.tabs.unsuspended(mode, await this.filesSchemeAllowed(), { groupId: tab.groupId, });
 		return this.suspendTabs(tabs, mode);
@@ -84,7 +84,7 @@ export class Suspender
 	public async unsuspendGroup(tabId: number): Promise<void>
 	{
 		const tab = await Tabs.get(tabId);
-		const tabs = tab.groupId == chrome.tabGroups.TAB_GROUP_ID_NONE
+		const tabs = tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
 			? [tab,]
 			: await this.tabs.suspended({ groupId: tab.groupId, });
 		return this.unsuspendTabs(tabs);

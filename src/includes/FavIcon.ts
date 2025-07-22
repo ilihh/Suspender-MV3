@@ -16,10 +16,12 @@ export class FavIcon
 			return this.url;
 		}
 
-		return new Promise((resolve) => {
+		return new Promise((resolve) =>
+		{
 			const img = document.createElement('img');
 
-			img.addEventListener('load', () => {
+			img.addEventListener('load', () =>
+			{
 				const canvas = document.createElement('canvas');
 				canvas.width = img.naturalWidth;
 				canvas.height = img.naturalHeight;

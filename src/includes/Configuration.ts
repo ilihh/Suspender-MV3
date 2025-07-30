@@ -127,6 +127,16 @@ export class Configuration
 			this.data.faviconsMode = this.data.restoreScrollPosition ? FAVICON_MODE.Actual : FAVICON_MODE.NoDim;
 			this.data.version = 2;
 		}
+
+		if (this.data.version == 2)
+		{
+			if ('exportSessions' in this.data)
+			{
+				delete this.data['exportSessions'];
+			}
+
+			this.data.version = 3;
+		}
 	}
 
 	public async save(): Promise<void>

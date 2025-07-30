@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.14
+
+- core: unsuspending multiple tabs is much faster now
+- sessions: the "downloads" permission is no more required
+
 ## 1.0.12
 
 - action (popup): relaxed conditions when commands "Suspend", "Pause Suspension", "Never suspend this domain", "Never suspend this URL" are available

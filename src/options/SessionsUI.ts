@@ -1,6 +1,6 @@
 import { Session, Sessions, SessionWindow } from '../includes/Sessions';
 import { Configuration } from '../includes/Configuration';
-import { isHTMLElement, setInnerText } from '../includes/functions';
+import { setInnerText } from '../includes/functions';
 import { Messenger } from '../includes/Messenger';
 import { MESSAGE } from '../includes/constants';
 import { clone } from './functions';
@@ -101,29 +101,12 @@ export class SessionsUI
 
 	private initSessionButton(session: Session, container: HTMLElement, type: 'current' | 'recent' | 'saved'): void
 	{
-		const btn_export = container.querySelector('button[data-export]')!;
+		const manifest = chrome.runtime.getManifest();
 
-		container.addEventListener('pointerenter', () =>
-		{
-			if (isHTMLElement<HTMLButtonElement>(btn_export))
-			{
-				btn_export.disabled = !this.config.data.exportSessions;
-			}
-		});
-
-		btn_export.addEventListener('click', async () =>
-		{
-			const blob = new Blob([session.data], {type : 'text/plain'});
-			const url = URL.createObjectURL(blob);
-
-			await Messenger.send({
-				action: MESSAGE.ExportSession,
-				url: url,
-				filename: `session ${session.name}.txt`,
-			});
-
-			URL.revokeObjectURL(url);
-		});
+		const btn_export = container.querySelector<HTMLAnchorElement>('a[data-export]')!;
+		const blob = new Blob([session.data], {type : 'text/plain'});
+		btn_export.href = URL.createObjectURL(blob);
+		btn_export.download = `${manifest.name} - Session - ${session.name}.txt`;
 
 		container.querySelector('button[data-save]')!.addEventListener('click', async () =>
 		{

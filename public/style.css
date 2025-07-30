@@ -529,12 +529,14 @@ body.options {
 }
 
 .options .session button.session-action,
+.options .session a.button.session-action,
 .options .window button.window-action {
 	display: none;
 	margin-left: 5px;
 }
 
 .options .session:hover button.session-action,
+.options .session:hover a.button.session-action,
 .options .window:hover button.window-action {
 	display: inline-block;
 }
@@ -594,6 +596,7 @@ body.options {
 
 .options button.toggle-session,
 .options button.session-action,
+.options a.button.session-action,
 .options button.window-action {
 	display: inline-block;
 	background-color: var(--color-link);
@@ -606,11 +609,13 @@ body.options {
 	margin-right: 8px;
 	vertical-align: middle;
 	line-height: 1;
+	margin-top: 0;
 }
 
 .options .button:hover:not(:disabled),
 .options button.toggle-session:hover:not(:disabled),
 .options button.session-action:hover:not(:disabled),
+.options a.button.session-action:hover:not(:disabled),
 .options button.window-action:hover:not(:disabled) {
 	background-color: var(--color-link-hover);
 }
@@ -618,10 +623,12 @@ body.options {
 .options .button:disabled,
 .options button.toggle-session:disabled,
 .options button.session-action:disabled,
+.options a.button.session-action:disabled,
 .options button.window-action:disabled,
 .options .button[disabled],
 .options button.toggle-session[disabled],
 .options button.session-action[disabled],
+.options a.button.session-action[disabled],
 .options button.window-action[disabled] {
 	background-color: var(--color-button-disabled-bg);
 	color: var(--color-button-disabled-text);
@@ -631,6 +638,7 @@ body.options {
 }
 
 .options button.session-action,
+.options a.button.session-action,
 .options button.window-action {
 	padding: 3px 8px;
 	margin-left: 6px;

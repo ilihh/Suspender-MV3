@@ -141,8 +141,6 @@
 	"page_options_enable_context_menu_permissions": { "message": "Requires access to the context menu." },
 	"page_options_cleanup_history": { "message": "Remove suspended pages from history" },
 	"page_options_cleanup_history_permissions": { "message": "Requires access to the history." },
-	"page_options_export_sessions": { "message": "Sessions export" },
-	"page_options_export_sessions_permissions": { "message": "Requires access to the downloads." },
 	"page_options_sync_profile": { "message": "Sync settings with your Chrome profile" },
 
 	"page_options_block_icons": { "message": "Tab Icons" },

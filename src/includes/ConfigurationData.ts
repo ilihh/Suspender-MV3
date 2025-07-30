@@ -37,8 +37,6 @@ export class ConfigurationData
 
 	public cleanupHistory: boolean = false;
 
-	public exportSessions: boolean = false;
-
 	// decide against implementation
 	public syncProfile: boolean = true;
 }

@@ -229,19 +229,16 @@ export class Suspender
 
 		if (this.config.data.cleanupHistory)
 		{
-			await this.cleanupHistory(suspended_url, original.uri);
+			void this.cleanupHistory(suspended_url, original.uri);
 		}
 
-		await (await ScrollPositions.load()).set(tab.id, original.scrollPosition);
+		void (await ScrollPositions.load()).set(tab.id, original.scrollPosition);
 		const updated_tab = await Tabs.update(tab.id, {
 			url: original.uri,
 		});
 
-		if (isValidTab(updated_tab))
-		{
-			void TabInfo.activated(updated_tab.id);
-			void this.updateTabActionIcon(updated_tab);
-		}
+		void TabInfo.activated(tab.id);
+		void this.updateTabActionIcon(tab);
 
 		return updated_tab;
 	}

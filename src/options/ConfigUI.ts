@@ -108,9 +108,6 @@ export class ConfigUI
 			cleanupHistory: () => this.requestPermissions({
 				permissions: ['history'],
 			}),
-			exportSessions: () => this.requestPermissions({
-				permissions: ['downloads'],
-			}),
 		};
 
 		this.iconsPermissions = {

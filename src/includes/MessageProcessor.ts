@@ -4,7 +4,6 @@ import { ValidTab } from './ValidTab';
 import { Configuration } from './Configuration';
 import { Suspender } from './Suspender';
 import { TabInfo } from './TabInfo';
-import { string2filename } from './functions';
 import { Session, SessionWindow } from './Sessions';
 
 export type MessageProcessorResult = Promise<SuspenderResponse<boolean> | SuspenderResponse<TAB_STATUS> | SuspenderResponse<void>>;
@@ -193,22 +192,6 @@ export class MessageProcessor implements MessageProcessorMap
 		const urls = this.request.urls ?? '';
 		const suspended = this.request.suspended ?? false;
 		await this.suspender.openSession(Session.createWindows(urls), suspended);
-		return { success: true, };
-	}
-
-	async [MESSAGE.ExportSession](): Promise<SuspenderResponse<void>>
-	{
-		const url = this.request.url ?? '';
-		const filename = this.request.filename ?? '';
-		if (!this.config.data.exportSessions || !filename.trim())
-		{
-			return { success: false, };
-		}
-
-		await chrome.downloads.download({
-			url: url,
-			filename: string2filename(filename),
-		});
 		return { success: true, };
 	}
 }

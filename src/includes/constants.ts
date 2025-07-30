@@ -72,7 +72,6 @@ export enum MESSAGE
 	// options: sessions
 	OpenWindow = 'open_window',
 	OpenSession = 'open_session',
-	ExportSession = 'export_session',
 }
 
 export enum TAB_STATUS {

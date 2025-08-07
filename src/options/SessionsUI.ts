@@ -249,8 +249,9 @@ export class SessionsUI
 		{
 			const tab_view = clone(this.templateTab);
 			const a = tab_view.querySelector('a')!;
-			a.innerText = tab;
-			a.setAttribute('href', tab);
+
+			a.innerText = tab.title;
+			a.setAttribute('href', tab.url);
 
 			tabs.appendChild(tab_view);
 		}

@@ -1,4 +1,5 @@
 import { DataStorage } from './DataStorage';
+import { SuspendedURL } from './SuspendedURL';
 
 export class Sessions
 {
@@ -6,8 +7,8 @@ export class Sessions
 	public recent: Session[] = [];
 	public saved: Session[] = [];
 
-	private static storageKey: string = 'sessions';
-	private static recentLimit: number = 7;
+	private static readonly storageKey: string = 'sessions';
+	private static readonly recentLimit: number = 7;
 
 	public static async load(): Promise<Sessions>
 	{
@@ -61,9 +62,9 @@ export class Sessions
 
 export class Session
 {
-	private static _key = 'session-backup';
+	private static readonly _key = 'session-backup';
 
-	private static windowSeparator: string = '\n\n';
+	private static readonly windowSeparator: string = '\n\n';
 
 	public name: string;
 
@@ -111,8 +112,7 @@ export class Session
 				continue;
 			}
 
-			const tabs: string[] = window.tabs.map(x => x.url).filter(x => x !== undefined);
-			const w = new SessionWindow(tabs);
+			const w = new SessionWindow(SessionURL.createFromTabs(window.tabs));
 			if (w.tabs.length > 0)
 			{
 				windows.push(w);
@@ -145,22 +145,82 @@ export class Session
 
 export class SessionWindow
 {
-	private static tabSeparator: string = '\n';
+	public static readonly tabSeparator: string = '\n';
 
 	public constructor(
-		public tabs: string[],
+		public readonly tabs: SessionURL[],
 	)
 	{
-		this.tabs = tabs.map(x => x.trim()).filter(x => x.length > 0);
-	}
-
-	public static create(data: string): SessionWindow
-	{
-		return new SessionWindow(data.split(SessionWindow.tabSeparator));
 	}
 
 	public toString(): string
 	{
-		return this.tabs.join(SessionWindow.tabSeparator);
+		return this.tabs.map(x => x.toString()).join(SessionWindow.tabSeparator);
+	}
+
+	public static create(data: string): SessionWindow
+	{
+		return new SessionWindow(SessionURL.createArray(data));
+	}
+}
+
+export class SessionURL
+{
+	public constructor(
+		public readonly url: string,
+		private readonly _title: string = '',
+	)
+	{
+	}
+
+	public get title(): string
+	{
+		if (this._title !== '')
+		{
+			return this._title;
+		}
+
+		const suspended = SuspendedURL.fromSuspendedUrl(this.url);
+		return (suspended.uri !== '' && suspended.title !== '')
+			? suspended.title
+			: this.url;
+	}
+
+	public toString(): string
+	{
+		return `${this.url}\t${this._title}`;
+	}
+
+	public static create(line: string): SessionURL
+	{
+		const index = line.indexOf('\t');
+		if (index === -1)
+		{
+			return new SessionURL(line);
+		}
+
+		return new SessionURL(line.substring(0, index), line.substring(index + 1));
+	}
+
+	public static createArray(data: string): SessionURL[]
+	{
+		const lines = data.split(SessionWindow.tabSeparator);
+		return lines.map(x => x.trim()).filter(x => x.length > 0).map(x => SessionURL.create(x));
+	}
+
+	public static createFromTabs(tabs: chrome.tabs.Tab[]): SessionURL[]
+	{
+		const result: SessionURL[] = [];
+		for (const tab of tabs)
+		{
+			if (tab.url === undefined)
+			{
+				continue;
+			}
+
+			result.push(new SessionURL(tab.url, tab.title ?? ''));
+		}
+
+		return result;
 	}
 }

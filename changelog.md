@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.15
+
+- sessions: tabs titles now are saved
+- sessions: tab titles from previous imports and sessions are displayed when available
+
 ## 1.0.14
 
 - core: unsuspending multiple tabs is much faster now

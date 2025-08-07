@@ -531,24 +531,19 @@ body.options {
 .options .session button.session-action,
 .options .session a.button.session-action,
 .options .window button.window-action {
-	display: none;
-	margin-left: 5px;
-}
-
-.options .session:hover button.session-action,
-.options .session:hover a.button.session-action,
-.options .window:hover button.window-action {
 	display: inline-block;
+	margin-left: 0;
+	margin-right: 0;
 }
 
-.options .session.session-current:hover button.session-action[data-open-suspended],
-.options .session.session-current:hover button.session-action[data-open-loaded],
-.options .session.session-current:hover button.session-action[data-rename],
-.options .session.session-current:hover button.session-action[data-delete] {
+.options .session.session-current button.session-action[data-open-suspended],
+.options .session.session-current button.session-action[data-open-loaded],
+.options .session.session-current button.session-action[data-rename],
+.options .session.session-current button.session-action[data-delete] {
 	display: none !important;
 }
 
-.options .session.session-saved:hover button.session-action[data-save] {
+.options .session.session-saved button.session-action[data-save] {
 	display: none !important;
 }
 
@@ -561,6 +556,7 @@ body.options {
 	margin-bottom: 0.5em;
 	display: flex;
 	align-items: center;
+	gap: 0.5em;
 }
 
 .options .window-name span {
@@ -580,6 +576,11 @@ body.options {
 .options .session-header {
 	display: flex;
 	align-items: center;
+	gap: 0.5em;
+}
+
+.options .session-header:first-child {
+	margin-bottom: 0.5em;
 }
 
 .options .comment {
@@ -606,7 +607,7 @@ body.options {
 	border-radius: 4px;
 	font-size: 0.8rem;
 	cursor: pointer;
-	margin-right: 8px;
+	margin-right: 0;
 	vertical-align: middle;
 	line-height: 1;
 	margin-top: 0;

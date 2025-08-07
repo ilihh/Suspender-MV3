@@ -434,7 +434,7 @@ export class Suspender
 
 		for (const url of window.tabs)
 		{
-			await this.createTab(url, suspend, undefined, undefined, false, w.id);
+			await this.createTab(url.url, suspend, undefined, undefined, false, w.id);
 		}
 	}
 

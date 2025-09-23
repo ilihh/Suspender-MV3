@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.17
+
+- bugfix: proper fix for the browser-restricted pages (chromewebstore.google.com, chrome.google.com, microsoftedge.microsoft.com, etc)
+
 ## 1.0.16
 
 - added machine translations into different languages

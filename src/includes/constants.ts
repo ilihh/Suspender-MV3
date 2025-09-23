@@ -109,9 +109,3 @@ export enum FAVICON_MODE
 	// show actual icon, dimmed, requires access to the all urls
 	Actual = 'actual',
 }
-
-// Chrome does not allow scripts injection on the following domains
-export const INJECT_PROHIBITED_DOMAINS: string[] = [
-	'chromewebstore.google.com',
-	'chrome.google.com',
-];

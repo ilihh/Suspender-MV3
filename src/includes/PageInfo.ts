@@ -1,7 +1,6 @@
 import { ValidTab } from './ValidTab';
 import { isUrlAllowed } from './functions';
 import { ConfigurationData } from './ConfigurationData';
-import { INJECT_PROHIBITED_DOMAINS } from './constants';
 
 interface InternalPageInfo
 {
@@ -22,39 +21,24 @@ export class PageInfo implements InternalPageInfo
 
 	public static async get(tab: ValidTab, data: ConfigurationData): Promise<PageInfo|false>
 	{
-		const prohibited = INJECT_PROHIBITED_DOMAINS.includes((new URL(tab.url)).hostname);
-		const can_inject = !prohibited && await isUrlAllowed(tab.url);
-		if (!can_inject)
+		if (!await isUrlAllowed(tab.url))
 		{
 			return new PageInfo();
 		}
 
-		const results = await PageInfo.inject(
+		return await PageInfo.inject(
 			tab.id,
 			data.restoreScrollPosition,
 			data.maintainYoutubeTime && tab.url.startsWith('https://www.youtube.com/watch'),
 			data.neverSuspendUnsavedData,
 		);
-
-		if (results === false)
-		{
-			return false;
-		}
-
-		const result = results[0]?.result;
-		if (result !== undefined)
-		{
-			return new PageInfo(result.scrollPosition, result.time, result.changedFields);
-		}
-
-		return new PageInfo();
 	}
 
-	private static async inject(tabId: number, scroll: boolean, time: boolean, changed_fields: boolean): Promise<chrome.scripting.InjectionResult<InternalPageInfo>[]|false>
+	private static async inject(tabId: number, scroll: boolean, time: boolean, changed_fields: boolean): Promise<PageInfo|false>
 	{
 		try
 		{
-			return await chrome.scripting.executeScript({
+			const injection = await chrome.scripting.executeScript({
 				target: { tabId: tabId, },
 				world: 'MAIN',
 				injectImmediately: true,
@@ -154,11 +138,34 @@ export class PageInfo implements InternalPageInfo
 				},
 				args: [scroll, time, changed_fields, ],
 			});
+			const result = injection[0]?.result;
+			if (result !== undefined)
+			{
+				return new PageInfo(result.scrollPosition, result.time, result.changedFields);
+			}
+
+			return new PageInfo();
 		}
-		// prevent error on internal chrome pages like ERR_CONNECTION_CLOSED
+		// errors will happen on
+		// - internal chrome pages like ERR_CONNECTION_CLOSED
+		// - Chrome Web Store and Edge Add-ons store pages (browser restriction)
 		catch (e)
 		{
+			// for the browser restriction
+			if (isErrorWithMessage(e) && (e.message === 'Error: The extensions gallery cannot be scripted.'))
+			{
+				return new PageInfo();
+			}
+
 			return false;
 		}
 	}
+}
+
+function isErrorWithMessage(error: unknown): error is { message: string }
+{
+	return (typeof error === 'object')
+		&& (error !== null)
+		&& ('message' in error)
+		&& (typeof error.message === 'string');
 }

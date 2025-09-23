@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "タブをサスペンドする" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "リンクを新しいサスペンドタブで開く" },
+	"action_open_settings": { "message": "設定" },
+
+	"action_toggle_suspend_tab": { "message": "このタブをサスペンド/復元する" },
+	"action_suspend_tab": { "message": "このタブをサスペンドする" },
+	"action_unsuspend_tab": { "message": "このタブを復元する" },
+
+	"action_toggle_pause_tab": { "message": "このタブのサスペンドを一時停止/再開する" },
+	"action_pause_tab": { "message": "このタブのサスペンドを一時停止する" },
+	"action_unpause_tab": { "message": "このタブのサスペンドを再開する" },
+
+	"action_whitelist_domain": { "message": "このドメインをサスペンドしない" },
+	"action_whitelist_url": { "message": "このURLをサスペンドしない" },
+	"action_whitelist_remove": { "message": "ホワイトリストから削除する" },
+
+	"action_suspend_group": { "message": "現在のグループをサスペンドする" },
+	"action_suspend_group_forced": { "message": "現在のグループを強制サスペンドする" },
+	"action_unsuspend_group": { "message": "現在のグループを復元する" },
+
+	"action_suspend_window": { "message": "このウィンドウ内の他のタブをサスペンドする" },
+	"action_suspend_window_forced": { "message": "このウィンドウ内の他のタブを強制サスペンドする" },
+	"action_unsuspend_window": { "message": "このウィンドウ内のすべてのタブを復元する" },
+
+	"action_suspend_all": { "message": "すべてのウィンドウ内のタブをサスペンドする" },
+	"action_suspend_all_forced": { "message": "すべてのウィンドウ内のタブを強制サスペンドする" },
+	"action_unsuspend_all": { "message": "すべてのウィンドウ内のタブを復元する" },
+
+	"tab_status_normal": { "message": "タブは自動的にサスペンドされます。" },
+	"tab_status_suspended": { "message": "タブはサスペンドされています。" },
+	"tab_status_disabled": { "message": "自動タブサスペンドは無効です。" },
+	"tab_status_special": { "message": "このタブはサスペンドできません。" },
+	"tab_status_whitelist": { "message": "URLはホワイトリストにあります。" },
+	"tab_status_playing_audio": { "message": "タブで音声が再生されています。" },
+	"tab_status_unsaved_form": { "message": "タブに未保存のフォームデータがあります。" },
+	"tab_status_local_file": { "message": "ローカルファイルはサスペンドできません。" },
+	"tab_status_active": { "message": "タブがアクティブです。" },
+	"tab_status_pinned": { "message": "タブはピン留めされています。" },
+	"tab_status_suspend_paused": { "message": "タブのサスペンドは一時停止中です。" },
+	"tab_status_offline": { "message": "ネットワーク接続がありません。" },
+	"tab_status_power_connected": { "message": "電源に接続されています。" },
+	"tab_status_error": { "message": "このタブでは自動サスペンドが利用できません。" },
+
+	"page_suspended_unsuspend": { "message": "更新するかクリックして再読み込みしてください" },
+	"page_suspended_shortcuts": { "message": "キーボードショートカットを設定する" },
+
+	"page_options_title": { "message": "Suspender MV3: 設定" },
+	"page_options_tab_settings": { "message": "設定" },
+	"page_options_tab_sessions": { "message": "セッション" },
+	"page_options_tab_shortcuts": { "message": "ショートカット" },
+	"page_options_tab_about": { "message": "情報" },
+	"page_options_settings": { "message": "設定" },
+	"page_options_migrate": { "message": "移行" },
+	"page_options_migrate_comment": {
+		"message": "他の拡張機能のIDの32文字を入力してください。\nIDはサスペンドされたページのURLから取得できます。\n例: URL:\n__CODE__\nの拡張機能IDは: __ID__ です。"
+	},
+	"page_options_migrate_progress": {
+		"message": "$TOTAL$ 個中 $DONE$ 個のタブを移行しました。処理には数分かかる場合があります。",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "移行が完了しました。古い拡張機能は削除できます。"
+	},
+
+	"page_options_sessions": { "message": "セッション" },
+	"page_options_sessions_current": { "message": "現在のセッション:" },
+	"page_options_sessions_recent": { "message": "最近のセッション:" },
+	"page_options_sessions_saved": { "message": "保存されたセッション:" },
+	"page_options_sessions_import": { "message": "セッションをインポート" },
+
+	"page_options_sessions_window": {
+		"message": "ウィンドウ #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "サスペンド状態で開く" },
+	"page_options_sessions_open_loaded": { "message": "読み込み状態で開く" },
+	"page_options_sessions_export": { "message": "エクスポート" },
+	"page_options_sessions_save": { "message": "保存" },
+	"page_options_sessions_save_prompt": { "message": "セッション名を入力してください:" },
+	"page_options_sessions_rename": { "message": "名前を変更" },
+	"page_options_sessions_delete": { "message": "削除" },
+	"page_options_sessions_delete_confirm": { "message": "このセッションを削除してもよろしいですか？" },
+	"page_options_sessions_import_error": { "message": "ファイルの読み込みに失敗しました。ファイルはプレーンテキストで、1行に1つのURLを含む必要があります。" },
+
+	"page_options_shortcuts": { "message": "キーボードショートカット" },
+	"page_options_shortcuts_change": { "message": "ショートカットを変更" },
+
+	"page_options_block_automatic": { "message": "自動タブサスペンド" },
+	"page_options_suspend_delay": { "message": "自動的にタブをサスペンドするまでの時間:" },
+	"page_options_suspend_delay_never": { "message": "しない" },
+	"page_options_suspend_delay_5_min": { "message": "5分" },
+	"page_options_suspend_delay_10_min": { "message": "10分" },
+	"page_options_suspend_delay_15_min": { "message": "15分" },
+	"page_options_suspend_delay_30_min": { "message": "30分" },
+	"page_options_suspend_delay_1_hour": { "message": "1時間" },
+	"page_options_suspend_delay_2_hours": { "message": "2時間" },
+	"page_options_suspend_delay_4_hours": { "message": "4時間" },
+	"page_options_suspend_delay_6_hours": { "message": "6時間" },
+	"page_options_suspend_delay_12_hours": { "message": "12時間" },
+	"page_options_suspend_delay_1_day": { "message": "1日" },
+	"page_options_suspend_delay_2_days": { "message": "2日" },
+	"page_options_suspend_delay_3_days": { "message": "3日" },
+	"page_options_suspend_delay_1_week": { "message": "1週間" },
+	"page_options_suspend_delay_2_week": { "message": "2週間" },
+
+	"page_options_suspend_active": { "message": "アクティブなタブをサスペンドする" },
+	"page_options_suspend_pinned": { "message": "ピン留めされたタブをサスペンドする" },
+	"page_options_suspend_playing_audio": { "message": "音声を再生中のタブをサスペンドする" },
+
+	"page_options_suspend_local_files": { "message": "file:// タブをサスペンドする" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "Chrome 拡張機能のページで「ファイルのURLへのアクセスを許可する」オプションを有効にする必要があります。\n警告: このオプションを変更すると、この拡張機能のサスペンドされたすべてのページが閉じられます。実行前にセッションをバックアップしてください。"
+	},
+
+	"page_options_suspend_offline": { "message": "オフライン時にタブをサスペンドする" },
+	"page_options_never_suspend_unsaved_data": { "message": "未保存のフォーム入力があるタブはサスペンドしない" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "すべてのURLへのアクセスとスクリプト実行の権限が必要です。" },
+	"page_options_never_suspend_when_power_on": { "message": "電源接続中はタブをサスペンドしない" },
+	"page_options_white_list": { "message": "次のリストにあるURLのタブはサスペンドしない:" },
+	"page_options_white_list_hint": { "message": "各項目を新しい行に入力してください。\n例:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "サスペンドされたタブ" },
+	"page_options_restore_scroll_position": { "message": "スクロール位置を復元し、タブアイコンを暗く表示する" },
+	"page_options_restore_scroll_permissions": { "message": "すべてのURLへのアクセスとスクリプト実行の権限が必要です。" },
+
+	"page_options_maintain_youtube_time": { "message": "動画タブの YouTube 再生位置を保存する" },
+	"page_options_youtube_permissions": { "message": "https://www.youtube.com/watch* へのアクセスとスクリプト実行の権限が必要です。" },
+
+	"page_options_discard_tabs": { "message": "サスペンドの代わりにタブを破棄する" },
+	"page_options_block_other": { "message": "その他" },
+
+	"page_options_enable_context_menu": { "message": "コンテキストメニューに追加する" },
+	"page_options_enable_context_menu_permissions": { "message": "コンテキストメニューへのアクセスが必要です。" },
+	"page_options_cleanup_history": { "message": "履歴からサスペンドされたページを削除する" },
+	"page_options_cleanup_history_permissions": { "message": "履歴へのアクセスが必要です。" },
+	"page_options_sync_profile": { "message": "設定をChromeプロファイルと同期する" },
+
+	"page_options_block_icons": { "message": "タブアイコン" },
+	"page_options_favicons_mode_no_dim": { "message": "実際のサイトアイコン（暗くしない）" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "サイトのファビコンをそのまま使用します。追加の権限は不要です。サスペンドされたタブのアイコンは通常のタブと同じです。" },
+	"page_options_favicons_mode_google": { "message": "Google アイコン（暗く表示）" },
+	"page_options_favicons_mode_google_permissions": { "message": "Google Favicon API からアイコンを読み込み暗くします。実際のアイコンと異なる場合がありますが、Googleへのアクセスのみが必要です。" },
+	"page_options_favicons_mode_actual": { "message": "実際のサイトアイコン（暗く表示）" },
+	"page_options_favicons_mode_actual_permissions": { "message": "正確なサイトアイコンを使用し暗くします。すべてのURLへのアクセスが必要です。" },
+
+	"page_options_block_theme": { "message": "テーマ" },
+	"page_options_theme_auto": { "message": "自動" },
+	"page_options_theme_light": { "message": "ライト" },
+	"page_options_theme_dark": { "message": "ダーク" },
+
+	"page_options_commands_default_description": { "message": "名称未設定" },
+	"page_options_commands_default_shortcut": { "message": "(未設定)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (ウィンドウ: $WINDOWS$; タブ: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "セッション名" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "情報" },
+	"page_options_about_author": { "message": "作者:" },
+	"page_options_about_info": { "message": "The Great Suspender 拡張機能に触発されました。" }
+}

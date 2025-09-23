@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "挂起标签页" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "在新的挂起标签页中打开链接" },
+	"action_open_settings": { "message": "设置" },
+
+	"action_toggle_suspend_tab": { "message": "挂起/恢复此标签页" },
+	"action_suspend_tab": { "message": "挂起此标签页" },
+	"action_unsuspend_tab": { "message": "恢复此标签页" },
+
+	"action_toggle_pause_tab": { "message": "暂停/恢复此标签页的挂起" },
+	"action_pause_tab": { "message": "暂停此标签页的挂起" },
+	"action_unpause_tab": { "message": "恢复此标签页的挂起" },
+
+	"action_whitelist_domain": { "message": "从不挂起此域名" },
+	"action_whitelist_url": { "message": "从不挂起此 URL" },
+	"action_whitelist_remove": { "message": "从白名单移除" },
+
+	"action_suspend_group": { "message": "挂起当前分组" },
+	"action_suspend_group_forced": { "message": "强制挂起当前分组" },
+	"action_unsuspend_group": { "message": "恢复当前分组" },
+
+	"action_suspend_window": { "message": "挂起此窗口中的其他标签页" },
+	"action_suspend_window_forced": { "message": "强制挂起此窗口中的其他标签页" },
+	"action_unsuspend_window": { "message": "恢复此窗口中的所有标签页" },
+
+	"action_suspend_all": { "message": "挂起所有窗口中的所有标签页" },
+	"action_suspend_all_forced": { "message": "强制挂起所有窗口中的所有标签页" },
+	"action_unsuspend_all": { "message": "恢复所有窗口中的所有标签页" },
+
+	"tab_status_normal": { "message": "标签页将自动挂起。" },
+	"tab_status_suspended": { "message": "标签页已挂起。" },
+	"tab_status_disabled": { "message": "自动挂起已禁用。" },
+	"tab_status_special": { "message": "此标签页无法挂起。" },
+	"tab_status_whitelist": { "message": "URL 在白名单中。" },
+	"tab_status_playing_audio": { "message": "标签页正在播放音频。" },
+	"tab_status_unsaved_form": { "message": "标签页有未保存的表单数据。" },
+	"tab_status_local_file": { "message": "本地文件无法挂起。" },
+	"tab_status_active": { "message": "标签页处于活动状态。" },
+	"tab_status_pinned": { "message": "标签页已固定。" },
+	"tab_status_suspend_paused": { "message": "挂起已暂停。" },
+	"tab_status_offline": { "message": "无网络连接。" },
+	"tab_status_power_connected": { "message": "已连接电源。" },
+	"tab_status_error": { "message": "此标签页无法自动挂起。" },
+
+	"page_suspended_unsuspend": { "message": "刷新或点击重新加载" },
+	"page_suspended_shortcuts": { "message": "设置快捷键" },
+
+	"page_options_title": { "message": "Suspender MV3: 设置" },
+	"page_options_tab_settings": { "message": "设置" },
+	"page_options_tab_sessions": { "message": "会话" },
+	"page_options_tab_shortcuts": { "message": "快捷键" },
+	"page_options_tab_about": { "message": "关于" },
+	"page_options_settings": { "message": "设置" },
+	"page_options_migrate": { "message": "迁移" },
+	"page_options_migrate_comment": {
+		"message": "输入另一个扩展程序 ID 的 32 个字符。\n你可以从挂起页面的 URL 中获取 ID。\n例如，URL:\n__CODE__\n扩展程序 ID 为: __ID__。"
+	},
+	"page_options_migrate_progress": {
+		"message": "已迁移 $DONE$ / $TOTAL$ 个标签页。此过程可能需要几分钟。",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "迁移完成。可以删除旧扩展程序。"
+	},
+
+	"page_options_sessions": { "message": "会话" },
+	"page_options_sessions_current": { "message": "当前会话：" },
+	"page_options_sessions_recent": { "message": "最近的会话：" },
+	"page_options_sessions_saved": { "message": "已保存的会话：" },
+	"page_options_sessions_import": { "message": "导入会话" },
+
+	"page_options_sessions_window": {
+		"message": "窗口 #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "打开挂起" },
+	"page_options_sessions_open_loaded": { "message": "打开已加载" },
+	"page_options_sessions_export": { "message": "导出" },
+	"page_options_sessions_save": { "message": "保存" },
+	"page_options_sessions_save_prompt": { "message": "输入会话名称：" },
+	"page_options_sessions_rename": { "message": "重命名" },
+	"page_options_sessions_delete": { "message": "删除" },
+	"page_options_sessions_delete_confirm": { "message": "确定要删除此会话吗？" },
+	"page_options_sessions_import_error": { "message": "加载文件失败。文件必须是纯文本且每行包含一个 URL。" },
+
+	"page_options_shortcuts": { "message": "键盘快捷键" },
+	"page_options_shortcuts_change": { "message": "更改快捷键" },
+
+	"page_options_block_automatic": { "message": "自动挂起标签页" },
+	"page_options_suspend_delay": { "message": "自动挂起标签页的时间：" },
+	"page_options_suspend_delay_never": { "message": "从不" },
+	"page_options_suspend_delay_5_min": { "message": "5 分钟" },
+	"page_options_suspend_delay_10_min": { "message": "10 分钟" },
+	"page_options_suspend_delay_15_min": { "message": "15 分钟" },
+	"page_options_suspend_delay_30_min": { "message": "30 分钟" },
+	"page_options_suspend_delay_1_hour": { "message": "1 小时" },
+	"page_options_suspend_delay_2_hours": { "message": "2 小时" },
+	"page_options_suspend_delay_4_hours": { "message": "4 小时" },
+	"page_options_suspend_delay_6_hours": { "message": "6 小时" },
+	"page_options_suspend_delay_12_hours": { "message": "12 小时" },
+	"page_options_suspend_delay_1_day": { "message": "1 天" },
+	"page_options_suspend_delay_2_days": { "message": "2 天" },
+	"page_options_suspend_delay_3_days": { "message": "3 天" },
+	"page_options_suspend_delay_1_week": { "message": "1 周" },
+	"page_options_suspend_delay_2_week": { "message": "2 周" },
+
+	"page_options_suspend_active": { "message": "挂起活动标签页" },
+	"page_options_suspend_pinned": { "message": "挂起固定标签页" },
+	"page_options_suspend_playing_audio": { "message": "挂起正在播放音频的标签页" },
+
+	"page_options_suspend_local_files": { "message": "挂起 file:// 标签页" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "必须在 Chrome 扩展程序页面启用“允许访问文件 URL”。\n警告：更改此选项会关闭此扩展的所有挂起页面。请在执行前备份会话。"
+	},
+
+	"page_options_suspend_offline": { "message": "离线时挂起标签页" },
+	"page_options_never_suspend_unsaved_data": { "message": "不挂起包含未保存表单数据的标签页" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "需要访问所有 URL 并有执行脚本的权限。" },
+	"page_options_never_suspend_when_power_on": { "message": "连接电源时不挂起标签页" },
+	"page_options_white_list": { "message": "不挂起以下列表中 URL 的标签页：" },
+	"page_options_white_list_hint": { "message": "每行一个。\n示例：\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "挂起的标签页" },
+	"page_options_restore_scroll_position": { "message": "恢复滚动位置并启用灰显的标签图标" },
+	"page_options_restore_scroll_permissions": { "message": "需要访问所有 URL 并有执行脚本的权限。" },
+
+	"page_options_maintain_youtube_time": { "message": "保存带视频标签页的 YouTube 播放时间点" },
+	"page_options_youtube_permissions": { "message": "需要访问 https://www.youtube.com/watch* 并有执行脚本的权限。" },
+
+	"page_options_discard_tabs": { "message": "丢弃标签页而不是挂起" },
+	"page_options_block_other": { "message": "其他" },
+
+	"page_options_enable_context_menu": { "message": "添加到右键菜单" },
+	"page_options_enable_context_menu_permissions": { "message": "需要访问上下文菜单。" },
+	"page_options_cleanup_history": { "message": "从历史记录中移除挂起页面" },
+	"page_options_cleanup_history_permissions": { "message": "需要访问历史记录。" },
+	"page_options_sync_profile": { "message": "与 Chrome 配置文件同步设置" },
+
+	"page_options_block_icons": { "message": "标签图标" },
+	"page_options_favicons_mode_no_dim": { "message": "网站原始图标（不灰显）" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "直接使用网站图标。无需额外权限。挂起标签图标与非挂起相同。" },
+	"page_options_favicons_mode_google": { "message": "Google 图标（灰显）" },
+	"page_options_favicons_mode_google_permissions": { "message": "从 Google Favicon API 加载图标并灰显。可能与实际图标不同，但仅需访问 Google。" },
+	"page_options_favicons_mode_actual": { "message": "网站原始图标（灰显）" },
+	"page_options_favicons_mode_actual_permissions": { "message": "使用网站原始图标并灰显。需要访问所有 URL。" },
+
+	"page_options_block_theme": { "message": "主题" },
+	"page_options_theme_auto": { "message": "自动" },
+	"page_options_theme_light": { "message": "浅色" },
+	"page_options_theme_dark": { "message": "深色" },
+
+	"page_options_commands_default_description": { "message": "未命名" },
+	"page_options_commands_default_shortcut": { "message": "（未设置）" },
+	"page_options_session_name": {
+		"message": "$SESSION$（窗口: $WINDOWS$；标签页: $TABS$）",
+		"placeholders": {
+			"session": { "content": "$1", "example": "会话名称" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "关于" },
+	"page_options_about_author": { "message": "作者：" },
+	"page_options_about_info": { "message": "灵感来自 The Great Suspender 扩展。" }
+}

@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Suspender abas" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Abrir link em nova aba suspensa" },
+	"action_open_settings": { "message": "Configurações" },
+
+	"action_toggle_suspend_tab": { "message": "Suspender/Desuspender esta aba" },
+	"action_suspend_tab": { "message": "Suspender esta aba" },
+	"action_unsuspend_tab": { "message": "Desuspender esta aba" },
+
+	"action_toggle_pause_tab": { "message": "Pausar/Despausar suspensão desta aba" },
+	"action_pause_tab": { "message": "Pausar suspensão desta aba" },
+	"action_unpause_tab": { "message": "Despausar suspensão desta aba" },
+
+	"action_whitelist_domain": { "message": "Nunca suspender este domínio" },
+	"action_whitelist_url": { "message": "Nunca suspender esta URL" },
+	"action_whitelist_remove": { "message": "Remover da lista branca" },
+
+	"action_suspend_group": { "message": "Suspender grupo atual" },
+	"action_suspend_group_forced": { "message": "Forçar suspensão do grupo atual" },
+	"action_unsuspend_group": { "message": "Desuspender grupo atual" },
+
+	"action_suspend_window": { "message": "Suspender todas as outras abas nesta janela" },
+	"action_suspend_window_forced": { "message": "Forçar suspensão de todas as outras abas nesta janela" },
+	"action_unsuspend_window": { "message": "Desuspender todas as abas nesta janela" },
+
+	"action_suspend_all": { "message": "Suspender todas as abas em todas as janelas" },
+	"action_suspend_all_forced": { "message": "Forçar suspensão de todas as abas em todas as janelas" },
+	"action_unsuspend_all": { "message": "Desuspender todas as abas em todas as janelas" },
+
+	"tab_status_normal": { "message": "A aba será suspensa automaticamente." },
+	"tab_status_suspended": { "message": "Aba suspensa." },
+	"tab_status_disabled": { "message": "Suspensão automática de abas desativada." },
+	"tab_status_special": { "message": "A aba não pode ser suspensa." },
+	"tab_status_whitelist": { "message": "URL está na lista branca." },
+	"tab_status_playing_audio": { "message": "A aba está reproduzindo áudio." },
+	"tab_status_unsaved_form": { "message": "A aba tem dados de formulário não salvos." },
+	"tab_status_local_file": { "message": "Arquivo local não pode ser suspenso." },
+	"tab_status_active": { "message": "A aba está ativa." },
+	"tab_status_pinned": { "message": "A aba foi fixada." },
+	"tab_status_suspend_paused": { "message": "Suspensão de abas pausada." },
+	"tab_status_offline": { "message": "Sem conexão de rede." },
+	"tab_status_power_connected": { "message": "Conectado à fonte de energia." },
+	"tab_status_error": { "message": "Suspensão automática indisponível para esta aba." },
+
+	"page_suspended_unsuspend": { "message": "Atualizar ou clique para recarregar" },
+	"page_suspended_shortcuts": { "message": "Definir atalhos de teclado" },
+
+	"page_options_title": { "message": "Suspender MV3: Configurações" },
+	"page_options_tab_settings": { "message": "Configurações" },
+	"page_options_tab_sessions": { "message": "Sessões" },
+	"page_options_tab_shortcuts": { "message": "Atalhos" },
+	"page_options_tab_about": { "message": "Sobre" },
+	"page_options_settings": { "message": "Configurações" },
+	"page_options_migrate": { "message": "Migrar" },
+	"page_options_migrate_comment": {
+		"message": "Digite 32 símbolos do ID da outra extensão.\nVocê pode obter o ID da URL da página suspensa.\nPor exemplo, URL:\n__CODE__\ntem ID da extensão: __ID__."
+	},
+	"page_options_migrate_progress": {
+		"message": "Migradas $DONE$ de $TOTAL$ abas. O processo pode levar vários minutos.",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "Migração concluída. A extensão antiga pode ser excluída."
+	},
+
+	"page_options_sessions": { "message": "Sessões" },
+	"page_options_sessions_current": { "message": "Sessão atual:" },
+	"page_options_sessions_recent": { "message": "Sessões recentes:" },
+	"page_options_sessions_saved": { "message": "Sessões salvas:" },
+	"page_options_sessions_import": { "message": "Importar sessão" },
+
+	"page_options_sessions_window": {
+		"message": "Janela #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "abrir suspensa" },
+	"page_options_sessions_open_loaded": { "message": "abrir carregada" },
+	"page_options_sessions_export": { "message": "exportar" },
+	"page_options_sessions_save": { "message": "salvar" },
+	"page_options_sessions_save_prompt": { "message": "Digite o nome da sessão:" },
+	"page_options_sessions_rename": { "message": "renomear" },
+	"page_options_sessions_delete": { "message": "excluir" },
+	"page_options_sessions_delete_confirm": { "message": "Tem certeza de que deseja excluir esta sessão?" },
+	"page_options_sessions_import_error": { "message": "Falha ao carregar o arquivo. O arquivo deve ser texto simples e conter uma URL por linha." },
+
+	"page_options_shortcuts": { "message": "Atalhos de teclado" },
+	"page_options_shortcuts_change": { "message": "Alterar atalhos" },
+
+	"page_options_block_automatic": { "message": "Suspensão automática de abas" },
+	"page_options_suspend_delay": { "message": "Suspender abas automaticamente após:" },
+	"page_options_suspend_delay_never": { "message": "Nunca" },
+	"page_options_suspend_delay_5_min": { "message": "5 minutos" },
+	"page_options_suspend_delay_10_min": { "message": "10 minutos" },
+	"page_options_suspend_delay_15_min": { "message": "15 minutos" },
+	"page_options_suspend_delay_30_min": { "message": "30 minutos" },
+	"page_options_suspend_delay_1_hour": { "message": "1 hora" },
+	"page_options_suspend_delay_2_hours": { "message": "2 horas" },
+	"page_options_suspend_delay_4_hours": { "message": "4 horas" },
+	"page_options_suspend_delay_6_hours": { "message": "6 horas" },
+	"page_options_suspend_delay_12_hours": { "message": "12 horas" },
+	"page_options_suspend_delay_1_day": { "message": "1 dia" },
+	"page_options_suspend_delay_2_days": { "message": "2 dias" },
+	"page_options_suspend_delay_3_days": { "message": "3 dias" },
+	"page_options_suspend_delay_1_week": { "message": "1 semana" },
+	"page_options_suspend_delay_2_week": { "message": "2 semanas" },
+
+	"page_options_suspend_active": { "message": "Suspender abas ativas" },
+	"page_options_suspend_pinned": { "message": "Suspender abas fixadas" },
+	"page_options_suspend_playing_audio": { "message": "Suspender abas que estão reproduzindo áudio" },
+
+	"page_options_suspend_local_files": { "message": "Suspender abas file://" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "A opção \"Permitir acesso a URLs de arquivo\" deve estar ativada na página de extensões do Chrome.\nAviso: alterar esta opção fechará todas as páginas suspensas desta extensão. Faça backup da sessão antes de fazer isso."
+	},
+
+	"page_options_suspend_offline": { "message": "Suspender abas quando offline" },
+	"page_options_never_suspend_unsaved_data": { "message": "Nunca suspender abas que contenham entradas de formulário não salvas" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requer acesso a todas as URLs e permissão para executar scripts." },
+	"page_options_never_suspend_when_power_on": { "message": "Nunca suspender abas quando conectado a uma fonte de energia" },
+	"page_options_white_list": { "message": "Nunca suspender abas com URLs da seguinte lista:" },
+	"page_options_white_list_hint": { "message": "Cada item em uma nova linha.\nExemplo:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Abas suspensas" },
+	"page_options_restore_scroll_position": { "message": "Restaurar posição de rolagem e ativar ícones de abas escurecidos" },
+	"page_options_restore_scroll_permissions": { "message": "Requer acesso a todas as URLs e permissão para executar scripts." },
+
+	"page_options_maintain_youtube_time": { "message": "Salvar timestamps do YouTube para a aba com vídeo" },
+	"page_options_youtube_permissions": { "message": "Requer acesso a https://www.youtube.com/watch* e permissão para executar scripts." },
+
+	"page_options_discard_tabs": { "message": "Descartar abas em vez de suspender" },
+	"page_options_block_other": { "message": "Outros" },
+
+	"page_options_enable_context_menu": { "message": "Adicionar ao menu de contexto" },
+	"page_options_enable_context_menu_permissions": { "message": "Requer acesso ao menu de contexto." },
+	"page_options_cleanup_history": { "message": "Remover páginas suspensas do histórico" },
+	"page_options_cleanup_history_permissions": { "message": "Requer acesso ao histórico." },
+	"page_options_sync_profile": { "message": "Sincronizar configurações com o seu perfil do Chrome" },
+
+	"page_options_block_icons": { "message": "Ícones de abas" },
+	"page_options_favicons_mode_no_dim": { "message": "Ícone real do site (sem escurecimento)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Usa o favicon do site como está. Nenhuma permissão extra necessária. Ícones de abas suspensas são iguais aos não suspensos." },
+	"page_options_favicons_mode_google": { "message": "Ícone do Google (escurecido)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Carrega ícone da API de Favicon do Google e escurece. Pode ser diferente do ícone real, mas requer apenas acesso ao Google." },
+	"page_options_favicons_mode_actual": { "message": "Ícone real do site (escurecido)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Usa o ícone exato do site e escurece. Requer acesso a todas as URLs." },
+
+	"page_options_block_theme": { "message": "Tema" },
+	"page_options_theme_auto": { "message": "Automático" },
+	"page_options_theme_light": { "message": "Claro" },
+	"page_options_theme_dark": { "message": "Escuro" },
+
+	"page_options_commands_default_description": { "message": "Sem nome" },
+	"page_options_commands_default_shortcut": { "message": "(não definido)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Janelas: $WINDOWS$; Abas: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Nome da Sessão" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "Sobre" },
+	"page_options_about_author": { "message": "Autor:" },
+	"page_options_about_info": { "message": "Inspirado na extensão The Great Suspender." }
+}

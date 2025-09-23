@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Zawieszaj karty" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Otwórz link w nowej zawieszonej karcie" },
+	"action_open_settings": { "message": "Ustawienia" },
+
+	"action_toggle_suspend_tab": { "message": "Zawieś/Odzawieś tę kartę" },
+	"action_suspend_tab": { "message": "Zawieś tę kartę" },
+	"action_unsuspend_tab": { "message": "Odzawieś tę kartę" },
+
+	"action_toggle_pause_tab": { "message": "Wstrzymaj/Wznów zawieszanie tej karty" },
+	"action_pause_tab": { "message": "Wstrzymaj zawieszanie tej karty" },
+	"action_unpause_tab": { "message": "Wznów zawieszanie tej karty" },
+
+	"action_whitelist_domain": { "message": "Nigdy nie zawieszaj tej domeny" },
+	"action_whitelist_url": { "message": "Nigdy nie zawieszaj tego URL" },
+	"action_whitelist_remove": { "message": "Usuń z białej listy" },
+
+	"action_suspend_group": { "message": "Zawieś bieżącą grupę" },
+	"action_suspend_group_forced": { "message": "Wymuś zawieszenie bieżącej grupy" },
+	"action_unsuspend_group": { "message": "Odzawieś bieżącą grupę" },
+
+	"action_suspend_window": { "message": "Zawieś wszystkie inne karty w tym oknie" },
+	"action_suspend_window_forced": { "message": "Wymuś zawieszenie wszystkich innych kart w tym oknie" },
+	"action_unsuspend_window": { "message": "Odzawieś wszystkie karty w tym oknie" },
+
+	"action_suspend_all": { "message": "Zawieś wszystkie karty we wszystkich oknach" },
+	"action_suspend_all_forced": { "message": "Wymuś zawieszenie wszystkich kart we wszystkich oknach" },
+	"action_unsuspend_all": { "message": "Odzawieś wszystkie karty we wszystkich oknach" },
+
+	"tab_status_normal": { "message": "Karta zawiesi się automatycznie." },
+	"tab_status_suspended": { "message": "Karta zawieszona." },
+	"tab_status_disabled": { "message": "Automatyczne zawieszanie kart wyłączone." },
+	"tab_status_special": { "message": "Karta nie może być zawieszona." },
+	"tab_status_whitelist": { "message": "URL jest na białej liście." },
+	"tab_status_playing_audio": { "message": "Karta odtwarza audio." },
+	"tab_status_unsaved_form": { "message": "Karta zawiera niezapisane dane formularza." },
+	"tab_status_local_file": { "message": "Plik lokalny nie może być zawieszony." },
+	"tab_status_active": { "message": "Karta jest aktywna." },
+	"tab_status_pinned": { "message": "Karta jest przypięta." },
+	"tab_status_suspend_paused": { "message": "Zawieszanie kart wstrzymane." },
+	"tab_status_offline": { "message": "Brak połączenia sieciowego." },
+	"tab_status_power_connected": { "message": "Podłączone do źródła zasilania." },
+	"tab_status_error": { "message": "Automatyczne zawieszanie niedostępne dla tej karty." },
+
+	"page_suspended_unsuspend": { "message": "Odśwież lub kliknij, aby przeładować" },
+	"page_suspended_shortcuts": { "message": "Ustaw skróty klawiszowe" },
+
+	"page_options_title": { "message": "Suspender MV3: Ustawienia" },
+	"page_options_tab_settings": { "message": "Ustawienia" },
+	"page_options_tab_sessions": { "message": "Sesje" },
+	"page_options_tab_shortcuts": { "message": "Skróty" },
+	"page_options_tab_about": { "message": "O rozszerzeniu" },
+	"page_options_settings": { "message": "Ustawienia" },
+	"page_options_migrate": { "message": "Migruj" },
+	"page_options_migrate_comment": {
+		"message": "Wprowadź 32 symbole ID innego rozszerzenia.\nID możesz uzyskać z URL zawieszonej strony.\nNa przykład, URL:\n__CODE__\nma ID rozszerzenia: __ID__."
+	},
+	"page_options_migrate_progress": {
+		"message": "Przemigrowano $DONE$ z $TOTAL$ kart. Proces może potrwać kilka minut.",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "Migracja ukończona. Stare rozszerzenie można usunąć."
+	},
+
+	"page_options_sessions": { "message": "Sesje" },
+	"page_options_sessions_current": { "message": "Bieżąca sesja:" },
+	"page_options_sessions_recent": { "message": "Ostatnie sesje:" },
+	"page_options_sessions_saved": { "message": "Zapisane sesje:" },
+	"page_options_sessions_import": { "message": "Importuj sesję" },
+
+	"page_options_sessions_window": {
+		"message": "Okno #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "otwórz zawieszone" },
+	"page_options_sessions_open_loaded": { "message": "otwórz załadowane" },
+	"page_options_sessions_export": { "message": "eksportuj" },
+	"page_options_sessions_save": { "message": "zapisz" },
+	"page_options_sessions_save_prompt": { "message": "Wprowadź nazwę sesji:" },
+	"page_options_sessions_rename": { "message": "zmień nazwę" },
+	"page_options_sessions_delete": { "message": "usuń" },
+	"page_options_sessions_delete_confirm": { "message": "Czy na pewno chcesz usunąć tę sesję?" },
+	"page_options_sessions_import_error": { "message": "Nie udało się załadować pliku. Plik musi być zwykłym tekstem i zawierać jeden URL na linię." },
+
+	"page_options_shortcuts": { "message": "Skróty klawiszowe" },
+	"page_options_shortcuts_change": { "message": "Zmień skróty" },
+
+	"page_options_block_automatic": { "message": "Automatyczne zawieszanie kart" },
+	"page_options_suspend_delay": { "message": "Automatycznie zawieszaj karty po:" },
+	"page_options_suspend_delay_never": { "message": "Nigdy" },
+	"page_options_suspend_delay_5_min": { "message": "5 minutach" },
+	"page_options_suspend_delay_10_min": { "message": "10 minutach" },
+	"page_options_suspend_delay_15_min": { "message": "15 minutach" },
+	"page_options_suspend_delay_30_min": { "message": "30 minutach" },
+	"page_options_suspend_delay_1_hour": { "message": "1 godzinie" },
+	"page_options_suspend_delay_2_hours": { "message": "2 godzinach" },
+	"page_options_suspend_delay_4_hours": { "message": "4 godzinach" },
+	"page_options_suspend_delay_6_hours": { "message": "6 godzinach" },
+	"page_options_suspend_delay_12_hours": { "message": "12 godzinach" },
+	"page_options_suspend_delay_1_day": { "message": "1 dniu" },
+	"page_options_suspend_delay_2_days": { "message": "2 dniach" },
+	"page_options_suspend_delay_3_days": { "message": "3 dniach" },
+	"page_options_suspend_delay_1_week": { "message": "1 tygodniu" },
+	"page_options_suspend_delay_2_week": { "message": "2 tygodniach" },
+
+	"page_options_suspend_active": { "message": "Zawieszaj aktywne karty" },
+	"page_options_suspend_pinned": { "message": "Zawieszaj przypięte karty" },
+	"page_options_suspend_playing_audio": { "message": "Zawieszaj karty odtwarzające audio" },
+
+	"page_options_suspend_local_files": { "message": "Zawieszaj karty file://" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "Opcja \"Zezwól na dostęp do adresów URL plików\" musi być włączona na stronie rozszerzeń Chrome.\nOstrzeżenie: zmiana tej opcji zamknie wszystkie zawieszone strony tego rozszerzenia. Zrób kopię zapasową sesji przed tym."
+	},
+
+	"page_options_suspend_offline": { "message": "Zawieszaj karty w trybie offline" },
+	"page_options_never_suspend_unsaved_data": { "message": "Nigdy nie zawieszaj kart zawierających niezapisane dane wejściowe formularza" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Wymaga dostępu do wszystkich URL i uprawnienia do wykonywania skryptów." },
+	"page_options_never_suspend_when_power_on": { "message": "Nigdy nie zawieszaj kart, gdy podłączone do źródła zasilania" },
+	"page_options_white_list": { "message": "Nigdy nie zawieszaj kart z URL z poniższej listy:" },
+	"page_options_white_list_hint": { "message": "Każdy element w nowej linii.\nPrzykład:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Zawieszone karty" },
+	"page_options_restore_scroll_position": { "message": "Przywracaj pozycję przewijania i włącz przyciemnione ikony kart" },
+	"page_options_restore_scroll_permissions": { "message": "Wymaga dostępu do wszystkich URL i uprawnienia do wykonywania skryptów." },
+
+	"page_options_maintain_youtube_time": { "message": "Zapisz znaczniki czasu YouTube dla karty z wideo" },
+	"page_options_youtube_permissions": { "message": "Wymaga dostępu do https://www.youtube.com/watch* i uprawnienia do wykonywania skryptów." },
+
+	"page_options_discard_tabs": { "message": "Odrzucaj karty zamiast zawieszać" },
+	"page_options_block_other": { "message": "Inne" },
+
+	"page_options_enable_context_menu": { "message": "Dodaj do menu kontekstowego" },
+	"page_options_enable_context_menu_permissions": { "message": "Wymaga dostępu do menu kontekstowego." },
+	"page_options_cleanup_history": { "message": "Usuwaj zawieszone strony z historii" },
+	"page_options_cleanup_history_permissions": { "message": "Wymaga dostępu do historii." },
+	"page_options_sync_profile": { "message": "Synchronizuj ustawienia z profilem Chrome" },
+
+	"page_options_block_icons": { "message": "Ikony kart" },
+	"page_options_favicons_mode_no_dim": { "message": "Aktualna ikona witryny (bez przyciemnienia)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Używa ikony witryny bez zmian. Nie wymaga dodatkowych uprawnień. Ikony zawieszonych kart są takie same jak niezawieszonych." },
+	"page_options_favicons_mode_google": { "message": "Ikona Google (przyciemniona)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Ładuje ikonę z API Google Favicon i przyciemnia ją. Może różnić się od aktualnej ikony, ale wymaga tylko dostępu do Google." },
+	"page_options_favicons_mode_actual": { "message": "Aktualna ikona witryny (przyciemniona)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Używa dokładnej ikony witryny i przyciemnia ją. Wymaga dostępu do wszystkich URL." },
+
+	"page_options_block_theme": { "message": "Motyw" },
+	"page_options_theme_auto": { "message": "Automatyczny" },
+	"page_options_theme_light": { "message": "Jasny" },
+	"page_options_theme_dark": { "message": "Ciemny" },
+
+	"page_options_commands_default_description": { "message": "Bez nazwy" },
+	"page_options_commands_default_shortcut": { "message": "(nie ustawiono)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Okna: $WINDOWS$; Karty: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Session Name" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "O rozszerzeniu" },
+	"page_options_about_author": { "message": "Autor:" },
+	"page_options_about_info": { "message": "Zainspirowane rozszerzeniem The Great Suspender." }
+}

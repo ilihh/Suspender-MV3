@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Приостановка вкладок" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Открыть ссылку в новой приостановленной вкладке" },
+	"action_open_settings": { "message": "Настройки" },
+
+	"action_toggle_suspend_tab": { "message": "Приостановить/Возобновить эту вкладку" },
+	"action_suspend_tab": { "message": "Приостановить эту вкладку" },
+	"action_unsuspend_tab": { "message": "Возобновить эту вкладку" },
+
+	"action_toggle_pause_tab": { "message": "Поставить на паузу/Возобновить приостановку этой вкладки" },
+	"action_pause_tab": { "message": "Поставить на паузу приостановку этой вкладки" },
+	"action_unpause_tab": { "message": "Возобновить приостановку этой вкладки" },
+
+	"action_whitelist_domain": { "message": "Никогда не приостанавливать этот домен" },
+	"action_whitelist_url": { "message": "Никогда не приостанавливать этот URL" },
+	"action_whitelist_remove": { "message": "Удалить из белого списка" },
+
+	"action_suspend_group": { "message": "Приостановить текущую группу" },
+	"action_suspend_group_forced": { "message": "Принудительно приостановить текущую группу" },
+	"action_unsuspend_group": { "message": "Возобновить текущую группу" },
+
+	"action_suspend_window": { "message": "Приостановить все другие вкладки в этом окне" },
+	"action_suspend_window_forced": { "message": "Принудительно приостановить все другие вкладки в этом окне" },
+	"action_unsuspend_window": { "message": "Возобновить все вкладки в этом окне" },
+
+	"action_suspend_all": { "message": "Приостановить все вкладки во всех окнах" },
+	"action_suspend_all_forced": { "message": "Принудительно приостановить все вкладки во всех окнах" },
+	"action_unsuspend_all": { "message": "Возобновить все вкладки во всех окнах" },
+
+	"tab_status_normal": { "message": "Вкладка приостановится автоматически." },
+	"tab_status_suspended": { "message": "Вкладка приостановлена." },
+	"tab_status_disabled": { "message": "Автоматическая приостановка вкладки отключена." },
+	"tab_status_special": { "message": "Вкладку нельзя приостановить." },
+	"tab_status_whitelist": { "message": "URL в белом списке." },
+	"tab_status_playing_audio": { "message": "Вкладка воспроизводит аудио." },
+	"tab_status_unsaved_form": { "message": "Вкладка содержит несохраненные данные формы." },
+	"tab_status_local_file": { "message": "Локальный файл нельзя приостановить." },
+	"tab_status_active": { "message": "Вкладка активна." },
+	"tab_status_pinned": { "message": "Вкладка закреплена." },
+	"tab_status_suspend_paused": { "message": "Приостановка вкладок приостановлена." },
+	"tab_status_offline": { "message": "Нет подключения к сети." },
+	"tab_status_power_connected": { "message": "Подключено к источнику питания." },
+	"tab_status_error": { "message": "Автоприостановка недоступна для этой вкладки." },
+
+	"page_suspended_unsuspend": { "message": "Обновите или кликните для возобновления" },
+	"page_suspended_shortcuts": { "message": "Настроить сочетания клавиш" },
+
+	"page_options_title": { "message": "Suspender MV3: Настройки" },
+	"page_options_tab_settings": { "message": "Настройки" },
+	"page_options_tab_sessions": { "message": "Сеансы" },
+	"page_options_tab_shortcuts": { "message": "Сочетания клавиш" },
+	"page_options_tab_about": { "message": "О программе" },
+	"page_options_settings": { "message": "Настройки" },
+	"page_options_migrate": { "message": "Миграция" },
+	"page_options_migrate_comment": {
+		"message": "Введите 32 символа ID другого расширения.\nВы можете получить ID из URL приостановленной страницы.\nНапример, URL:\n__CODE__\nсодержит ID расширения: __ID__."
+	},
+	"page_options_migrate_progress": {
+		"message": "Перенесено $DONE$ из $TOTAL$ вкладок. Процесс может занять несколько минут.",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "Миграция завершена. Старое расширение можно удалить."
+	},
+
+	"page_options_sessions": { "message": "Сеансы" },
+	"page_options_sessions_current": { "message": "Текущий сеанс:" },
+	"page_options_sessions_recent": { "message": "Недавние сеансы:" },
+	"page_options_sessions_saved": { "message": "Сохраненные сеансы:" },
+	"page_options_sessions_import": { "message": "Импорт сеанса" },
+
+	"page_options_sessions_window": {
+		"message": "Окно #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "открыть приостановленные" },
+	"page_options_sessions_open_loaded": { "message": "открыть загруженные" },
+	"page_options_sessions_export": { "message": "экспорт" },
+	"page_options_sessions_save": { "message": "сохранить" },
+	"page_options_sessions_save_prompt": { "message": "Введите имя сеанса:" },
+	"page_options_sessions_rename": { "message": "переименовать" },
+	"page_options_sessions_delete": { "message": "удалить" },
+	"page_options_sessions_delete_confirm": { "message": "Вы уверены, что хотите удалить этот сеанс?" },
+	"page_options_sessions_import_error": { "message": "Не удалось загрузить файл. Файл должен быть простым текстом и содержать один URL на строку." },
+
+	"page_options_shortcuts": { "message": "Сочетания клавиш" },
+	"page_options_shortcuts_change": { "message": "Изменить сочетания клавиш" },
+
+	"page_options_block_automatic": { "message": "Автоматическая приостановка вкладок" },
+	"page_options_suspend_delay": { "message": "Автоматически приостанавливать вкладки после:" },
+	"page_options_suspend_delay_never": { "message": "Никогда" },
+	"page_options_suspend_delay_5_min": { "message": "5 минут" },
+	"page_options_suspend_delay_10_min": { "message": "10 минут" },
+	"page_options_suspend_delay_15_min": { "message": "15 минут" },
+	"page_options_suspend_delay_30_min": { "message": "30 минут" },
+	"page_options_suspend_delay_1_hour": { "message": "1 часа" },
+	"page_options_suspend_delay_2_hours": { "message": "2 часов" },
+	"page_options_suspend_delay_4_hours": { "message": "4 часов" },
+	"page_options_suspend_delay_6_hours": { "message": "6 часов" },
+	"page_options_suspend_delay_12_hours": { "message": "12 часов" },
+	"page_options_suspend_delay_1_day": { "message": "1 дня" },
+	"page_options_suspend_delay_2_days": { "message": "2 дней" },
+	"page_options_suspend_delay_3_days": { "message": "3 дней" },
+	"page_options_suspend_delay_1_week": { "message": "1 недели" },
+	"page_options_suspend_delay_2_week": { "message": "2 недель" },
+
+	"page_options_suspend_active": { "message": "Приостанавливать активные вкладки" },
+	"page_options_suspend_pinned": { "message": "Приостанавливать закрепленные вкладки" },
+	"page_options_suspend_playing_audio": { "message": "Приостанавливать вкладки, воспроизводящие аудио" },
+
+	"page_options_suspend_local_files": { "message": "Приостанавливать вкладки file://" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "Опция \"Разрешить доступ к URL файлов\" должна быть включена на странице расширений Chrome.\nПредупреждение: изменение этой опции закроет все приостановленные страницы этого расширения. Сделайте резервную копию сеанса перед этим."
+	},
+
+	"page_options_suspend_offline": { "message": "Приостанавливать вкладки в оффлайн-режиме" },
+	"page_options_never_suspend_unsaved_data": { "message": "Никогда не приостанавливать вкладки с несохраненными формами" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Требует доступа ко всем URL и разрешения на выполнение скриптов." },
+	"page_options_never_suspend_when_power_on": { "message": "Никогда не приостанавливать вкладки при подключении к источнику питания" },
+	"page_options_white_list": { "message": "Никогда не приостанавливать вкладки с URL из следующего списка:" },
+	"page_options_white_list_hint": { "message": "Каждый элемент с новой строки.\nПример:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Приостановленные вкладки" },
+	"page_options_restore_scroll_position": { "message": "Восстанавливать позицию прокрутки и включать затемненные иконки вкладок" },
+	"page_options_restore_scroll_permissions": { "message": "Требует доступа ко всем URL и разрешения на выполнение скриптов." },
+
+	"page_options_maintain_youtube_time": { "message": "Сохранять метки времени YouTube для вкладки с видео" },
+	"page_options_youtube_permissions": { "message": "Требует доступа к https://www.youtube.com/watch* и разрешения на выполнение скриптов." },
+
+	"page_options_discard_tabs": { "message": "Выгружать вкладки вместо приостановки" },
+	"page_options_block_other": { "message": "Другое" },
+
+	"page_options_enable_context_menu": { "message": "Добавить в контекстное меню" },
+	"page_options_enable_context_menu_permissions": { "message": "Требует доступа к контекстному меню." },
+	"page_options_cleanup_history": { "message": "Удалять приостановленные страницы из истории" },
+	"page_options_cleanup_history_permissions": { "message": "Требует доступа к истории." },
+	"page_options_sync_profile": { "message": "Синхронизировать настройки с вашим профилем Chrome" },
+
+	"page_options_block_icons": { "message": "Иконки вкладок" },
+	"page_options_favicons_mode_no_dim": { "message": "Фактическая иконка сайта (без затемнения)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Использует иконку сайта как есть. Не требует дополнительных разрешений. Иконки приостановленных вкладок такие же, как и неприостановленных." },
+	"page_options_favicons_mode_google": { "message": "Иконка Google (затемненная)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Загружает иконку из Google Favicon API и затемняет ее. Может отличаться от фактической иконки, но требует только доступа к Google." },
+	"page_options_favicons_mode_actual": { "message": "Фактическая иконка сайта (затемненная)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Использует точную иконку сайта и затемняет ее. Требует доступа ко всем URL." },
+
+	"page_options_block_theme": { "message": "Тема" },
+	"page_options_theme_auto": { "message": "Авто" },
+	"page_options_theme_light": { "message": "Светлая" },
+	"page_options_theme_dark": { "message": "Темная" },
+
+	"page_options_commands_default_description": { "message": "Без имени" },
+	"page_options_commands_default_shortcut": { "message": "(не задано)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Окон: $WINDOWS$; Вкладок: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Session Name" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "О программе" },
+	"page_options_about_author": { "message": "Автор:" },
+	"page_options_about_info": { "message": "Вдохновлено расширением The Great Suspender." }
+}

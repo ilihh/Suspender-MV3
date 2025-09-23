@@ -1,6 +1,7 @@
 import { ValidTab } from './ValidTab';
 import { isUrlAllowed } from './functions';
 import { ConfigurationData } from './ConfigurationData';
+import { INJECT_PROHIBITED_DOMAINS } from './constants';
 
 interface InternalPageInfo
 {
@@ -21,7 +22,9 @@ export class PageInfo implements InternalPageInfo
 
 	public static async get(tab: ValidTab, data: ConfigurationData): Promise<PageInfo|false>
 	{
-		if (!await isUrlAllowed(tab.url))
+		const prohibited = INJECT_PROHIBITED_DOMAINS.includes((new URL(tab.url)).hostname);
+		const can_inject = !prohibited && await isUrlAllowed(tab.url);
+		if (!can_inject)
 		{
 			return new PageInfo();
 		}

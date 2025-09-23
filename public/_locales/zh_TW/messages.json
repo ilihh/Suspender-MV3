@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "暫停分頁" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "在新的暫停分頁中開啟連結" },
+	"action_open_settings": { "message": "設定" },
+
+	"action_toggle_suspend_tab": { "message": "暫停/恢復此分頁" },
+	"action_suspend_tab": { "message": "暫停此分頁" },
+	"action_unsuspend_tab": { "message": "恢復此分頁" },
+
+	"action_toggle_pause_tab": { "message": "暫停/繼續此分頁的暫停狀態" },
+	"action_pause_tab": { "message": "暫停此分頁的自動暫停" },
+	"action_unpause_tab": { "message": "繼續此分頁的自動暫停" },
+
+	"action_whitelist_domain": { "message": "永不暫停此網域" },
+	"action_whitelist_url": { "message": "永不暫停此 URL" },
+	"action_whitelist_remove": { "message": "從白名單移除" },
+
+	"action_suspend_group": { "message": "暫停目前群組" },
+	"action_suspend_group_forced": { "message": "強制暫停目前群組" },
+	"action_unsuspend_group": { "message": "恢復目前群組" },
+
+	"action_suspend_window": { "message": "暫停此視窗中的其他分頁" },
+	"action_suspend_window_forced": { "message": "強制暫停此視窗中的其他分頁" },
+	"action_unsuspend_window": { "message": "恢復此視窗中的所有分頁" },
+
+	"action_suspend_all": { "message": "暫停所有視窗的所有分頁" },
+	"action_suspend_all_forced": { "message": "強制暫停所有視窗的所有分頁" },
+	"action_unsuspend_all": { "message": "恢復所有視窗的所有分頁" },
+
+	"tab_status_normal": { "message": "分頁將自動暫停。" },
+	"tab_status_suspended": { "message": "分頁已暫停。" },
+	"tab_status_disabled": { "message": "自動暫停已停用。" },
+	"tab_status_special": { "message": "此分頁無法暫停。" },
+	"tab_status_whitelist": { "message": "URL 在白名單中。" },
+	"tab_status_playing_audio": { "message": "分頁正在播放音訊。" },
+	"tab_status_unsaved_form": { "message": "分頁有未儲存的表單資料。" },
+	"tab_status_local_file": { "message": "本機檔案無法暫停。" },
+	"tab_status_active": { "message": "分頁為作用中。" },
+	"tab_status_pinned": { "message": "分頁已釘選。" },
+	"tab_status_suspend_paused": { "message": "分頁暫停功能已暫停。" },
+	"tab_status_offline": { "message": "沒有網路連線。" },
+	"tab_status_power_connected": { "message": "已連接電源。" },
+	"tab_status_error": { "message": "此分頁無法自動暫停。" },
+
+	"page_suspended_unsuspend": { "message": "重新整理或點擊以重新載入" },
+	"page_suspended_shortcuts": { "message": "設定鍵盤快速鍵" },
+
+	"page_options_title": { "message": "Suspender MV3：設定" },
+	"page_options_tab_settings": { "message": "設定" },
+	"page_options_tab_sessions": { "message": "工作階段" },
+	"page_options_tab_shortcuts": { "message": "快速鍵" },
+	"page_options_tab_about": { "message": "關於" },
+	"page_options_settings": { "message": "設定" },
+	"page_options_migrate": { "message": "遷移" },
+	"page_options_migrate_comment": {
+		"message": "輸入另一個擴充功能的 32 位元 ID。\n您可以從暫停頁面的網址取得 ID。\n例如，網址：\n__CODE__\n的擴充功能 ID 為：__ID__。"
+	},
+	"page_options_migrate_progress": {
+		"message": "已遷移 $DONE$ / $TOTAL$ 個分頁。此過程可能需要數分鐘。",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "遷移完成。可以刪除舊的擴充功能。"
+	},
+
+	"page_options_sessions": { "message": "工作階段" },
+	"page_options_sessions_current": { "message": "目前的工作階段：" },
+	"page_options_sessions_recent": { "message": "最近的工作階段：" },
+	"page_options_sessions_saved": { "message": "已儲存的工作階段：" },
+	"page_options_sessions_import": { "message": "匯入工作階段" },
+
+	"page_options_sessions_window": {
+		"message": "視窗 #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "以暫停狀態開啟" },
+	"page_options_sessions_open_loaded": { "message": "以載入狀態開啟" },
+	"page_options_sessions_export": { "message": "匯出" },
+	"page_options_sessions_save": { "message": "儲存" },
+	"page_options_sessions_save_prompt": { "message": "輸入工作階段名稱：" },
+	"page_options_sessions_rename": { "message": "重新命名" },
+	"page_options_sessions_delete": { "message": "刪除" },
+	"page_options_sessions_delete_confirm": { "message": "確定要刪除此工作階段嗎？" },
+	"page_options_sessions_import_error": { "message": "載入檔案失敗。檔案必須是純文字，且每行包含一個 URL。" },
+
+	"page_options_shortcuts": { "message": "鍵盤快速鍵" },
+	"page_options_shortcuts_change": { "message": "更改快速鍵" },
+
+	"page_options_block_automatic": { "message": "自動暫停分頁" },
+	"page_options_suspend_delay": { "message": "自動暫停分頁延遲：" },
+	"page_options_suspend_delay_never": { "message": "永不" },
+	"page_options_suspend_delay_5_min": { "message": "5 分鐘" },
+	"page_options_suspend_delay_10_min": { "message": "10 分鐘" },
+	"page_options_suspend_delay_15_min": { "message": "15 分鐘" },
+	"page_options_suspend_delay_30_min": { "message": "30 分鐘" },
+	"page_options_suspend_delay_1_hour": { "message": "1 小時" },
+	"page_options_suspend_delay_2_hours": { "message": "2 小時" },
+	"page_options_suspend_delay_4_hours": { "message": "4 小時" },
+	"page_options_suspend_delay_6_hours": { "message": "6 小時" },
+	"page_options_suspend_delay_12_hours": { "message": "12 小時" },
+	"page_options_suspend_delay_1_day": { "message": "1 天" },
+	"page_options_suspend_delay_2_days": { "message": "2 天" },
+	"page_options_suspend_delay_3_days": { "message": "3 天" },
+	"page_options_suspend_delay_1_week": { "message": "1 週" },
+	"page_options_suspend_delay_2_week": { "message": "2 週" },
+
+	"page_options_suspend_active": { "message": "暫停作用中分頁" },
+	"page_options_suspend_pinned": { "message": "暫停已釘選分頁" },
+	"page_options_suspend_playing_audio": { "message": "暫停正在播放音訊的分頁" },
+
+	"page_options_suspend_local_files": { "message": "暫停 file:// 分頁" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "必須在 Chrome 擴充功能頁面啟用「允許存取檔案網址」。\n警告：變更此選項將關閉此擴充功能所有暫停頁面。請先備份工作階段。"
+	},
+
+	"page_options_suspend_offline": { "message": "離線時暫停分頁" },
+	"page_options_never_suspend_unsaved_data": { "message": "永不暫停含有未儲存表單輸入的分頁" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "需要存取所有 URL 並允許執行指令碼。" },
+	"page_options_never_suspend_when_power_on": { "message": "連接電源時永不暫停分頁" },
+	"page_options_white_list": { "message": "永不暫停以下清單中的 URL 分頁：" },
+	"page_options_white_list_hint": { "message": "每行一項。\n範例：\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "已暫停分頁" },
+	"page_options_restore_scroll_position": { "message": "恢復捲動位置並啟用分頁圖示變暗" },
+	"page_options_restore_scroll_permissions": { "message": "需要存取所有 URL 並允許執行指令碼。" },
+
+	"page_options_maintain_youtube_time": { "message": "儲存影片分頁的 YouTube 播放時間" },
+	"page_options_youtube_permissions": { "message": "需要存取 https://www.youtube.com/watch* 並允許執行指令碼。" },
+
+	"page_options_discard_tabs": { "message": "捨棄分頁而不是暫停" },
+	"page_options_block_other": { "message": "其他" },
+
+	"page_options_enable_context_menu": { "message": "新增至右鍵選單" },
+	"page_options_enable_context_menu_permissions": { "message": "需要存取右鍵選單。" },
+	"page_options_cleanup_history": { "message": "從歷史紀錄中移除暫停頁面" },
+	"page_options_cleanup_history_permissions": { "message": "需要存取瀏覽歷史紀錄。" },
+	"page_options_sync_profile": { "message": "與您的 Chrome 個人檔案同步設定" },
+
+	"page_options_block_icons": { "message": "分頁圖示" },
+	"page_options_favicons_mode_no_dim": { "message": "原始網站圖示（不變暗）" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "直接使用網站的 favicon，不需要額外權限。暫停分頁圖示與正常分頁相同。" },
+	"page_options_favicons_mode_google": { "message": "Google 圖示（變暗）" },
+	"page_options_favicons_mode_google_permissions": { "message": "從 Google Favicon API 載入並變暗。可能與實際圖示不同，但只需存取 Google。" },
+	"page_options_favicons_mode_actual": { "message": "實際網站圖示（變暗）" },
+	"page_options_favicons_mode_actual_permissions": { "message": "使用網站原始圖示並變暗。需要存取所有 URL。" },
+
+	"page_options_block_theme": { "message": "主題" },
+	"page_options_theme_auto": { "message": "自動" },
+	"page_options_theme_light": { "message": "淺色" },
+	"page_options_theme_dark": { "message": "深色" },
+
+	"page_options_commands_default_description": { "message": "未命名" },
+	"page_options_commands_default_shortcut": { "message": "（未設定）" },
+	"page_options_session_name": {
+		"message": "$SESSION$（視窗：$WINDOWS$；分頁：$TABS$）",
+		"placeholders": {
+			"session": { "content": "$1", "example": "工作階段名稱" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "關於" },
+	"page_options_about_author": { "message": "作者：" },
+	"page_options_about_info": { "message": "靈感來自 The Great Suspender 擴充功能。" }
+}

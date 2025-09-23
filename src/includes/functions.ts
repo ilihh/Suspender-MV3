@@ -1,6 +1,6 @@
 import { SuspenderRequest } from './Messenger';
 import { Tabs } from './Tabs';
-import {isValidTab, ValidTab} from "./ValidTab";
+import { isValidTab, ValidTab } from './ValidTab';
 
 export const isHTMLElement = <T extends HTMLElement>(
 	el: Element|EventTarget|null|undefined,
@@ -67,40 +67,6 @@ export async function getTab(request: SuspenderRequest, sender: chrome.runtime.M
 		? await Tabs.get(request.tabId)
 		: sender.tab;
 	return isValidTab(tab) ? tab : null;
-}
-
-export function string2filename(str: string): string
-{
-	const replaces = {
-		':': '-',
-		'?': '-',
-		'\\': ' - ',
-		'\/': ' - ',
-		'|': '_',
-		'&#65279;': '',
-		'~': '-',
-		'"': '-',
-		'<': '«',
-		'>': '»',
-		'–': '-',
-		'`': '-',
-		'!': '-',
-		'@': '-',
-		'#': '-',
-		'$': '-',
-		'%': '-',
-		'^': '-',
-		';': '-',
-		'&': '-',
-		'*': '-',
-	};
-
-	for (const [k, v] of Object.entries(replaces))
-	{
-		str = str.split(k).join(v);
-	}
-
-	return str.trim();
 }
 
 export function delay(ms: number): Promise<void>

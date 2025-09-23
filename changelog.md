@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.16
+
+- added machine translations into different languages
+- bugfix: chromewebstore.google.com and chrome.google.com cannot be suspended if "Restore scroll position" or "Save YouTube timestamps" options are enabled
+
 ## 1.0.15
 
 - sessions: tabs titles now are saved

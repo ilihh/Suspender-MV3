@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Tabs aussetzen" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Link in neuem ausgesetztem Tab öffnen" },
+	"action_open_settings": { "message": "Einstellungen" },
+
+	"action_toggle_suspend_tab": { "message": "Diesen Tab aussetzen/Entsetzen" },
+	"action_suspend_tab": { "message": "Diesen Tab aussetzen" },
+	"action_unsuspend_tab": { "message": "Diesen Tab entsetzen" },
+
+	"action_toggle_pause_tab": { "message": "Aussetzung dieses Tabs pausieren/Entpausieren" },
+	"action_pause_tab": { "message": "Aussetzung dieses Tabs pausieren" },
+	"action_unpause_tab": { "message": "Aussetzung dieses Tabs entpausieren" },
+
+	"action_whitelist_domain": { "message": "Diese Domain nie aussetzen" },
+	"action_whitelist_url": { "message": "Diese URL nie aussetzen" },
+	"action_whitelist_remove": { "message": "Aus der Whitelist entfernen" },
+
+	"action_suspend_group": { "message": "Aktuelle Gruppe aussetzen" },
+	"action_suspend_group_forced": { "message": "Aktuelle Gruppe zwangsweise aussetzen" },
+	"action_unsuspend_group": { "message": "Aktuelle Gruppe entsetzen" },
+
+	"action_suspend_window": { "message": "Alle anderen Tabs in diesem Fenster aussetzen" },
+	"action_suspend_window_forced": { "message": "Alle anderen Tabs in diesem Fenster zwangsweise aussetzen" },
+	"action_unsuspend_window": { "message": "Alle Tabs in diesem Fenster entsetzen" },
+
+	"action_suspend_all": { "message": "Alle Tabs in allen Fenstern aussetzen" },
+	"action_suspend_all_forced": { "message": "Alle Tabs in allen Fenstern zwangsweise aussetzen" },
+	"action_unsuspend_all": { "message": "Alle Tabs in allen Fenstern entsetzen" },
+
+	"tab_status_normal": { "message": "Tab wird automatisch ausgesetzt." },
+	"tab_status_suspended": { "message": "Tab ausgesetzt." },
+	"tab_status_disabled": { "message": "Automatische Tab-Aussetzung deaktiviert." },
+	"tab_status_special": { "message": "Tab kann nicht ausgesetzt werden." },
+	"tab_status_whitelist": { "message": "URL ist in der Whitelist." },
+	"tab_status_playing_audio": { "message": "Tab spielt Audio ab." },
+	"tab_status_unsaved_form": { "message": "Tab hat ungespeicherte Formulardaten." },
+	"tab_status_local_file": { "message": "Lokale Datei kann nicht ausgesetzt werden." },
+	"tab_status_active": { "message": "Tab ist aktiv." },
+	"tab_status_pinned": { "message": "Tab ist angeheftet." },
+	"tab_status_suspend_paused": { "message": "Tabs-Aussetzung pausiert." },
+	"tab_status_offline": { "message": "Keine Netzwerkverbindung." },
+	"tab_status_power_connected": { "message": "Verbunden mit Stromquelle." },
+	"tab_status_error": { "message": "Auto-Aussetzung für diesen Tab nicht verfügbar." },
+
+	"page_suspended_unsuspend": { "message": "Aktualisieren oder klicken, um neu zu laden" },
+	"page_suspended_shortcuts": { "message": "Tastenkürzel einstellen" },
+
+	"page_options_title": { "message": "Suspender MV3: Einstellungen" },
+	"page_options_tab_settings": { "message": "Einstellungen" },
+	"page_options_tab_sessions": { "message": "Sitzungen" },
+	"page_options_tab_shortcuts": { "message": "Kürzel" },
+	"page_options_tab_about": { "message": "Über" },
+	"page_options_settings": { "message": "Einstellungen" },
+	"page_options_migrate": { "message": "Migrieren" },
+	"page_options_migrate_comment": {
+		"message": "Geben Sie 32 Symbole der anderen Erweiterungs-ID ein.\nSie können die ID aus der URL der ausgesetzten Seite erhalten.\nZum Beispiel, URL:\n__CODE__\nhat Erweiterungs-ID: __ID__."
+	},
+	"page_options_migrate_progress": {
+		"message": "$DONE$ von $TOTAL$ Tabs migriert. Der Prozess kann mehrere Minuten dauern.",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "Migration abgeschlossen. Die alte Erweiterung kann gelöscht werden."
+	},
+
+	"page_options_sessions": { "message": "Sitzungen" },
+	"page_options_sessions_current": { "message": "Aktuelle Sitzung:" },
+	"page_options_sessions_recent": { "message": "Letzte Sitzungen:" },
+	"page_options_sessions_saved": { "message": "Gespeicherte Sitzungen:" },
+	"page_options_sessions_import": { "message": "Sitzung importieren" },
+
+	"page_options_sessions_window": {
+		"message": "Fenster #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "ausgesetzt öffnen" },
+	"page_options_sessions_open_loaded": { "message": "geladen öffnen" },
+	"page_options_sessions_export": { "message": "exportieren" },
+	"page_options_sessions_save": { "message": "speichern" },
+	"page_options_sessions_save_prompt": { "message": "Sitzungsname eingeben:" },
+	"page_options_sessions_rename": { "message": "umbenennen" },
+	"page_options_sessions_delete": { "message": "löschen" },
+	"page_options_sessions_delete_confirm": { "message": "Sind Sie sicher, dass Sie diese Sitzung löschen möchten?" },
+	"page_options_sessions_import_error": { "message": "Datei konnte nicht geladen werden. Die Datei muss reiner Text sein und eine einzelne URL pro Zeile enthalten." },
+
+	"page_options_shortcuts": { "message": "Tastenkürzel" },
+	"page_options_shortcuts_change": { "message": "Kürzel ändern" },
+
+	"page_options_block_automatic": { "message": "Automatische Tab-Aussetzung" },
+	"page_options_suspend_delay": { "message": "Tabs automatisch aussetzen nach:" },
+	"page_options_suspend_delay_never": { "message": "Nie" },
+	"page_options_suspend_delay_5_min": { "message": "5 Minuten" },
+	"page_options_suspend_delay_10_min": { "message": "10 Minuten" },
+	"page_options_suspend_delay_15_min": { "message": "15 Minuten" },
+	"page_options_suspend_delay_30_min": { "message": "30 Minuten" },
+	"page_options_suspend_delay_1_hour": { "message": "1 Stunde" },
+	"page_options_suspend_delay_2_hours": { "message": "2 Stunden" },
+	"page_options_suspend_delay_4_hours": { "message": "4 Stunden" },
+	"page_options_suspend_delay_6_hours": { "message": "6 Stunden" },
+	"page_options_suspend_delay_12_hours": { "message": "12 Stunden" },
+	"page_options_suspend_delay_1_day": { "message": "1 Tag" },
+	"page_options_suspend_delay_2_days": { "message": "2 Tage" },
+	"page_options_suspend_delay_3_days": { "message": "3 Tage" },
+	"page_options_suspend_delay_1_week": { "message": "1 Woche" },
+	"page_options_suspend_delay_2_week": { "message": "2 Wochen" },
+
+	"page_options_suspend_active": { "message": "Aktive Tabs aussetzen" },
+	"page_options_suspend_pinned": { "message": "Angeheftete Tabs aussetzen" },
+	"page_options_suspend_playing_audio": { "message": "Tabs aussetzen, die Audio abspielen" },
+
+	"page_options_suspend_local_files": { "message": "file:// Tabs aussetzen" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "Option \"Zugriff auf Datei-URLs erlauben\" muss auf der Chrome-Erweiterungsseite aktiviert sein.\nWarnung: Das Ändern dieser Option schließt alle ausgesetzten Seiten dieser Erweiterung. Sichern Sie die Sitzung vor dem Ändern."
+	},
+
+	"page_options_suspend_offline": { "message": "Tabs aussetzen, wenn offline" },
+	"page_options_never_suspend_unsaved_data": { "message": "Tabs mit ungespeicherten Formulareingaben nie aussetzen" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Erfordert Zugriff auf alle URLs und Berechtigung zum Ausführen von Skripten." },
+	"page_options_never_suspend_when_power_on": { "message": "Tabs nie aussetzen, wenn mit einer Stromquelle verbunden" },
+	"page_options_white_list": { "message": "Tabs mit URLs aus der folgenden Liste nie aussetzen:" },
+	"page_options_white_list_hint": { "message": "Jedes Element in einer neuen Zeile.\nBeispiel:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Ausgesetzte Tabs" },
+	"page_options_restore_scroll_position": { "message": "Scroll-Position wiederherstellen und abgedunkelte Tabs-Icons aktivieren" },
+	"page_options_restore_scroll_permissions": { "message": "Erfordert Zugriff auf alle URLs und Berechtigung zum Ausführen von Skripten." },
+
+	"page_options_maintain_youtube_time": { "message": "YouTube-Zeitstempel für den Tab mit Video speichern" },
+	"page_options_youtube_permissions": { "message": "Erfordert Zugriff auf https://www.youtube.com/watch* und Berechtigung zum Ausführen von Skripten." },
+
+	"page_options_discard_tabs": { "message": "Tabs verwerfen statt aussetzen" },
+	"page_options_block_other": { "message": "Andere" },
+
+	"page_options_enable_context_menu": { "message": "Zum Kontextmenü hinzufügen" },
+	"page_options_enable_context_menu_permissions": { "message": "Erfordert Zugriff auf das Kontextmenü." },
+	"page_options_cleanup_history": { "message": "Ausgesetzte Seiten aus dem Verlauf entfernen" },
+	"page_options_cleanup_history_permissions": { "message": "Erfordert Zugriff auf den Verlauf." },
+	"page_options_sync_profile": { "message": "Einstellungen mit Ihrem Chrome-Profil synchronisieren" },
+
+	"page_options_block_icons": { "message": "Tab-Icons" },
+	"page_options_favicons_mode_no_dim": { "message": "Aktuelles Site-Icon (kein Abdunkeln)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Verwendet das Site-Favicon unverändert. Keine zusätzlichen Berechtigungen benötigt. Ausgesetzte Tab-Icons sind identisch mit nicht-ausgesetzten." },
+	"page_options_favicons_mode_google": { "message": "Google-Icon (abgedunkelt)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Lädt Icon von Google Favicon API und dunkelt es ab. Kann vom tatsächlichen Icon abweichen, erfordert aber nur Zugriff auf Google." },
+	"page_options_favicons_mode_actual": { "message": "Aktuelles Site-Icon (abgedunkelt)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Verwendet das exakte Site-Icon und dunkelt es ab. Erfordert Zugriff auf alle URLs." },
+
+	"page_options_block_theme": { "message": "Theme" },
+	"page_options_theme_auto": { "message": "Auto" },
+	"page_options_theme_light": { "message": "Hell" },
+	"page_options_theme_dark": { "message": "Dunkel" },
+
+	"page_options_commands_default_description": { "message": "Unbenannt" },
+	"page_options_commands_default_shortcut": { "message": "(nicht gesetzt)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Fenster: $WINDOWS$; Tabs: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Session Name" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "Über" },
+	"page_options_about_author": { "message": "Autor:" },
+	"page_options_about_info": { "message": "Inspiriert von der Erweiterung The Great Suspender." }
+}

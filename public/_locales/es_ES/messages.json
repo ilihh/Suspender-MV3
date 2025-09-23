@@ -1,0 +1,173 @@
+{
+	"manifest_name": { "message": "Suspender MV3" },
+	"manifest_description": { "message": "Suspender pestañas" },
+	"manifest_action": { "message": "Suspender MV3" },
+
+	"action_open_link_in_suspended_tab": { "message": "Abrir enlace en nueva pestaña suspendida" },
+	"action_open_settings": { "message": "Configuración" },
+
+	"action_toggle_suspend_tab": { "message": "Suspender/Desuspender esta pestaña" },
+	"action_suspend_tab": { "message": "Suspender esta pestaña" },
+	"action_unsuspend_tab": { "message": "Desuspender esta pestaña" },
+
+	"action_toggle_pause_tab": { "message": "Pausar/Despausar la suspensión de esta pestaña" },
+	"action_pause_tab": { "message": "Pausar la suspensión de esta pestaña" },
+	"action_unpause_tab": { "message": "Despausar la suspensión de esta pestaña" },
+
+	"action_whitelist_domain": { "message": "Nunca suspender este dominio" },
+	"action_whitelist_url": { "message": "Nunca suspender esta URL" },
+	"action_whitelist_remove": { "message": "Eliminar de la lista blanca" },
+
+	"action_suspend_group": { "message": "Suspender grupo actual" },
+	"action_suspend_group_forced": { "message": "Forzar suspensión del grupo actual" },
+	"action_unsuspend_group": { "message": "Desuspender grupo actual" },
+
+	"action_suspend_window": { "message": "Suspender todas las demás pestañas en esta ventana" },
+	"action_suspend_window_forced": { "message": "Forzar suspensión de todas las demás pestañas en esta ventana" },
+	"action_unsuspend_window": { "message": "Desuspender todas las pestañas en esta ventana" },
+
+	"action_suspend_all": { "message": "Suspender todas las pestañas en todas las ventanas" },
+	"action_suspend_all_forced": { "message": "Forzar suspensión de todas las pestañas en todas las ventanas" },
+	"action_unsuspend_all": { "message": "Desuspender todas las pestañas en todas las ventanas" },
+
+	"tab_status_normal": { "message": "La pestaña se suspenderá automáticamente." },
+	"tab_status_suspended": { "message": "Pestaña suspendida." },
+	"tab_status_disabled": { "message": "Suspensión automática de pestañas desactivada." },
+	"tab_status_special": { "message": "La pestaña no se puede suspender." },
+	"tab_status_whitelist": { "message": "La URL está en la lista blanca." },
+	"tab_status_playing_audio": { "message": "La pestaña está reproduciendo audio." },
+	"tab_status_unsaved_form": { "message": "La pestaña tiene datos de formulario no guardados." },
+	"tab_status_local_file": { "message": "El archivo local no se puede suspender." },
+	"tab_status_active": { "message": "La pestaña está activa." },
+	"tab_status_pinned": { "message": "La pestaña ha sido anclada." },
+	"tab_status_suspend_paused": { "message": "Suspensión de pestañas pausada." },
+	"tab_status_offline": { "message": "Sin conexión a la red." },
+	"tab_status_power_connected": { "message": "Conectado a fuente de alimentación." },
+	"tab_status_error": { "message": "Suspensión automática no disponible para esta pestaña." },
+
+	"page_suspended_unsuspend": { "message": "Actualizar o hacer clic para recargar" },
+	"page_suspended_shortcuts": { "message": "Configurar atajos de teclado" },
+
+	"page_options_title": { "message": "Suspender MV3: Configuración" },
+	"page_options_tab_settings": { "message": "Configuración" },
+	"page_options_tab_sessions": { "message": "Sesiones" },
+	"page_options_tab_shortcuts": { "message": "Atajos" },
+	"page_options_tab_about": { "message": "Acerca de" },
+	"page_options_settings": { "message": "Configuración" },
+	"page_options_migrate": { "message": "Migrar" },
+	"page_options_migrate_comment": {
+		"message": "Introduce 32 símbolos del ID de la otra extensión.\nPuedes obtener el ID de la URL de la página suspendida.\nPor ejemplo, URL:\n__CODE__\ntiene ID de extensión: __ID__."
+	},
+	"page_options_migrate_progress": {
+		"message": "Migradas $DONE$ de $TOTAL$ pestañas. El proceso puede tardar varios minutos.",
+		"placeholders": {
+			"done": { "content": "$1", "example": "5" },
+			"total": { "content": "$2", "example": "12" }
+		}
+	},
+	"page_options_migrate_done": {
+		"message": "Migración completada. La extensión antigua se puede eliminar."
+	},
+
+	"page_options_sessions": { "message": "Sesiones" },
+	"page_options_sessions_current": { "message": "Sesión actual:" },
+	"page_options_sessions_recent": { "message": "Sesiones recientes:" },
+	"page_options_sessions_saved": { "message": "Sesiones guardadas:" },
+	"page_options_sessions_import": { "message": "Importar sesión" },
+
+	"page_options_sessions_window": {
+		"message": "Ventana #$ID$",
+		"placeholders": {
+			"id": { "content": "$1", "example": "1" }
+		}
+	},
+	"page_options_sessions_open_suspended": { "message": "abrir suspendida" },
+	"page_options_sessions_open_loaded": { "message": "abrir cargada" },
+	"page_options_sessions_export": { "message": "exportar" },
+	"page_options_sessions_save": { "message": "guardar" },
+	"page_options_sessions_save_prompt": { "message": "Introduce nombre de sesión:" },
+	"page_options_sessions_rename": { "message": "renombrar" },
+	"page_options_sessions_delete": { "message": "eliminar" },
+	"page_options_sessions_delete_confirm": { "message": "¿Estás seguro de que quieres eliminar esta sesión?" },
+	"page_options_sessions_import_error": { "message": "Error al cargar el archivo. El archivo debe ser texto plano y contener una URL por línea." },
+
+	"page_options_shortcuts": { "message": "Atajos de teclado" },
+	"page_options_shortcuts_change": { "message": "Cambiar atajos" },
+
+	"page_options_block_automatic": { "message": "Suspensión automática de pestañas" },
+	"page_options_suspend_delay": { "message": "Suspender automáticamente las pestañas después de:" },
+	"page_options_suspend_delay_never": { "message": "Nunca" },
+	"page_options_suspend_delay_5_min": { "message": "5 minutos" },
+	"page_options_suspend_delay_10_min": { "message": "10 minutos" },
+	"page_options_suspend_delay_15_min": { "message": "15 minutos" },
+	"page_options_suspend_delay_30_min": { "message": "30 minutos" },
+	"page_options_suspend_delay_1_hour": { "message": "1 hora" },
+	"page_options_suspend_delay_2_hours": { "message": "2 horas" },
+	"page_options_suspend_delay_4_hours": { "message": "4 horas" },
+	"page_options_suspend_delay_6_hours": { "message": "6 horas" },
+	"page_options_suspend_delay_12_hours": { "message": "12 horas" },
+	"page_options_suspend_delay_1_day": { "message": "1 día" },
+	"page_options_suspend_delay_2_days": { "message": "2 días" },
+	"page_options_suspend_delay_3_days": { "message": "3 días" },
+	"page_options_suspend_delay_1_week": { "message": "1 semana" },
+	"page_options_suspend_delay_2_week": { "message": "2 semanas" },
+
+	"page_options_suspend_active": { "message": "Suspender pestañas activas" },
+	"page_options_suspend_pinned": { "message": "Suspender pestañas ancladas" },
+	"page_options_suspend_playing_audio": { "message": "Suspender pestañas que reproducen audio" },
+
+	"page_options_suspend_local_files": { "message": "Suspender pestañas file://" },
+	"page_options_suspend_local_files_permissions": {
+		"message": "La opción \"Permitir acceso a URLs de archivo\" debe estar activada en la página de extensiones de Chrome.\nAdvertencia: cambiar esta opción cerrará todas las páginas suspendidas de esta extensión. Haz una copia de seguridad de la sesión antes de hacerlo."
+	},
+
+	"page_options_suspend_offline": { "message": "Suspender pestañas cuando no hay conexión" },
+	"page_options_never_suspend_unsaved_data": { "message": "Nunca suspender pestañas que contengan entradas de formulario no guardadas" },
+	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requiere acceso a todas las URLs y permiso para ejecutar scripts." },
+	"page_options_never_suspend_when_power_on": { "message": "Nunca suspender pestañas cuando está conectado a una fuente de alimentación" },
+	"page_options_white_list": { "message": "Nunca suspender pestañas con URLs de la siguiente lista:" },
+	"page_options_white_list_hint": { "message": "Cada elemento en una nueva línea.\nEjemplo:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_block_suspended": { "message": "Pestañas suspendidas" },
+	"page_options_restore_scroll_position": { "message": "Restaurar posición de desplazamiento y activar iconos de pestañas atenuados" },
+	"page_options_restore_scroll_permissions": { "message": "Requiere acceso a todas las URLs y permiso para ejecutar scripts." },
+
+	"page_options_maintain_youtube_time": { "message": "Guardar marcas de tiempo de YouTube para la pestaña con vídeo" },
+	"page_options_youtube_permissions": { "message": "Requiere acceso a https://www.youtube.com/watch* y permiso para ejecutar scripts." },
+
+	"page_options_discard_tabs": { "message": "Descartar pestañas en lugar de suspenderlas" },
+	"page_options_block_other": { "message": "Otros" },
+
+	"page_options_enable_context_menu": { "message": "Añadir al menú contextual" },
+	"page_options_enable_context_menu_permissions": { "message": "Requiere acceso al menú contextual." },
+	"page_options_cleanup_history": { "message": "Eliminar páginas suspendidas del historial" },
+	"page_options_cleanup_history_permissions": { "message": "Requiere acceso al historial." },
+	"page_options_sync_profile": { "message": "Sincronizar configuración con tu perfil de Chrome" },
+
+	"page_options_block_icons": { "message": "Iconos de pestañas" },
+	"page_options_favicons_mode_no_dim": { "message": "Icono del sitio real (sin atenuar)" },
+	"page_options_favicons_mode_no_dim_permissions": { "message": "Usa el favicon del sitio tal cual. No se necesitan permisos adicionales. Los iconos de pestañas suspendidas son iguales a los de las no suspendidas." },
+	"page_options_favicons_mode_google": { "message": "Icono de Google (atenuado)" },
+	"page_options_favicons_mode_google_permissions": { "message": "Carga el icono desde la API de Favicon de Google y lo atenúa. Puede ser diferente del icono real pero solo requiere acceso a Google." },
+	"page_options_favicons_mode_actual": { "message": "Icono del sitio real (atenuado)" },
+	"page_options_favicons_mode_actual_permissions": { "message": "Usa el icono exacto del sitio y lo atenúa. Requiere acceso a todas las URLs." },
+
+	"page_options_block_theme": { "message": "Tema" },
+	"page_options_theme_auto": { "message": "Automático" },
+	"page_options_theme_light": { "message": "Claro" },
+	"page_options_theme_dark": { "message": "Oscuro" },
+
+	"page_options_commands_default_description": { "message": "Sin nombre" },
+	"page_options_commands_default_shortcut": { "message": "(no establecido)" },
+	"page_options_session_name": {
+		"message": "$SESSION$ (Ventanas: $WINDOWS$; Pestañas: $TABS$)",
+		"placeholders": {
+			"session": { "content": "$1", "example": "Session Name" },
+			"windows": { "content": "$2", "example": "5" },
+			"tabs": { "content": "$3", "example": "40" }
+		}
+	},
+
+	"page_options_about": { "message": "Acerca de" },
+	"page_options_about_author": { "message": "Autor:" },
+	"page_options_about_info": { "message": "Inspirado en la extensión The Great Suspender." }
+}

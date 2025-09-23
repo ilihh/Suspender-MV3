@@ -148,13 +148,12 @@ export class PageInfo implements InternalPageInfo
 			return new PageInfo();
 		}
 		// errors will happen on
-		// - internal chrome pages like ERR_CONNECTION_CLOSED
+		// - internal chrome error pages like ERR_CONNECTION_CLOSED
 		// - Chrome Web Store and Edge Add-ons store pages (browser restriction)
 		catch (e)
 		{
 			// is browser restricted page
-			const possible_suspend = isErrorWithMessage(e) && (e.message === 'Error: The extensions gallery cannot be scripted.');
-
+			const possible_suspend = isErrorWithMessage(e) && (e.message === 'The extensions gallery cannot be scripted.');
 			return new PageInfo(0, null, false, possible_suspend);
 		}
 	}

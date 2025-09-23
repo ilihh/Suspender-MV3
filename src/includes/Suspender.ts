@@ -148,7 +148,7 @@ export class Suspender
 	private async hasUnsavedData(tab: ValidTab): Promise<boolean>
 	{
 		const info = await PageInfo.get(tab, this.config.data);
-		return info !== false && info.changedFields;
+		return info.changedFields;
 	}
 
 	public isSuspended(tab: ValidTab): boolean
@@ -298,7 +298,7 @@ export class Suspender
 		if (this.config.data.restoreScrollPosition || this.config.data.maintainYoutubeTime)
 		{
 			const info = await PageInfo.get(tab, this.config.data);
-			if (info === false)
+			if (!info.possibleSuspend)
 			{
 				return false;
 			}

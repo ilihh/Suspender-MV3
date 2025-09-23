@@ -15,11 +15,12 @@ export class PageInfo implements InternalPageInfo
 		public readonly scrollPosition: number = 0,
 		public readonly time: number|null = null,
 		public readonly changedFields: boolean = false,
+		public readonly possibleSuspend: boolean = true,
 	)
 	{
 	}
 
-	public static async get(tab: ValidTab, data: ConfigurationData): Promise<PageInfo|false>
+	public static async get(tab: ValidTab, data: ConfigurationData): Promise<PageInfo>
 	{
 		if (!await isUrlAllowed(tab.url))
 		{
@@ -34,7 +35,7 @@ export class PageInfo implements InternalPageInfo
 		);
 	}
 
-	private static async inject(tabId: number, scroll: boolean, time: boolean, changed_fields: boolean): Promise<PageInfo|false>
+	private static async inject(tabId: number, scroll: boolean, time: boolean, changed_fields: boolean): Promise<PageInfo>
 	{
 		try
 		{
@@ -151,13 +152,10 @@ export class PageInfo implements InternalPageInfo
 		// - Chrome Web Store and Edge Add-ons store pages (browser restriction)
 		catch (e)
 		{
-			// for the browser restriction
-			if (isErrorWithMessage(e) && (e.message === 'Error: The extensions gallery cannot be scripted.'))
-			{
-				return new PageInfo();
-			}
+			// is browser restricted page
+			const possible_suspend = isErrorWithMessage(e) && (e.message === 'Error: The extensions gallery cannot be scripted.');
 
-			return false;
+			return new PageInfo(0, null, false, possible_suspend);
 		}
 	}
 }

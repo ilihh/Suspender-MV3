@@ -45,4 +45,3 @@ Suspender MV3 is [available at the official Chrome Web Store](https://chromewebs
 - **Restore scroll position**: requires access to all URLs and permission to execute scripts.
 - **Save YouTube timestamps for the tab with video**: requires access to https://www.youtube.com/watch* and permission to execute scripts.
 - **Remove suspended pages from history**: requires access to the history.
-- **Sessions export**: requires access to the downloads.

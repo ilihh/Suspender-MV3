@@ -163,7 +163,7 @@ async function processMessage(request: SuspenderRequest, sender: chrome.runtime.
 }
 
 async function executeMessage(tab: ValidTab, request: SuspenderRequest):
-	Promise<SuspenderResponse<boolean>|SuspenderResponse<TAB_STATUS>|SuspenderResponse<void>>
+	Promise<SuspenderResponse<boolean> | SuspenderResponse<TAB_STATUS> | SuspenderResponse<void> | SuspenderResponse<string>>
 {
 	const config = await Configuration.load();
 	const suspender = new Suspender(config);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.18
+
+- added dimmed favicon cache
+
 ## 1.0.17
 
 - bugfix: proper fix for the browser-restricted pages (chromewebstore.google.com, chrome.google.com, microsoftedge.microsoft.com, etc)

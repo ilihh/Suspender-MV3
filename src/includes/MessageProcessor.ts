@@ -5,8 +5,9 @@ import { Configuration } from './Configuration';
 import { Suspender } from './Suspender';
 import { TabInfo } from './TabInfo';
 import { Session, SessionWindow } from './Sessions';
+import { DimProcessor } from './DimProcessor';
 
-export type MessageProcessorResult = Promise<SuspenderResponse<boolean> | SuspenderResponse<TAB_STATUS> | SuspenderResponse<void>>;
+export type MessageProcessorResult = Promise<SuspenderResponse<boolean> | SuspenderResponse<TAB_STATUS> | SuspenderResponse<void> | SuspenderResponse<string>>;
 
 type MessageProcessorMap = {
 	[K in MESSAGE]: () => MessageProcessorResult;
@@ -23,12 +24,29 @@ export class MessageProcessor implements MessageProcessorMap
 	{
 	}
 
-	/**
-	 * only for Offscreen
-	 */
+	/** only for Offscreen */
 	async [MESSAGE.BatteryStatus](): Promise<SuspenderResponse<void>>
 	{
 		return { success: false, };
+	}
+
+	/** only for Offscreen */
+	async [MESSAGE.OffscreenDimIcon](): Promise<SuspenderResponse<void>>
+	{
+		return { success: false, };
+	}
+
+	async [MESSAGE.DimIcon](): Promise<SuspenderResponse<string>>
+	{
+		if (this.request.url === undefined)
+		{
+			return { success: false, };
+		}
+
+		return {
+			success: true,
+			data: await DimProcessor.dim(this.request.url),
+		};
 	}
 
 	async [MESSAGE.TabStatus](): Promise<SuspenderResponse<TAB_STATUS>>

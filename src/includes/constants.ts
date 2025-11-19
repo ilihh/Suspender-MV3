@@ -64,6 +64,8 @@ export enum MESSAGE
 
 	// internal
 	BatteryStatus = 'battery_status',
+	OffscreenDimIcon = 'offscreen_dim_icon',
+	DimIcon = 'dim_icon',
 
 	// options
 	OpenShortcuts = 'open_shortcuts',

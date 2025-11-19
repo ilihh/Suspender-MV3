@@ -20,8 +20,8 @@ export class Offscreen
 		{
 			Offscreen.creating[path] = chrome.offscreen.createDocument({
 				url: path,
-				reasons: ['BATTERY_STATUS'],
-				justification: 'Request battery status',
+				reasons: ['BATTERY_STATUS', 'DOM_SCRAPING'],
+				justification: 'Get battery status and created dimmed icons',
 			});
 		}
 

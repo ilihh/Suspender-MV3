@@ -4,11 +4,12 @@ import { Configuration } from './includes/Configuration';
 import { ScrollPositions } from './includes/ScrollPositions';
 import { getTab, isEnumValue } from './includes/functions';
 import { SuspenderRequest, SuspenderResponse } from './includes/Messenger';
-import { Session, Sessions } from './includes/Sessions';
+import { Sessions } from './includes/Sessions';
 import { isValidTab, ValidTab } from './includes/ValidTab';
 import { TabInfo } from './includes/TabInfo';
 import { MessageProcessor, MessageProcessorResult } from './includes/MessageProcessor';
 import { Tabs } from './includes/Tabs';
+import { AlarmProcessor } from './includes/AlarmProcessor';
 
 // runtime
 chrome.runtime.onInstalled.addListener(async (details: chrome.runtime.InstalledDetails) =>
@@ -105,13 +106,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) =>
 {
 	if (alarm.name === ALARM_TABS)
 	{
-		const config = await Configuration.load();
-		if (config.autoSuspend())
-		{
-			await (new Suspender(config)).suspendAuto();
-		}
-
-		await (await Session.current()).save();
+		await AlarmProcessor.run();
 	}
 });
 

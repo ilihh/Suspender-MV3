@@ -21,7 +21,7 @@ export class DimProcessor
 
 	static _promises: Map<string, Promise<string>> = new Map<string, Promise<string>>();
 
-	public static async dim(url: string): Promise<string>
+	public static dim(url: string): Promise<string>
 	{
 		const saved_promise = DimProcessor._promises.get(url);
 		if (saved_promise !== undefined)
@@ -29,7 +29,7 @@ export class DimProcessor
 			return saved_promise;
 		}
 
-		const promise = DimProcessor._load(url);
+		const promise = DimProcessor.load(url);
 
 		DimProcessor._promises.set(url, promise);
 
@@ -38,7 +38,7 @@ export class DimProcessor
 		return promise;
 	}
 
-	private static async _load(url: string): Promise<string>
+	private static async load(url: string): Promise<string>
 	{
 		const key = 'dim-cache-' + url;
 

@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Wymaga dostępu do wszystkich URL i uprawnienia do wykonywania skryptów." },
 	"page_options_never_suspend_when_power_on": { "message": "Nigdy nie zawieszaj kart, gdy podłączone do źródła zasilania" },
 	"page_options_white_list": { "message": "Nigdy nie zawieszaj kart z URL z poniższej listy:" },
-	"page_options_white_list_hint": { "message": "Każdy element w nowej linii.\nPrzykład:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Każdy element w nowej linii.\nPrzykład:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Zawieszone karty" },
 	"page_options_restore_scroll_position": { "message": "Przywracaj pozycję przewijania i włącz przyciemnione ikony kart" },
 	"page_options_restore_scroll_permissions": { "message": "Wymaga dostępu do wszystkich URL i uprawnienia do wykonywania skryptów." },

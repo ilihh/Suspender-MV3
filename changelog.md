@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.20
+
+- added regular expression support for the whitelist
+- added wildcard support for the whitelist
+
 ## 1.0.19
 
 - optimization to reduce the too-long background tasks on the alarm

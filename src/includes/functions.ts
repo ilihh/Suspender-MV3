@@ -50,13 +50,25 @@ export function escapeHtml(str: string): string
 		.replace(/'/g, '&#039;');
 }
 
+const i18n_substitutions: { [key: string]: string | string[] } = {
+	page_options_white_list_hint: '\n\t' + [
+		'github.com',
+		'youtube.com/watch',
+		'*.example.com/some/*/path/',
+		'/^([a-z0-9-]+\\.)*example\\.com$\/i',
+	].join('\n\t'),
+}
+
 export function i18n(document: Document): void
 {
 	document.querySelectorAll('[data-i18n]').forEach(e =>
 	{
 		if (isHTMLElement<HTMLElement>(e) && e.dataset['i18n'])
 		{
-			e.innerText = chrome.i18n.getMessage(e.dataset['i18n']);
+			const key = e.dataset['i18n'];
+			e.innerText = (key in i18n_substitutions)
+				 ? chrome.i18n.getMessage(e.dataset['i18n'], i18n_substitutions[key])
+				 : chrome.i18n.getMessage(e.dataset['i18n']);
 		}
 	});
 }

@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "모든 URL에 대한 액세스 및 스크립트 실행 권한 필요." },
 	"page_options_never_suspend_when_power_on": { "message": "전원에 연결된 경우 탭을 일시 중단하지 않음" },
 	"page_options_white_list": { "message": "다음 목록의 URL을 가진 탭은 절대 일시 중단하지 않음:" },
-	"page_options_white_list_hint": { "message": "항목마다 새 줄에 입력하세요.\n예시:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "항목마다 새 줄에 입력하세요.\n예시:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "일시 중단된 탭" },
 	"page_options_restore_scroll_position": { "message": "스크롤 위치 복원 및 흐린 탭 아이콘 사용" },
 	"page_options_restore_scroll_permissions": { "message": "모든 URL에 대한 액세스 및 스크립트 실행 권한 필요." },

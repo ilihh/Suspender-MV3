@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requiere acceso a todas las URLs y permiso para ejecutar scripts." },
 	"page_options_never_suspend_when_power_on": { "message": "Nunca suspender pestañas cuando está conectado a una fuente de alimentación" },
 	"page_options_white_list": { "message": "Nunca suspender pestañas con URLs de la siguiente lista:" },
-	"page_options_white_list_hint": { "message": "Cada elemento en una nueva línea.\nEjemplo:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Cada elemento en una nueva línea.\nEjemplo:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Pestañas suspendidas" },
 	"page_options_restore_scroll_position": { "message": "Restaurar posición de desplazamiento y activar iconos de pestañas atenuados" },
 	"page_options_restore_scroll_permissions": { "message": "Requiere acceso a todas las URLs y permiso para ejecutar scripts." },

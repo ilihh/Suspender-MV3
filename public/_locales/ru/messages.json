@@ -22,8 +22,8 @@
 	"action_suspend_group_forced": { "message": "Принудительно приостановить текущую группу" },
 	"action_unsuspend_group": { "message": "Возобновить текущую группу" },
 
-	"action_suspend_window": { "message": "Приостановить все другие вкладки в этом окне" },
-	"action_suspend_window_forced": { "message": "Принудительно приостановить все другие вкладки в этом окне" },
+	"action_suspend_window": { "message": "Приостановить все другие остальные в этом окне" },
+	"action_suspend_window_forced": { "message": "Принудительно приостановить все остальные вкладки в этом окне" },
 	"action_unsuspend_window": { "message": "Возобновить все вкладки в этом окне" },
 
 	"action_suspend_all": { "message": "Приостановить все вкладки во всех окнах" },
@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Требует доступа ко всем URL и разрешения на выполнение скриптов." },
 	"page_options_never_suspend_when_power_on": { "message": "Никогда не приостанавливать вкладки при подключении к источнику питания" },
 	"page_options_white_list": { "message": "Никогда не приостанавливать вкладки с URL из следующего списка:" },
-	"page_options_white_list_hint": { "message": "Каждый элемент с новой строки.\nПример:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Каждый элемент с новой строки.\nПример:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Приостановленные вкладки" },
 	"page_options_restore_scroll_position": { "message": "Восстанавливать позицию прокрутки и включать затемненные иконки вкладок" },
 	"page_options_restore_scroll_permissions": { "message": "Требует доступа ко всем URL и разрешения на выполнение скриптов." },
@@ -135,7 +140,7 @@
 	"page_options_youtube_permissions": { "message": "Требует доступа к https://www.youtube.com/watch* и разрешения на выполнение скриптов." },
 
 	"page_options_discard_tabs": { "message": "Выгружать вкладки вместо приостановки" },
-	"page_options_block_other": { "message": "Другое" },
+	"page_options_block_other": { "message": "Прочее" },
 
 	"page_options_enable_context_menu": { "message": "Добавить в контекстное меню" },
 	"page_options_enable_context_menu_permissions": { "message": "Требует доступа к контекстному меню." },

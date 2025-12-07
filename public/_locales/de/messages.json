@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Erfordert Zugriff auf alle URLs und Berechtigung zum Ausführen von Skripten." },
 	"page_options_never_suspend_when_power_on": { "message": "Tabs nie aussetzen, wenn mit einer Stromquelle verbunden" },
 	"page_options_white_list": { "message": "Tabs mit URLs aus der folgenden Liste nie aussetzen:" },
-	"page_options_white_list_hint": { "message": "Jedes Element in einer neuen Zeile.\nBeispiel:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Jedes Element in einer neuen Zeile.\nBeispiel:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Ausgesetzte Tabs" },
 	"page_options_restore_scroll_position": { "message": "Scroll-Position wiederherstellen und abgedunkelte Tabs-Icons aktivieren" },
 	"page_options_restore_scroll_permissions": { "message": "Erfordert Zugriff auf alle URLs und Berechtigung zum Ausführen von Skripten." },

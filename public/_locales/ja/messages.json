@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "すべてのURLへのアクセスとスクリプト実行の権限が必要です。" },
 	"page_options_never_suspend_when_power_on": { "message": "電源接続中はタブをサスペンドしない" },
 	"page_options_white_list": { "message": "次のリストにあるURLのタブはサスペンドしない:" },
-	"page_options_white_list_hint": { "message": "各項目を新しい行に入力してください。\n例:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "各項目を新しい行に入力してください。\n例:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "サスペンドされたタブ" },
 	"page_options_restore_scroll_position": { "message": "スクロール位置を復元し、タブアイコンを暗く表示する" },
 	"page_options_restore_scroll_permissions": { "message": "すべてのURLへのアクセスとスクリプト実行の権限が必要です。" },

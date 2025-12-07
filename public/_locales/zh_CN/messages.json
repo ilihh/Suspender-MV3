@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "需要访问所有 URL 并有执行脚本的权限。" },
 	"page_options_never_suspend_when_power_on": { "message": "连接电源时不挂起标签页" },
 	"page_options_white_list": { "message": "不挂起以下列表中 URL 的标签页：" },
-	"page_options_white_list_hint": { "message": "每行一个。\n示例：\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "每行一个。\n示例：$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "挂起的标签页" },
 	"page_options_restore_scroll_position": { "message": "恢复滚动位置并启用灰显的标签图标" },
 	"page_options_restore_scroll_permissions": { "message": "需要访问所有 URL 并有执行脚本的权限。" },

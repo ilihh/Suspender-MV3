@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "需要存取所有 URL 並允許執行指令碼。" },
 	"page_options_never_suspend_when_power_on": { "message": "連接電源時永不暫停分頁" },
 	"page_options_white_list": { "message": "永不暫停以下清單中的 URL 分頁：" },
-	"page_options_white_list_hint": { "message": "每行一項。\n範例：\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "每行一項。\n範例：$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "已暫停分頁" },
 	"page_options_restore_scroll_position": { "message": "恢復捲動位置並啟用分頁圖示變暗" },
 	"page_options_restore_scroll_permissions": { "message": "需要存取所有 URL 並允許執行指令碼。" },

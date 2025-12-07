@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Nécessite l’accès à toutes les URL et l’autorisation d’exécuter des scripts." },
 	"page_options_never_suspend_when_power_on": { "message": "Ne jamais suspendre les onglets quand l’appareil est branché" },
 	"page_options_white_list": { "message": "Ne jamais suspendre les onglets avec des URL de la liste suivante :" },
-	"page_options_white_list_hint": { "message": "Un élément par ligne.\nExemple :\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Un élément par ligne.\nExemple:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Onglets suspendus" },
 	"page_options_restore_scroll_position": { "message": "Restaurer la position de défilement et activer les icônes d’onglets atténuées" },
 	"page_options_restore_scroll_permissions": { "message": "Nécessite l’accès à toutes les URL et l’autorisation d’exécuter des scripts." },

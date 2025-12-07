@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requer acesso a todas as URLs e permissão para executar scripts." },
 	"page_options_never_suspend_when_power_on": { "message": "Nunca suspender abas quando conectado a uma fonte de energia" },
 	"page_options_white_list": { "message": "Nunca suspender abas com URLs da seguinte lista:" },
-	"page_options_white_list_hint": { "message": "Cada item em uma nova linha.\nExemplo:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Cada item em uma nova linha.\nExemplo:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Abas suspensas" },
 	"page_options_restore_scroll_position": { "message": "Restaurar posição de rolagem e ativar ícones de abas escurecidos" },
 	"page_options_restore_scroll_permissions": { "message": "Requer acesso a todas as URLs e permissão para executar scripts." },

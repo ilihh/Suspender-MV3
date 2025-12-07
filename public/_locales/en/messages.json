@@ -126,7 +126,12 @@
 	"page_options_never_suspend_unsaved_data_permissions": { "message": "Requires access to all URLs and permission to execute scripts." },
 	"page_options_never_suspend_when_power_on": { "message": "Never suspend tabs when connected to a power source" },
 	"page_options_white_list": { "message": "Never suspend tabs with URLs from the following list:" },
-	"page_options_white_list_hint": { "message": "Each item on a new line.\nExample:\n\tgithub.com\n\tyoutube.com/watch" },
+	"page_options_white_list_hint": {
+      "message": "Each item on a new line.\nExample:$EXAMPLES$",
+      "placeholders": {
+        "examples": { "content": "$1", "example": "\n\tgithub.com\n\tyoutube.com/watch\n\t*.example.com/some/*/path/\n\t/^([a-z0-9-]+\\.)*example\\.com$/i" }
+      }
+    },
 	"page_options_block_suspended": { "message": "Suspended tabs" },
 	"page_options_restore_scroll_position": { "message": "Restore scroll position and enable dimmed tabs icons" },
 	"page_options_restore_scroll_permissions": { "message": "Requires access to all URLs and permission to execute scripts." },

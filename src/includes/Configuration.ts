@@ -85,7 +85,7 @@ export class Configuration
 	public inWhiteList(tab: ValidTab): boolean
 	{
 		const url = new URL(tab.url);
-		const base_url = url.host + url.pathname;
+		const simplified_url = url.host + url.pathname;
 		for (const path of this.data.whiteList)
 		{
 			if (path === '')
@@ -93,13 +93,67 @@ export class Configuration
 				continue;
 			}
 
-			if (base_url.includes(path))
+			if (this.isRegExp(path))
+			{
+				if (this.testRegExp(tab.url, path))
+				{
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.includes('*'))
+			{
+				if (this.testWildcard(simplified_url, path))
+				{
+					return true;
+				}
+
+				continue;
+			}
+
+			if (simplified_url.startsWith(path))
 			{
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	private isRegExp(path: string): boolean
+	{
+		return path.startsWith('/') && path.lastIndexOf('/') > 0;
+	}
+
+	private testRegExp(url: string, patternString: string): boolean
+	{
+		try
+		{
+			const last_slash = patternString.lastIndexOf('/');
+			const pattern = patternString.substring(1, last_slash);
+			const flags = patternString.substring(last_slash + 1);
+
+			return (new RegExp(pattern, flags)).test(url);
+		}
+		catch (e)
+		{
+			return false;
+		}
+	}
+
+	private testWildcard(url: string, patternString: string): boolean
+	{
+		if (patternString === '*')
+		{
+			return true;
+		}
+
+		const escaped = patternString.replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
+		const pattern = '^' + escaped.replace(/\*/g, '.*');
+
+		return (new RegExp(pattern, 'i')).test(url);
 	}
 
 	public whiteListRemove(tab: ValidTab): Promise<void>

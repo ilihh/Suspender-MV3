@@ -1,4 +1,4 @@
-import { MESSAGE, TAB_STATUS } from './includes/constants';
+import { MESSAGE, TAB_GROUP_ID_NONE, TAB_STATUS } from './includes/constants';
 import { i18n, isEnumValue, isHTMLElement } from './includes/functions';
 import { Messenger } from './includes/Messenger';
 import { Theme } from './includes/Theme';
@@ -88,9 +88,9 @@ async function init()
 		[MESSAGE.WhitelistUrl]: allow_whitelist.includes(status.data),
 		[MESSAGE.WhitelistRemove]: status.data === TAB_STATUS.WhiteList,
 
-		[MESSAGE.SuspendGroup]: tab.groupId !== -1,
-		[MESSAGE.SuspendGroupForced]: tab.groupId !== -1,
-		[MESSAGE.UnsuspendGroup]: tab.groupId !== -1,
+		[MESSAGE.SuspendGroup]: tab.groupId !== TAB_GROUP_ID_NONE,
+		[MESSAGE.SuspendGroupForced]: tab.groupId !== TAB_GROUP_ID_NONE,
+		[MESSAGE.UnsuspendGroup]: tab.groupId !== TAB_GROUP_ID_NONE,
 	};
 
 	for (const [action, display] of Object.entries(conditions))

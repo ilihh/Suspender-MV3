@@ -111,3 +111,5 @@ export enum FAVICON_MODE
 	// show actual icon, dimmed, requires access to the all urls
 	Actual = 'actual',
 }
+
+export const TAB_GROUP_ID_NONE = -1;

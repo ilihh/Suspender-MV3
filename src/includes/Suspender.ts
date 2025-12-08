@@ -1,5 +1,5 @@
 import { SuspendedURL } from './SuspendedURL';
-import { PAGE, SUSPEND_MODE, TAB_STATUS } from './constants';
+import { PAGE, SUSPEND_MODE, TAB_GROUP_ID_NONE, TAB_STATUS } from './constants';
 import { Configuration } from './Configuration';
 import { DeviceStatus } from './DeviceStatus';
 import { PageInfo } from './PageInfo';
@@ -75,8 +75,8 @@ export class Suspender
 	public async suspendGroup(tabId: number, mode: SUSPEND_MODE = SUSPEND_MODE.Auto): Promise<void>
 	{
 		const tab = await Tabs.get(tabId);
-		const tabs = tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
-			? [tab,]
+		const tabs = tab.groupId === TAB_GROUP_ID_NONE
+			? [tab, ]
 			: await this.tabs.unsuspended(mode, await this.filesSchemeAllowed(), { groupId: tab.groupId, });
 		return this.suspendTabs(tabs, mode);
 	}
@@ -84,8 +84,8 @@ export class Suspender
 	public async unsuspendGroup(tabId: number): Promise<void>
 	{
 		const tab = await Tabs.get(tabId);
-		const tabs = tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
-			? [tab,]
+		const tabs = tab.groupId === TAB_GROUP_ID_NONE
+			? [tab, ]
 			: await this.tabs.suspended({ groupId: tab.groupId, });
 		return this.unsuspendTabs(tabs);
 	}

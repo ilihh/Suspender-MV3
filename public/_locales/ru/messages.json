@@ -22,7 +22,7 @@
 	"action_suspend_group_forced": { "message": "Принудительно приостановить текущую группу" },
 	"action_unsuspend_group": { "message": "Возобновить текущую группу" },
 
-	"action_suspend_window": { "message": "Приостановить все другие остальные в этом окне" },
+	"action_suspend_window": { "message": "Приостановить все остальные вкладки в этом окне" },
 	"action_suspend_window_forced": { "message": "Принудительно приостановить все остальные вкладки в этом окне" },
 	"action_unsuspend_window": { "message": "Возобновить все вкладки в этом окне" },
 

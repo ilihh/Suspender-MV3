@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "О программе" },
 	"page_options_about_author": { "message": "Автор:" },
+    "page_options_about_changelog": { "message": "История изменений" },
 	"page_options_about_info": { "message": "Вдохновлено расширением The Great Suspender." }
 }

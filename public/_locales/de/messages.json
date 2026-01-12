@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "Über" },
 	"page_options_about_author": { "message": "Autor:" },
+    "page_options_about_changelog": { "message": "Änderungsprotokoll" },
 	"page_options_about_info": { "message": "Inspiriert von der Erweiterung The Great Suspender." }
 }

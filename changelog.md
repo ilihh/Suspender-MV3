@@ -1,8 +1,13 @@
 # Changelog
 
+## 1.0.22
+
+- Sessions: enforced tabs order in restored windows
+- added changelog link
+
 ## 1.0.21
 
-- bugfix: error regarding undefined TAB_GROUP_ID_NONE  when suspending group 
+- bugfix: error regarding undefined TAB_GROUP_ID_NONE when suspending group 
 
 ## 1.0.20
 

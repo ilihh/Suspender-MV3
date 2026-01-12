@@ -432,9 +432,20 @@ export class Suspender
 			return;
 		}
 
+		const first_tab = ((w.tabs === undefined) || (w.tabs.length === 0))
+			? undefined
+			: w.tabs[0]?.id;
+
+		let i = 0;
 		for (const url of window.tabs)
 		{
-			await this.createTab(url.url, suspend, undefined, undefined, false, w.id);
+			await this.createTab(url.url, suspend, undefined, i, false, w.id);
+			i++;
+		}
+
+		if (first_tab !== undefined)
+		{
+			await chrome.tabs.remove(first_tab);
 		}
 	}
 

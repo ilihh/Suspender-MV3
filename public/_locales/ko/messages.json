@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "정보" },
 	"page_options_about_author": { "message": "작성자:" },
+    "page_options_about_changelog": { "message": "변경 로그" },
 	"page_options_about_info": { "message": "The Great Suspender 확장에서 영감을 받음." }
 }

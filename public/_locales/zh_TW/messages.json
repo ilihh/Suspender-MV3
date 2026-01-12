@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "關於" },
 	"page_options_about_author": { "message": "作者：" },
+    "page_options_about_changelog": { "message": "更新日誌" },
 	"page_options_about_info": { "message": "靈感來自 The Great Suspender 擴充功能。" }
 }

@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "Hakkında" },
 	"page_options_about_author": { "message": "Yazar:" },
+    "page_options_about_changelog": { "message": "Değişiklik Günlüğü" },
 	"page_options_about_info": { "message": "The Great Suspender uzantısından esinlenilmiştir." }
 }

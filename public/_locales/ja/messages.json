@@ -174,5 +174,6 @@
 
 	"page_options_about": { "message": "情報" },
 	"page_options_about_author": { "message": "作者:" },
+  	"page_options_about_changelog": { "message": "変更履歴" },
 	"page_options_about_info": { "message": "The Great Suspender 拡張機能に触発されました。" }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.23
+
+- style fix
+
 ## 1.0.22
 
 - Sessions: enforced tabs order in restored windows

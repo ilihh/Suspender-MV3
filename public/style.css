@@ -208,6 +208,7 @@ body.suspended #suspended {
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	box-sizing: border-box;
 }
 
 body.suspended #page-info {
